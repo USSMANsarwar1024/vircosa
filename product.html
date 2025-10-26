@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Collection | Zephyra Luxe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #8B5A2B;
+            /* Rich Amber */
+            --secondary-color: #4A2C2A;
+            /* Deep Mahogany */
+            --accent-color: #D4AF8E;
+            /* Soft Nude */
+            --light-color: #F8F5F2;
+            /* Ivory */
+            --dark-color: #2A2118;
+            /* Dark Espresso */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            background-color: rgba(243, 221, 221, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(252, 231, 231, 0.95);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px;
+            position: relative;
+        }
+
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:before,
+        .nav-link.active:before {
+            width: 100%;
+        }
+
+        .btn-outline-perfume {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-perfume:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== Products Hero ===== */
+        .products-hero {
+            background: url('https://images.unsplash.com/photo-1676951394482-1e74ba15d703?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+            background-size: cover;
+            object-fit: cover;
+            object-position: center;
+            color: whitesmoke;
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 80px;
+            /* filter: blur(0.5px); */
+        }
+        
+        .products-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .products-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        /* ===== Products Section ===== */
+        .products-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-img {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .product-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-desc {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .product-price .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .btn-product {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-product:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Admin Controls (hidden by default) */
+        .admin-controls {
+            display: none;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 2;
+        }
+
+        .admin-controls .btn-admin {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--secondary-color);
+            border: none;
+            margin-right: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .admin-controls .btn-admin:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .product-card:hover .admin-controls {
+            display: block;
+        }
+
+        /* Pagination */
+        .pagination {
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .page-item .page-link {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            margin: 0 5px;
+            border-radius: 50% !important;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .products-hero h1 {
+                font-size: 3rem;
+            }
+
+            .product-img {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .products-hero {
+                padding: 120px 0 80px;
+            }
+
+            .products-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .products-hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Zephyr<span>Luxe</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">Perfumes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about-us.html">About Us</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="whishlist.html">Wishlist</a>
+                </li> -->
+            </ul>
+            <div class="ms-3 d-flex align-items-center">
+                <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
+                <a href="cart.html" class="btn btn-outline-perfume position-relative">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Added to cart notification (for all pages) -->
+<div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
+    <!-- Hero Section -->
+    <!-- <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Elegance in Every Drop</h1>
+            <p class="hero-subtitle">Discover the art of fragrance with Zephyra Luxe</p>
+            <a href="#products" class="btn btn-hero">Explore Scents</a>
+        </div>
+    </section> -->
+
+    
+    <!-- Products Hero -->
+    <section class="products-hero">
+        <div class="container">
+            <!-- <br><br><br><br> -->
+            <h1>Our Fragrance Collection</h1>
+            <h3>Whispers of Luxury. Bottled.</h3>
+            <p>Step into a world where every scent tells a story—crafted from rare botanicals, captured emotions, and timeless elegance. This isn’t just perfume. It’s an experience.</p>
+            <p>It’s a feeling. A memory. A moment—designed for those who dare to be unforgettable.</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Signature Scents</h2>
+                <p class="text-muted">Browse our complete collection of luxury fragrances</p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="women">For Women</button>
+                <button class="filter-btn" data-filter="men">For Men</button>
+                <button class="filter-btn" data-filter="unisex">Unisex</button>
+                <button class="filter-btn" data-filter="new">New Arrivals</button>
+                <button class="filter-btn" data-filter="bestsellers">Bestsellers</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-category="women new">
+                    <div class="product-badge">New</div>
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/fleur.png" alt="Fleur Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Floral</span>
+                        <h3 class="product-title">Fleur</h3>
+                        <p class="product-desc">A delicate floral bouquet with notes of jasmine, rose, and vanilla.</p>
+                        <p class="product-price">$89.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-category="men bestsellers">
+                    <div class="product-badge">Bestseller</div>
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/whim.png" alt="Whim Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Woody</span>
+                        <h3 class="product-title">Whim</h3>
+                        <p class="product-desc">Bold and woody with hints of amber and bergamot.</p>
+                        <p class="product-price">$95.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-category="unisex">
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/baran.png" alt="Baran Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Earthy</span>
+                        <h3 class="product-title">Baran</h3>
+                        <p class="product-desc">Mysterious and elemental with deep earthy tones.</p>
+                        <p class="product-price">$85.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-category="women bestsellers">
+                    <div class="product-badge">Bestseller</div>
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/zarva.jpg" alt="Zarva Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Oriental</span>
+                        <h3 class="product-title">Zarva</h3>
+                        <p class="product-desc">Daring and charismatic with smooth chaotic notes.</p>
+                        <p class="product-price">$79.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-category="men new">
+                    <div class="product-badge">New</div>
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Noir Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Spicy</span>
+                        <h3 class="product-title">Noir</h3>
+                        <p class="product-desc">Dark and mysterious with spicy undertones.</p>
+                        <p class="product-price">$92.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-category="unisex bestsellers">
+                    <div class="product-badge">Bestseller</div>
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/lumire.jpg" alt="Lumière Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Citrus</span>
+                        <h3 class="product-title">Lumière</h3>
+                        <p class="product-desc">Bright and refreshing with citrus and floral notes.</p>
+                        <p class="product-price">$87.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" data-category="women">
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/reve.jpg" alt="Rêve Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Floral</span>
+                        <h3 class="product-title">Rêve</h3>
+                        <p class="product-desc">Dreamy and romantic with soft floral accords.</p>
+                        <p class="product-price">$84.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" data-category="men">
+                    <div class="admin-controls">
+                        <button class="btn-admin"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-img">
+                        <img src="references/terre.webp" alt="Terre Perfume">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">Woody</span>
+                        <h3 class="product-title">Terre</h3>
+                        <p class="product-desc">Earthy and grounded with woody and mossy notes.</p>
+                        <p class="product-price">$90.00</p>
+                        <a href="cart.html" class="btn btn-product">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Product pagination">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-5" style="background-color: var(--secondary-color); color: white;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h3>Join Our Fragrance Journey</h3>
+                    <p class="mb-4">Subscribe for exclusive launches, artisan insights, and 10% off your first purchase.
+                    </p>
+                    <form class="d-flex justify-content-center">
+                        <input type="email" class="form-control w-50 me-2" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-hero" style="color: white">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h3 class="footer-title">Zephyra<span>Luxe</span></h3>
+                    <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
+                    <div class="social-icons mt-4">
+                        <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Shop</h4>
+                        <ul>
+                            <li><a href="product.html">Women</a></li>
+                            <li><a href="product.html">Men</a></li>
+                            <li><a href="product.html">Gift Sets</a></li>
+                            <li><a href="product.html">Travel Sizes</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="about-us.html">Our Story</a></li>
+                            <li><a href="#">Ingredients</a></li>
+                            <li><a href="#">Sustainability</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
+                            <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
+                            <li><i class="fas fa-envelope me-2"></i> hello@zephyraluxe.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Zephyra Luxe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (for navbar toggle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Minimal JS for Navbar Scroll Effect -->
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Simple filter functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+                const products = document.querySelectorAll('.product-card');
+
+                products.forEach(product => {
+                    if (filter === 'all' || product.getAttribute('data-category').includes(filter)) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Admin mode toggle (for demonstration)
+        // In a real implementation, this would be controlled by user authentication
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'a' && e.ctrlKey) {
+                const adminControls = document.querySelectorAll('.admin-controls');
+                adminControls.forEach(control => {
+                    if (control.style.display === 'block') {
+                        control.style.display = 'none';
+                        alert('Admin mode disabled');
+                    } else {
+                        control.style.display = 'block';
+                        alert('Admin mode enabled');
+                    }
+                });
+            }
+        });
+
+        
+    </script>
+</body>
+
+</html>

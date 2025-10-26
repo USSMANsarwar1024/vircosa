@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zephyra Luxe | Create Account</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B5A2B;
+            /* Rich Amber */
+            --secondary-color: #4A2C2A;
+            /* Deep Mahogany */
+            --accent-color: #D4AF8E;
+            /* Soft Nude */
+            --light-color: #F8F5F2;
+            /* Ivory */
+            --dark-color: #2A2118;
+            /* Dark Espresso */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(248, 245, 242, 0.92), rgba(139, 90, 43, 0.35)),
+                url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: var(--dark-color);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .register-card {
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: none;
+            transition: all 0.3s ease;
+            background-color: rgba(248, 245, 242, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .register-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: none;
+        }
+
+        .card-header h2 {
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .card-header i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: var(--secondary-color);
+        }
+
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding-left: 45px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.25);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        .btn-register {
+            background-color: var(--primary-color);
+            border: none;
+            height: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .btn-register:hover {
+            background-color: #6d4622;
+            transform: translateY(-2px);
+        }
+
+        .card-footer {
+            background-color: transparent;
+            border-top: none;
+            text-align: center;
+            padding: 1.5rem;
+            color: #7f8c8d;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-outline-perfume {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-perfume:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .gender-option {
+            flex: 1;
+        }
+
+        .gender-option .form-check-input {
+            margin-top: 0.3rem;
+        }
+
+        .gender-option .form-check-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            height: 5px;
+            background: #eee;
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .register-card {
+                width: 90% !important;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .card-header {
+                padding: 1.5rem;
+            }
+
+            .gender-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="register-card card w-100">
+                    <div class="card-header">
+                        <i class="fas fa-user-plus"></i>
+                        <h2>Join Zephyr Luxe</h2>
+                        <p class="mb-0 mt-2" style="font-family: 'Montserrat'; font-size: 0.9rem; letter-spacing: 1px;">
+                            CREATE YOUR FRAGRANCE ACCOUNT</p>
+                    </div>
+                    <div class="card-body">
+                        <form id="signupForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstName">First Name</label>
+                                        <i class="fas fa-user input-icon"></i>
+                                        <input type="text" class="form-control" id="firstName"
+                                            placeholder="Enter first name" name="firstName" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lastName">Last Name</label>
+                                        <i class="fas fa-user input-icon"></i>
+                                        <input type="text" class="form-control" id="lastName"
+                                            placeholder="Enter last name" name="lastName" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <div class="gender-options">
+                                    <div class="gender-option form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="m"
+                                            required checked>
+                                        <label class="form-check-label" for="male">
+                                            <i class="fas fa-male"></i> Male
+                                        </label>
+                                    </div>
+                                    <div class="gender-option form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="female" value="f"
+                                            required>
+                                        <label class="form-check-label" for="female">
+                                            <i class="fas fa-female"></i> Female
+                                        </label>
+                                    </div>
+                                    <div class="gender-option form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="other" value="o"
+                                            required>
+                                        <label class="form-check-label" for="other">
+                                            <i class="fas fa-genderless"></i> Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email"
+                                    name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control" id="password"
+                                    placeholder="Create a password" name="password" required>
+                                <small class="text-muted">At least 8 characters with uppercase, number, and special
+                                    character</small>
+                                <div class="password-strength">
+                                    <div class="strength-bar" id="strengthBar"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <i class="fas fa-phone input-icon"></i>
+                                <input type="tel" class="form-control" id="phoneNumber" placeholder="+92-300-1234567"
+                                    name="phone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <i class="fas fa-map-marker-alt input-icon"></i>
+                                <textarea class="form-control" id="address" placeholder="Enter your address"
+                                    name="address" rows="2"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-register w-100">
+                                <i class="fas fa-user-plus me-2"></i> CREATE ACCOUNT
+                            </button>
+
+                            <div class="login-link mt-4">
+                                Already have an account? <a href="login.html">Sign in</a>
+                            </div>
+                        </form>
+                        <br>
+                        <div class="text-center mt-3">
+                            <a href="index.html" class="btn btn-outline-perfume">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small>&copy; 2025 Zephyra Luxe. All Rights Reserved.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Simple password strength indicator -->
+    <script>
+        localStorage.clear();
+        document.getElementById('password').addEventListener('input', function () {
+            const password = this.value;
+            const strengthBar = document.getElementById('strengthBar');
+            let strength = 0;
+
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+            // Update strength bar
+            const width = strength * 20;
+            strengthBar.style.width = width + '%';
+
+            // Update color
+            if (strength <= 2) {
+                strengthBar.style.backgroundColor = '#e74c3c';
+            } else if (strength <= 4) {
+                strengthBar.style.backgroundColor = '#f39c12';
+            } else {
+                strengthBar.style.backgroundColor = '#2ecc71';
+            }
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+
+            const data = {
+                firstName: form.firstName.value.trim(),
+                lastName: form.lastName.value.trim(),
+                gender: form.gender.value,
+                email: form.email.value.trim(),
+                password: form.password.value,
+                phone: form.phone.value.trim(),
+                address: form.address.value.trim()
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    alert(result.error || 'Signup failed. Try again.');
+                    return;
+                }
+
+                // Clear localStorage to avoid accidental auto-login from a previous session
+                localStorage.clear();
+
+                // Show success alert or redirect
+                alert('Signup successful! Please log in.');
+                window.location.href = 'login.html';
+
+            } catch (err) {
+                console.error('Signup error:', err);
+                alert('Something went wrong. Please try again later.');
+            }
+        });
+
+        // alert('Signup successful! Please log in.');
+        // window.location.href = 'login.html';
+
+    </script>
+</body>
+
+</html>
