@@ -1,12 +1,12 @@
 
-# Zephyr Lux
+# Vircosa
 
 **Spray Once. Rule the Day.**  
-Welcome to the official website of **Zephyr Luxe**, a unisex perfume brand that embodies elegance, confidence, and lasting impressions.
+Welcome to the official website of **Vircosa**, a unisex perfume brand that embodies elegance, confidence, and lasting impressions.
 
 ## 🌟 Overview
 
-Zephyr Luxe is a premium fragrance brand tailored for modern individuals who value sophistication and presence. This website serves as the digital storefront and customer hub for Zephyr Luxe, offering a seamless shopping experience for perfume lovers.
+Vircosa is a premium fragrance brand tailored for modern individuals who value sophistication and presence. This website serves as the digital storefront and customer hub for Vircosa, offering a seamless shopping experience for perfume lovers.
 
 ## 🛍️ Key Features
 

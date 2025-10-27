@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
     <style>
         :root {
             --primary-color: #8B5A2B;
@@ -35,77 +36,11 @@
             overflow-x: hidden;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        .navbar-brand {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
-        /* ===== Navbar ===== */
-        .navbar {
-            background-color: rgba(243, 221, 221, 0.98);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            padding: 15px 0;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background-color: rgba(252, 231, 231, 0.95);
-            padding: 10px 0;
-        }
-
-        .navbar-brand {
-            font-size: 1.8rem;
-            color: var(--secondary-color);
-            letter-spacing: 1px;
-        }
-
-        .navbar-brand span {
-            color: var(--primary-color);
-        }
-
-        .nav-link {
-            color: var(--dark-color);
-            font-weight: 500;
-            margin: 0 8px;
-            padding: 8px 15px;
-            position: relative;
-        }
-
-        .nav-link:before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover:before,
-        .nav-link.active:before {
-            width: 100%;
-        }
-
-        .btn-outline-perfume {
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline-perfume:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
+        
         /* ===== Hero Section ===== */
         .hero-section {
             background: linear-gradient(rgba(42, 33, 24, 0.4), rgba(42, 33, 24, 0.4)),
-                url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+                url('../images/hero-img.avif') no-repeat center center;
             background-size: cover;
             color: white;
             padding: 180px 0 150px;
@@ -399,10 +334,11 @@
 </head>
 
 <body>
-    <!-- Navbar
+
+    <!-- Updated Navigation Bar for all pages -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Zephyra<span>Luxe</span></a>
+            <a class="navbar-brand" href="/">Vir<span>cosa</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -410,83 +346,39 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="product.html">Perfumes</a>
+                        <a class="nav-link" href="/products">Perfumes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">Our Story</a>
+                        <a class="nav-link" href="/about-us">Our Story</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Collections</a>
+                        <a class="nav-link" href="contact-us">Contact</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link active" href="login.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="/login">Login</a>
                     </li>
                 </ul>
                 <div class="ms-3 d-flex align-items-center">
                     <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
-                    <a href="#" class="btn btn-outline-perfume"><i class="fas fa-shopping-bag"></i></a>
+                    <a href="/cart" class="btn btn-outline-perfume position-relative">
+                        <i class="fas fa-shopping-bag"></i>
+                        <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">1</span> -->
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
-    <br><br><br> -->
-
-    <!-- Updated Navigation Bar for all pages -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">Zephyr<span>Luxe</span></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="product.html">Perfumes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html#about">Our Story</a>
-                </li>
-            
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.html">Sign Up</a>
-                </li>
-            </ul>
-            <div class="ms-3 d-flex align-items-center">
-                <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
-                <a href="cart.html" class="btn btn-outline-perfume position-relative">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<!-- Added to cart notification (for all pages) -->
-<div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <h1 class="hero-title">Elegance in Every Drop</h1>
-            <p class="hero-subtitle">Discover the art of fragrance with Zephyra Luxe</p>
-            <a href="product.html" class="btn btn-hero">Explore Scents</a>
+            <p class="hero-subtitle">Discover the art of fragrance with Vircosa</p>
+            <a href="/products" class="btn btn-hero">Explore Scents</a>
         </div>
     </section>
 
@@ -545,7 +437,7 @@
                     </div>
                 </div>
 
-                <!-- Product 4: Zephyra -->
+                <!-- Product 4: Zarva -->
                 <div class="col-lg-6">
                     <div class="product-card">
                         <div class="product-img">
@@ -573,18 +465,18 @@
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <div class="about-img">
                         <!-- Replace with your image -->
-                        <img src="references/store.jpg"
-                            alt="Zephyra Luxe Story">
+                        <img src="references/store.jpg" alt="Vircosa Story">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="about-content">
                         <h2>Our Essence</h2>
                         <p>Ever caught a scent that stopped you in your tracks? That’s the magic we bottle at
-                            <strong>Zephyra Luxe</strong>.</p>
+                            <strong>Vircosa</strong>.
+                        </p>
                         <p>We’re not just mixing perfumes—we’re crafting memories. Imagine rare botanicals whispering
                             secrets from Himalayan peaks or Amazonian rainforests, all blended to make you feel
-                            *something*—nostalgia, confidence, maybe even dangerously irresistible.</p>
+                            something—nostalgia, confidence, maybe even dangerously irresistible.</p>
                         <p>Our signature scents, like <em>Fleur</em> and <em>Whim</em>, aren’t just perfumes—they're
                             stories. Spritz, and you're suddenly the mysterious stranger in someone’s novel.</p>
                         <a href="#" class="btn btn-product mt-3">Dare to Smell Different</a>
@@ -612,13 +504,13 @@
         </div>
     </section>
 
-   
-     <!-- Footer -->
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h3 class="footer-title">Zephyr<span>Luxe</span></h3>
+                    <h3 class="footer-title">Vir<span>cosa</span></h3>
                     <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
                     <div class="social-icons mt-4">
                         <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
@@ -655,13 +547,13 @@
                         <ul>
                             <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
                             <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
-                            <li><i class="fas fa-envelope me-2"></i> hello@zephyraluxe.com</li>
+                            <li><i class="fas fa-envelope me-2"></i> hello@vircosa.com</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2025 Zephyra Luxe. All rights reserved.</p>
+                <p>&copy; 2025 Vircosa. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -679,7 +571,7 @@
             }
         });
 
-        
+
     </script>
 </body>
 

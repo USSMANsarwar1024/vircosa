@@ -1,7 +1,7 @@
 {
-  "name": "zephyr-luxe-main",
+  "name": "vircosa",
   "version": "1.0.0",
-  "description": "**Spray Once. Rule the Day.**  \r Welcome to the official website of **Zephyr Luxe**, a unisex perfume brand that embodies elegance, confidence, and lasting impressions.",
+  "description": "**Spray Once. Rule the Day.**  \r Welcome to the official website of **Vircosa**, a unisex perfume brand that embodies elegance, confidence, and lasting impressions.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
