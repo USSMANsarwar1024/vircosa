@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zephyra Luxe | Create Account</title>
+    <title>Vircosa | Create Account</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -13,6 +13,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
     <style>
         :root {
             --primary-color: #8B5A2B;
@@ -30,7 +33,7 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(rgba(248, 245, 242, 0.92), rgba(139, 90, 43, 0.35)),
-                url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
+                url('../images/signup-hero-img.avif') no-repeat center center;
             background-size: cover;
             min-height: 100vh;
             display: flex;
@@ -55,6 +58,8 @@
             transition: all 0.3s ease;
             background-color: rgba(248, 245, 242, 0.95);
             backdrop-filter: blur(5px);
+
+            margin-top: 6rem;
         }
 
         .register-card:hover {
@@ -233,6 +238,46 @@
 </head>
 
 <body>
+
+    <!-- Updated Navigation Bar for all pages -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Vir<span>cosa</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Perfumes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about-us">Our Story</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact-us">Contact</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                </ul>
+                <div class="ms-3 d-flex align-items-center">
+                    <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
+                    <a href="/cart" class="btn btn-outline-perfume position-relative">
+                        <i class="fas fa-shopping-bag"></i>
+                        <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">1</span> -->
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <br>
         <div class="row justify-content-center">
@@ -240,9 +285,9 @@
                 <div class="register-card card w-100">
                     <div class="card-header">
                         <i class="fas fa-user-plus"></i>
-                        <h2>Join Zephyr Luxe</h2>
+                        <h2>Join Vircosa</h2>
                         <p class="mb-0 mt-2" style="font-family: 'Montserrat'; font-size: 0.9rem; letter-spacing: 1px;">
-                            CREATE YOUR FRAGRANCE ACCOUNT</p>
+                            CREATE YOUR FRAGRANT ACCOUNT</p>
                     </div>
                     <div class="card-body">
                         <form id="signupForm">
@@ -341,7 +386,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <small>&copy; 2025 Zephyra Luxe. All Rights Reserved.</small>
+                        <small>&copy; 2025 Vircosa. All Rights Reserved.</small>
                     </div>
                 </div>
             </div>

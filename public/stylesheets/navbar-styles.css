@@ -66,4 +66,22 @@ h4,
 .btn-outline-perfume:hover {
   background-color: var(--primary-color);
   color: white;
+  border-radius: 50%;
+}
+
+.navbar-toggler {
+  border-radius: 1rem;
+  padding: 7.5px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.navbar-toggler:hover {
+  border-color:rgb(233, 191, 187);
+  transform: scale(1.1);
+  border: 1px solid;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
 }

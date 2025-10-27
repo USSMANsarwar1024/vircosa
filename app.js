@@ -28,6 +28,14 @@ app.get('/forget-password', () => {
 
 })
 
+app.get('/products', (req, res) => {
+  res.render('products');
+})
+
+app.get('/signup', (req, res) => {
+  res.render('signup');
+})
+
 // --- Server Start ---
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
