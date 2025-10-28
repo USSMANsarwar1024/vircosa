@@ -1,0 +1,38 @@
+/* ===== CTA Section ===== */
+.cta-section {
+  padding: 120px 0;
+  background: linear-gradient(rgba(42, 33, 24, 0.8), rgba(42, 33, 24, 0.8)),
+    url("../images/login-hero-img.avif") no-repeat center center;
+  background-size: cover;
+  color: white;
+  text-align: center;
+}
+
+.cta-title {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.cta-text {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  opacity: 0.9;
+}
+
+.btn-cta {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  padding: 12px 35px;
+  border-radius: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-cta:hover {
+  background-color: #4a2c2a;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}

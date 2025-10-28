@@ -1,0 +1,19 @@
+:root {
+            --primary-color: #8B5A2B;
+            /* Rich Amber */
+            --secondary-color: #4A2C2A;
+            /* Deep Mahogany */
+            --accent-color: #D4AF8E;
+            /* Soft Nude */
+            --light-color: #F8F5F2;
+            /* Ivory */
+            --dark-color: #2A2118;
+            /* Dark Espresso */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }

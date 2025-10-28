@@ -18,22 +18,26 @@ app.get("/", (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login')
-})
+});
 
 app.post('/login', (req, res) => {
 
-})
+});
 
 app.get('/forget-password', () => {
 
-})
+});
 
 app.get('/products', (req, res) => {
   res.render('products');
-})
+});
 
 app.get('/signup', (req, res) => {
   res.render('signup');
+});
+
+app.get('/about-us', (req, res) => {
+  res.render('about-us');
 })
 
 // --- Server Start ---
