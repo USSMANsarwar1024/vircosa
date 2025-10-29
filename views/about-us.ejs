@@ -549,44 +549,8 @@
 </head>
 
 <body>
-    <!-- Updated Navigation Bar for all pages -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Vir<span>cosa</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products">Perfumes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about-us">Our Story</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact-us">Contact</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                </ul>
-                <div class="ms-3 d-flex align-items-center">
-                    <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
-                    <a href="/cart" class="btn btn-outline-perfume position-relative">
-                        <i class="fas fa-shopping-bag"></i>
-                        <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">1</span> -->
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    
+    <%- include('partials/navbar') %>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -882,88 +846,9 @@
     </section>
 
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container text-center">
-            <h2 class="cta-title">Own the Scent. Own the Moment.</h2>
-            <p class="cta-text">
-                This isn’t just perfume — it’s confidence, charm, and class bottled for you. Because some experiences aren’t meant to be compared by price — only by how they make you feel.
-            </p>
-            <a href="/products" class="btn btn-cta">Experience Vircosa</a>
-        </div>
-    </section>
-
-
-    <!-- Newsletter Section -->
-    <section class="py-5" style="background-color: var(--secondary-color); color: white;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h3>Join Our Fragrance Journey</h3>
-                    <p class="mb-4">Subscribe for exclusive launches, artisan insights, and 10% off your first purchase.
-                    </p>
-                    <form class="d-flex justify-content-center">
-                        <input type="email" class="form-control w-50 me-2" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-hero">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h3 class="footer-title">Zephyra<span>Luxe</span></h3>
-                    <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
-                    <div class="social-icons mt-4">
-                        <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
-                        <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
-                        <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
-                        <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h4>Shop</h4>
-                        <ul>
-                            <li><a href="product.html">Women</a></li>
-                            <li><a href="product.html">Men</a></li>
-                            <li><a href="product.html">Gift Sets</a></li>
-                            <li><a href="product.html">Travel Sizes</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h4>About</h4>
-                        <ul>
-                            <li><a href="index.html#about">Our Story</a></li>
-                            <li><a href="#">Ingredients</a></li>
-                            <li><a href="#">Sustainability</a></li>
-                            <li><a href="#">Blog</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4">
-                    <div class="footer-links">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
-                            <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
-                            <li><i class="fas fa-envelope me-2"></i> hello@zephyraluxe.com</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Zephyra Luxe. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <%- include('partials/cta-section') %>
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
 
     <!-- Bootstrap JS (for navbar toggle) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

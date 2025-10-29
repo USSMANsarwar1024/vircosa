@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vircosa | Luxury Fragrances</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts (Playfair Display + Montserrat) -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
     <!-- Custom CSS -->
-     <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
-     <link rel="stylesheet" href="../stylesheets/footer-styes.css">
-     <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
     <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
-    
+
     <style>
         /* ===== Hero Section ===== */
         .hero-section {
@@ -233,254 +233,144 @@
 
 <body>
 
-    <!-- Updated Navigation Bar for all pages -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Vir<span>cosa</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products">Perfumes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about-us">Our Story</a>
-                    </li>
+    <%- include('partials/navbar') %>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact-us">Contact</a>
-                    </li>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">Elegance in Every Drop</h1>
+                <p class="hero-subtitle">Discover the art of fragrance with Vircosa</p>
+                <a href="/products" class="btn btn-hero">Explore Scents</a>
+            </div>
+        </section>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                </ul>
-                <div class="ms-3 d-flex align-items-center">
-                    <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
-                    <a href="/cart" class="btn btn-outline-perfume position-relative">
-                        <i class="fas fa-shopping-bag"></i>
-                        <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">1</span> -->
-                    </a>
+        <!-- Products Section -->
+        <section class="products-section" id="products">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Signature Scents</h2>
+                    <p class="text-muted">Crafted with rare ingredients for unforgettable moments</p>
                 </div>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">Elegance in Every Drop</h1>
-            <p class="hero-subtitle">Discover the art of fragrance with Vircosa</p>
-            <a href="/products" class="btn btn-hero">Explore Scents</a>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section class="products-section" id="products">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Signature Scents</h2>
-                <p class="text-muted">Crafted with rare ingredients for unforgettable moments</p>
-            </div>
-            <div class="row">
-                <!-- Product 1: Fleur -->
-                <div class="col-lg-6">
-                    <div class="product-card">
-                        <div class="product-img">
-                            <!-- Replace with your image -->
-                            <img src="references/fleur.png" alt="Fleur Perfume">
+                <div class="row">
+                    <!-- Product 1: Fleur -->
+                    <div class="col-lg-6">
+                        <div class="product-card">
+                            <div class="product-img">
+                                <!-- Replace with your image -->
+                                <img src="references/fleur.png" alt="Fleur Perfume">
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-title">Fleur</h3>
+                                <p class="product-desc">A delicate Floral bouquet with notes of jasmine, rose, and
+                                    vanilla.
+                                </p>
+                                <p class="product-price">$89.00</p>
+                                <a href="#" class="btn btn-product">Discover</a>
+                            </div>
                         </div>
-                        <div class="product-body">
-                            <h3 class="product-title">Fleur</h3>
-                            <p class="product-desc">A delicate Floral bouquet with notes of jasmine, rose, and vanilla.
+                    </div>
+                    <!-- Product 2: Whim -->
+                    <div class="col-lg-6">
+                        <div class="product-card">
+                            <div class="product-img">
+                                <!-- Replace with your image -->
+                                <img src="references/whim.png" alt="Whim Perfume">
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-title">Whim</h3>
+                                <p class="product-desc">Bold and woody with hints of Amber and Bergamot.</p>
+                                <p class="product-price">$95.00</p>
+                                <a href="#" class="btn btn-product">Discover</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product 3: Baran -->
+                    <div class="col-lg-6">
+                        <div class="product-card">
+                            <div class="product-img">
+                                <!-- Replace with your image -->
+                                <img src="references/baran.png" alt="Baran Perfume">
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-title">Baran</h3>
+                                <p class="product-desc">Mysterious. Earthy. Elemental power.</p>
+                                <p class="product-price">$85.00</p>
+                                <a href="#" class="btn btn-product">Discover</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4: Zarva -->
+                    <div class="col-lg-6">
+                        <div class="product-card">
+                            <div class="product-img">
+                                <!-- Replace with your image -->
+                                <img src="references/zarva.jpg" alt="Zarva Perfume">
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-title">Zarva</h3>
+                                <p class="product-desc">Daring. Charismatic. Smooth chaos.</p>
+                                <p class="product-price">$79.00</p>
+                                <a href="#" class="btn btn-product">Discover</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="about-img">
+                            <!-- Replace with your image -->
+                            <img src="references/store.jpg" alt="Vircosa Story">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <h2>Our Essence</h2>
+                            <p>Ever caught a scent that stopped you in your tracks? That’s the magic we bottle at
+                                <strong>Vircosa</strong>.
                             </p>
-                            <p class="product-price">$89.00</p>
-                            <a href="#" class="btn btn-product">Discover</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Product 2: Whim -->
-                <div class="col-lg-6">
-                    <div class="product-card">
-                        <div class="product-img">
-                            <!-- Replace with your image -->
-                            <img src="references/whim.png" alt="Whim Perfume">
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-title">Whim</h3>
-                            <p class="product-desc">Bold and woody with hints of Amber and Bergamot.</p>
-                            <p class="product-price">$95.00</p>
-                            <a href="#" class="btn btn-product">Discover</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Product 3: Baran -->
-                <div class="col-lg-6">
-                    <div class="product-card">
-                        <div class="product-img">
-                            <!-- Replace with your image -->
-                            <img src="references/baran.png" alt="Baran Perfume">
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-title">Baran</h3>
-                            <p class="product-desc">Mysterious. Earthy. Elemental power.</p>
-                            <p class="product-price">$85.00</p>
-                            <a href="#" class="btn btn-product">Discover</a>
-                        </div>
-                    </div>
-                </div>
+                            <p>We’re not just mixing perfumes—we’re crafting memories. Imagine rare botanicals
+                                whispering
+                                secrets from Himalayan peaks or Amazonian rainforests, all blended to make you feel
+                                something—nostalgia, confidence, maybe even dangerously irresistible.</p>
+                            <p>Our signature scents, like <em>Fleur</em> and <em>Whim</em>, aren’t just perfumes—they're
+                                stories. Spritz, and you're suddenly the mysterious stranger in someone’s novel.</p>
+                            <a href="#" class="btn btn-product mt-3">Dare to Smell Different</a>
 
-                <!-- Product 4: Zarva -->
-                <div class="col-lg-6">
-                    <div class="product-card">
-                        <div class="product-img">
-                            <!-- Replace with your image -->
-                            <img src="references/zarva.jpg" alt="Zarva Perfume">
                         </div>
-                        <div class="product-body">
-                            <h3 class="product-title">Zarva</h3>
-                            <p class="product-desc">Daring. Charismatic. Smooth chaos.</p>
-                            <p class="product-price">$79.00</p>
-                            <a href="#" class="btn btn-product">Discover</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about-section" id="about">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <div class="about-img">
-                        <!-- Replace with your image -->
-                        <img src="references/store.jpg" alt="Vircosa Story">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="about-content">
-                        <h2>Our Essence</h2>
-                        <p>Ever caught a scent that stopped you in your tracks? That’s the magic we bottle at
-                            <strong>Vircosa</strong>.
-                        </p>
-                        <p>We’re not just mixing perfumes—we’re crafting memories. Imagine rare botanicals whispering
-                            secrets from Himalayan peaks or Amazonian rainforests, all blended to make you feel
-                            something—nostalgia, confidence, maybe even dangerously irresistible.</p>
-                        <p>Our signature scents, like <em>Fleur</em> and <em>Whim</em>, aren’t just perfumes—they're
-                            stories. Spritz, and you're suddenly the mysterious stranger in someone’s novel.</p>
-                        <a href="#" class="btn btn-product mt-3">Dare to Smell Different</a>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Ready to Begin Your Fragrance Journey?</h2>
-            <p class="cta-text">Discover the scents that will become part of your story. Our perfumers are standing by
-                to guide you to your signature fragrance.</p>
-            <a href="product.html" class="btn btn-cta">Explore Our Collection</a>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="py-5" style="background-color: var(--secondary-color); color: white;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h3>Join Our Fragrance Journey</h3>
-                    <p class="mb-4">Subscribe for exclusive launches, artisan insights, and 10% off your first purchase.
-                    </p>
-                    <form class="d-flex justify-content-center">
-                        <input type="email" class="form-control w-50 me-2" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-hero">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h3 class="footer-title">Vir<span>cosa</span></h3>
-                    <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
-                    <div class="social-icons mt-4">
-                        <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
-                        <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
-                        <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
-                        <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h4>Shop</h4>
-                        <ul>
-                            <li><a href="product.html">Women</a></li>
-                            <li><a href="product.html">Men</a></li>
-                            <li><a href="product.html">Gift Sets</a></li>
-                            <li><a href="product.html">Travel Sizes</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h4>About</h4>
-                        <ul>
-                            <li><a href="index.html#about">Our Story</a></li>
-                            <li><a href="#">Ingredients</a></li>
-                            <li><a href="#">Sustainability</a></li>
-                            <li><a href="#">Blog</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4">
-                    <div class="footer-links">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
-                            <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
-                            <li><i class="fas fa-envelope me-2"></i> hello@vircosa.com</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Vircosa. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS (for navbar toggle) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Minimal JS for Navbar Scroll Effect -->
-    <script>
-        window.addEventListener('scroll', function () {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+        <%- include('partials/cta-section') %>
+            <%- include('partials/newsletter') %>
+                <%- include('partials/footer') %>
 
 
-    </script>
+                    <!-- Bootstrap JS (for navbar toggle) -->
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    <!-- Minimal JS for Navbar Scroll Effect -->
+                    <script>
+                        window.addEventListener('scroll', function () {
+                            const navbar = document.querySelector('.navbar');
+                            if (window.scrollY > 50) {
+                                navbar.classList.add('scrolled');
+                            } else {
+                                navbar.classList.remove('scrolled');
+                            }
+                        });
+
+
+                    </script>
 </body>
 
 </html>
