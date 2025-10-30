@@ -21,6 +21,8 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+
+// --- Signup Routes ---
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
@@ -70,13 +72,76 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get("/login", (req, res) => {
-  res.render("login");
+// --- Login Routes ---
+app.get("/login",isLoggedIn, (req, res) => {
+  if(isLoggedIn) {
+    res.render('dashboard');
+  } else {
+    res.render("login");
+  }
+  
 });
 
-app.post("/login", (req, res) => {});
+app.post("/login", async (req, res) => {
+  let { email, password } = req.body;
+  let existingUser = await userModel.findOne({ email });
 
-app.get("/forget-password", () => {});
+  if (!existingUser) {
+    res.status(401).send(`
+        <html>
+          <head>
+            <meta http-equiv="refresh" content="2;url=/login">
+            <title>Success!</title>
+            <style>
+              body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f0f0; }
+              h1 { color: #28a745; border: 1px solid #28a745; padding: 20px; border-radius: 8px; background-color: #e9f7ef; }
+            </style>
+          </head>
+          <body>
+            <h1>Invalid Credentials, Redirecting...</h1>
+          </body>
+        </html>
+`);
+  }
+
+  try {
+    const compare = await bcrypt.compare(password, existingUser.password);
+
+    if (!compare) {
+      return res.status(401).send(`
+        <html>
+          <head>
+            <meta http-equiv="refresh" content="2;url=/login">
+            <title>Success!</title>
+            <style>
+              body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f0f0; }
+              h1 { color: #28a745; border: 1px solid #28a745; padding: 20px; border-radius: 8px; background-color: #e9f7ef; }
+            </style>
+          </head>
+          <body>
+            <h1>Invalid Credentials, Redirecting...</h1>
+          </body>
+        </html>
+`);
+    }
+
+    setCookie(existingUser, res, "login");
+    // successful user login
+    // cookie-saved at frontend
+    // user data fetched from mongo-db
+  } catch (err) {
+    console.error("Login Error:", err);
+    return res.status(500).send("A server error occurred during login.");
+  }
+});
+
+app.get("/forget-password", () => {
+  res.send("Please contact us at: +92-3081036864 <b> WhatsApp Only!");
+});
+
+app.get("/dashboard",isLoggedIn, (req, res) => {
+  res.render('dashboard');
+});
 
 app.get("/products", (req, res) => {
   res.render("products");
@@ -88,6 +153,11 @@ app.get("/about-us", (req, res) => {
 
 app.get("/contact-us", (req, res) => {
   res.render("contact-us");
+});
+
+app.get("/logout", (req, res) => {
+  res.cookie("token", "");
+  res.redirect("/login");
 });
 
 function setCookie(user, res, action) {
@@ -121,6 +191,21 @@ function setCookie(user, res, action) {
     </body>
   </html>
 `);
+}
+
+function isLoggedIn(req, res, next) {
+  const token = req.cookies.token;
+  if (!token) return res.redirect("/login");
+
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = data;
+    next();
+  } catch (err) {
+    console.log(err);
+    res.clearCookie("token");
+    res.redirect("/login");
+  }
 }
 
 // --- Server Start ---
