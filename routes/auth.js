@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-// 💡 FIX: Import userModel and bcrypt directly.
 const userModel = require("../models/user"); 
 const bcrypt = require("bcrypt");
 

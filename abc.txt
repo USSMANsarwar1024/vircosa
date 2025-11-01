@@ -15,3 +15,22 @@ my-project/
     ├── index.js       <-- General routes (/ /, /products, /about-us, etc.)
     ├── auth.js        <-- Authentication routes (/signup, /login, /logout, /forget-password)
     └── dashboard.js   <-- Protected routes (/dashboard)
+
+
+🟩Use PowerShell filtering (recommended)
+
+Run this inside your project root:
+Get-ChildItem -Recurse -Directory | 
+Where-Object { $_.FullName -notmatch 'node_modules' } |
+ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\', '') }
+✅ This prints a clean folder structure excluding node_modules/.
+
+If you want to include files too:
+Get-ChildItem -Recurse -File | 
+Where-Object { $_.FullName -notmatch 'node_modules' } |
+ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\', '') }
+
+
+Get-ChildItem -Recurse -File | 
+Where-Object { $_.FullName -notmatch 'node_modules' } |
+ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\', '') }
