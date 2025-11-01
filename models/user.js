@@ -47,6 +47,19 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
+        wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "product" }],
+        cart: [{
+            product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+            quantity: { type: Number, default: 1, min: 1 }
+        }],
+
+        profilePicture: {
+            type: String,
+            trim: true,
+            // default image 
+            default: '../public/images/user-default-img.svg',
+        },
+
     },
     { timestamps: true }
 );
