@@ -73,6 +73,53 @@
             font-size: 0.9rem;
         }
 
+        .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        }
+
+        .marquee-content {
+        display: inline-flex;
+        gap: 1.5rem;
+        animation: scrollLeft 40s linear infinite;
+        }
+
+        .marquee-content .card {
+        flex: 0 0 auto;
+        width: 300px;
+        }
+
+        .marquee-content:hover {
+        animation-play-state: paused;
+    }
+
+        @keyframes scrollLeft {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+        }
+
+        /* Responsive: on small screens, stop animation and stack horizontally */
+        @media (max-width: 768px) {
+        .marquee {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            animation: none;
+            display: flex;
+            gap: 1rem;
+        }
+        .marquee-content .card {
+            width: 220px;
+        }
+        }
+
+
         .dashboard-card {
             border-radius: 10px;
             border: none;
@@ -221,93 +268,7 @@
             </div>
         </section>
 
-        <!-- Perfumes Section -->
-        <section id="perfumes" class="py-5">
-            <div class="container">
-                <h2 class="section-title brand-font">Our Perfumes</h2>
-                <div class="row">
-                    <!-- Perfume 1 -->
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="card perfume-card">
-                            <span class="badge-sale">SALE</span>
-                            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
-                                class="card-img-top" alt="Midnight Orchid">
-                            <div class="card-body">
-                                <h5 class="card-title">Midnight Orchid</h5>
-                                <p class="card-text">A mysterious blend of black orchid, vanilla, and amber.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="price">$89.99</span>
-                                        <span class="old-price ms-2">$120.00</span>
-                                    </div>
-                                    <a href="#" class="btn btn-zephyra btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Perfume 2 -->
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="card perfume-card">
-                            <img src="https://images.unsplash.com/photo-1615634262417-98ba8a8bd9b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
-                                class="card-img-top" alt="Solar Bloom">
-                            <div class="card-body">
-                                <h5 class="card-title">Solar Bloom</h5>
-                                <p class="card-text">Sun-kissed citrus with white florals and musk.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="price">$95.00</span>
-                                    </div>
-                                    <a href="#" class="btn btn-zephyra btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Perfume 3 -->
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="card perfume-card">
-                            <span class="badge-sale">SALE</span>
-                            <img src="https://images.unsplash.com/photo-1611068814580-ab4380fa0a0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
-                                class="card-img-top" alt="Velvet Rose">
-                            <div class="card-body">
-                                <h5 class="card-title">Velvet Rose</h5>
-                                <p class="card-text">Luxurious damask rose with hints of patchouli and oud.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="price">$110.00</span>
-                                        <span class="old-price ms-2">$145.00</span>
-                                    </div>
-                                    <a href="#" class="btn btn-zephyra btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Perfume 4 -->
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="card perfume-card">
-                            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
-                                class="card-img-top" alt="Ocean Mist">
-                            <div class="card-body">
-                                <h5 class="card-title">Ocean Mist</h5>
-                                <p class="card-text">Fresh aquatic notes with sea salt and driftwood.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="price">$85.00</span>
-                                    </div>
-                                    <a href="#" class="btn btn-zephyra btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4">
-                    <a href="/products" class="btn btn-outline-dark">View All Perfumes</a>
-                </div>
-            </div>
-        </section>
+        <%- include('partials/perfume-partials') %>
 
         <!-- Dashboard Section -->
         <section id="dashboard" class="py-5 bg-light">
@@ -332,7 +293,7 @@
                             <a href="/dashboard" class="sidebar-link active">
                                 <i class="fas fa-tachometer-alt"></i> Dashboard
                             </a>
-                            <a href="#" class="sidebar-link">
+                            <a href="/orders" class="sidebar-link">
                                 <i class="fas fa-shopping-bag"></i> Orders
                             </a>
                             <a href="/whishlist" class="sidebar-link">

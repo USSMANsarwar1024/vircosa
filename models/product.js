@@ -23,6 +23,7 @@ const productSchema = new mongoose.Schema({
     images: [{ 
         type: String
     }], // multiple product images
+    productBadge: String,
     ratings: {
         average: { type: Number, default: 0 },
         totalReviews: { type: Number, default: 0 },

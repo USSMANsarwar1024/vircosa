@@ -333,125 +333,32 @@
 
                 <!-- Product Grid -->
                 <div class="product-grid">
-                    <!-- Product 1 -->
-                    <div class="product-card" data-category="women new">
-                        <div class="product-badge">New</div>
-                        <div class="product-img">
-                            <img src="references/fleur.png" alt="Fleur Perfume">
+                    <div class="product-grid">
+                        <% if (products.length > 0) { %>
+                            <% products.forEach(product => { %>
+                            <div class="product-card" data-category="<%= product.category %>">
+                                <% if (product.productBadge) { %>
+                                <div class="product-badge"><%= product.productBadge %></div>
+                                <% } %>
+                                <div class="product-img">
+                                <img src="<%= product.images[0] %>" alt="<%= product.name %>" class="product-img-table">
+                                </div>
+                                <div class="product-body">
+                                <span class="product-category"><%= product.category %></span>
+                                <h3 class="product-title"><%= product.name %></h3>
+                                <p class="product-desc"><%= product.description %></p>
+                                <p class="product-price">PKR <%= product.price %></p>
+                                <a href="/cart" class="btn btn-product">Add to Cart</a>
+                                </div>
+                            </div>
+                            <% }) %>
+                        <% } else { %>
+                            <p class="text-center text-muted">No products exists.</p>
+                        <% } %>
                         </div>
-                        <div class="product-body">
-                            <span class="product-category">Floral</span>
-                            <h3 class="product-title">Fleur</h3>
-                            <p class="product-desc">A delicate floral bouquet with notes of jasmine, rose, and vanilla.
-                            </p>
-                            <p class="product-price">$89.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
 
-                    <!-- Product 2 -->
-                    <div class="product-card" data-category="men bestsellers">
-                        <div class="product-badge">Bestseller</div>
-                        <div class="product-img">
-                            <img src="references/whim.png" alt="Whim Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Woody</span>
-                            <h3 class="product-title">Whim</h3>
-                            <p class="product-desc">Bold and woody with hints of amber and bergamot.</p>
-                            <p class="product-price">$95.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
+                        
 
-                    <!-- Product 3 -->
-                    <div class="product-card" data-category="unisex">
-                        <div class="product-img">
-                            <img src="references/baran.png" alt="Baran Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Earthy</span>
-                            <h3 class="product-title">Baran</h3>
-                            <p class="product-desc">Mysterious and elemental with deep earthy tones.</p>
-                            <p class="product-price">$85.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 -->
-                    <div class="product-card" data-category="women bestsellers">
-                        <div class="product-badge">Bestseller</div>
-                        <div class="product-img">
-                            <img src="references/zarva.jpg" alt="Zarva Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Oriental</span>
-                            <h3 class="product-title">Zarva</h3>
-                            <p class="product-desc">Daring and charismatic with smooth chaotic notes.</p>
-                            <p class="product-price">$79.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="product-card" data-category="men new">
-                        <div class="product-badge">New</div>
-                        <div class="product-img">
-                            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                                alt="Noir Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Spicy</span>
-                            <h3 class="product-title">Noir</h3>
-                            <p class="product-desc">Dark and mysterious with spicy undertones.</p>
-                            <p class="product-price">$92.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
-
-                    <!-- Product 6 -->
-                    <div class="product-card" data-category="unisex bestsellers">
-                        <div class="product-badge">Bestseller</div>
-                        <div class="product-img">
-                            <img src="references/lumire.jpg" alt="Lumière Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Citrus</span>
-                            <h3 class="product-title">Lumière</h3>
-                            <p class="product-desc">Bright and refreshing with citrus and floral notes.</p>
-                            <p class="product-price">$87.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
-
-                    <!-- Product 7 -->
-                    <div class="product-card" data-category="women">
-                        <div class="product-img">
-                            <img src="references/reve.jpg" alt="Rêve Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Floral</span>
-                            <h3 class="product-title">Rêve</h3>
-                            <p class="product-desc">Dreamy and romantic with soft floral accords.</p>
-                            <p class="product-price">$84.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
-
-                    <!-- Product 8 -->
-                    <div class="product-card" data-category="men">
-                        <div class="product-img">
-                            <img src="references/terre.webp" alt="Terre Perfume">
-                        </div>
-                        <div class="product-body">
-                            <span class="product-category">Woody</span>
-                            <h3 class="product-title">Terre</h3>
-                            <p class="product-desc">Earthy and grounded with woody and mossy notes.</p>
-                            <p class="product-price">$90.00</p>
-                            <a href="cart.html" class="btn btn-product">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Pagination -->
                 <nav aria-label="Product pagination">

@@ -9,7 +9,13 @@ router.get("/dashboard", isLoggedIn, async (req, res) => {
   res.render("dashboard", { user });
 });
 
+router.get('/cart', isLoggedIn, (req, res) => {
+  res.render("cart");
+})
 
+router.get('/orders', (req, res) => {
+
+})
 
 
 
