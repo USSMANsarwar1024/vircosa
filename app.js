@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const dashboardRoutes = require("./routes/dashboard");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 
 // --- Middleware ---
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/products", productRoutes);
 app.use("/admin", adminRoutes);
+app.use("/cart", cartRoutes);
 
 
 // --- Route Registration ---

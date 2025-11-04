@@ -1,26 +1,26 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-    name: { 
+    name: {
         type: String,
-        required: true, 
+        required: true,
         trim: true,
         minlength: 3,
     },
-    description: { 
-        type: String, 
-        required: true 
+    description: {
+        type: String,
+        required: true
     },
-    category: { 
-        type: String, 
-        required: true 
+    category: {
+        type: String,
+        required: true
     },
-    price: { 
-        type: Number, 
-        required: true, 
-        min: 0 
+    price: {
+        type: Number,
+        required: true,
+        min: 0
     },
-    images: [{ 
+    images: [{
         type: String
     }], // multiple product images
     productBadge: String,
@@ -28,6 +28,14 @@ const productSchema = new mongoose.Schema({
         average: { type: Number, default: 0 },
         totalReviews: { type: Number, default: 0 },
     },
+    shippingFee: { 
+        type: Number, 
+        default: 200 
+    },
+    tax: { 
+        type: Number, 
+        default: 0.17 
+    }
 
 }, { timestamps: true });
 

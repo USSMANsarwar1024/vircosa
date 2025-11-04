@@ -1,6 +1,4 @@
-const jwt = require("jsonwebtoken");
-
-// Note: You might need to import your user model and other utils here
+const jwt = require("jsonwebtoken");// Note: You might need to import your user model and other utils here
 const userModel = require("../models/user"); 
 const bcrypt = require("bcrypt"); 
 
@@ -37,14 +35,19 @@ function setCookie(user, res, action) {
 `);
 }
 
-function isLoggedIn(req, res, next) {
+async function isLoggedIn(req, res, next) {
   const token = req.cookies.token;
   if (!token) return res.redirect("/login");
 
   try {
-    // Make sure process.env.JWT_SECRET is accessible
-    const data = jwt.verify(token, process.env.JWT_SECRET); 
-    req.user = data;
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await userModel.findById(data.userId);
+    if (!user) {
+      res.clearCookie("token");
+      return res.redirect("/login");
+    }
+
+    req.user = user; // ✅ full user document now
     next();
   } catch (err) {
     console.log(err);
@@ -52,6 +55,7 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login");
   }
 }
+
 
 function redirectIfLoggedIn(req, res, next) {
     const token = req.cookies.token;
