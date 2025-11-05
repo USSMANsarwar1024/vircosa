@@ -26,6 +26,9 @@ router.get('/', isLoggedIn, async (req, res) => {
             subtotal += item.product.price * item.quantity;
         });
 
+        // calculate total cart items
+        let total_items = calculateCartTotals;
+        
         const shipping = 300;
         const tax = subtotal * 0.17;
         const total = subtotal + shipping + tax;
@@ -36,7 +39,8 @@ router.get('/', isLoggedIn, async (req, res) => {
             subtotal,
             shipping,
             tax,
-            total
+            total,
+            total_items,
         });
 
     } catch (err) {
@@ -72,10 +76,67 @@ router.post('/add', isLoggedIn, async (req, res) => {
         console.log("Cart updated successfully!");
         res.json({ success: true });
     } catch (err) {
-        console.error("❌ Error adding to cart:", err);
-        res.status(500).json({ message: 'Error adding to cart' });
+        console.error("Server Error: ", err);
+        res.status(500).json({ message: 'Server Error' });
     }
 });
+
+router.post('/update', isLoggedIn, async (req, res) => {
+    try {
+        const { productId, action } = req.body;
+        
+        if (!['increase', 'decrease'].includes(action)) {
+            return res.status(400).json({ message: 'Invalid action specified' });
+        }
+
+        const user = await userModel.findById(req.user._id);
+        const itemIndex = user.cart.findIndex(i => i.product.equals(productId));
+
+        if (itemIndex === -1) {
+            return res.status(404).json({ message: 'Product not found in cart' });
+        }
+
+        let item = user.cart[itemIndex];
+
+        if (action === 'increase') {
+            item.quantity += 1;
+        } else if (action === 'decrease') {
+            if (item.quantity > 1) {
+                item.quantity -= 1;
+            } else {
+                // If quantity is 1 and they try to decrease, remove the item
+                user.cart.splice(itemIndex, 1);
+            }
+        }
+        
+        await user.save();
+
+        // Recalculate totals for the response
+        const newTotals = calculateCartTotals(user.cart);
+
+        res.json({ 
+            success: true, 
+            newQuantity: item.quantity, 
+            ...newTotals // Send updated totals back to the frontend
+        });
+
+    } catch (err) {
+        console.error("Cart Update Error: ", err);
+        res.status(500).json({ message: 'Server Error during cart update' });
+    }
+});
+
+// Helper function to calculate totals (optional, but good practice)
+function calculateCartTotals(cartItems) {
+    let subtotal = 0;
+    let total_items = 0;
+
+    cartItems.forEach(item => {
+        total_items += item.quantity;
+    });
+
+    return { total_items };
+}
 
 
 

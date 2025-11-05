@@ -20,9 +20,11 @@ const productSchema = new mongoose.Schema({
         required: true,
         min: 0
     },
-    images: [{
-        type: String
-    }], // multiple product images
+    images: {
+    type: [String],
+    validate: [(v) => v.length > 0, 'At least one image is required'],
+    required: true
+  }, // multiple product images but atleast one is necessary!
     productBadge: String,
     ratings: {
         average: { type: Number, default: 0 },
@@ -30,11 +32,11 @@ const productSchema = new mongoose.Schema({
     },
     shippingFee: { 
         type: Number, 
-        default: 200 
+        default: 0
     },
     tax: { 
         type: Number, 
-        default: 0.17 
+        default: 0
     }
 
 }, { timestamps: true });

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Zephyr Luxe</title>
+    <title>Admin Dashboard | Vircosa</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -415,7 +415,7 @@
                         <i class="fas fa-store"></i>
                     </div>
                     <div class="card-title">Total Products</div>
-                    <div class="card-value">42</div>
+                    <div class="card-value"><%= stats.totalProducts %></div>
                     <div class="card-change positive">
                         <i class="fas fa-arrow-up"></i> 5.2% from last month
                     </div>
@@ -427,9 +427,21 @@
                         <i class="fas fa-shopping-bag"></i>
                     </div>
                     <div class="card-title">Today's Orders</div>
-                    <div class="card-value">18</div>
+                    <div class="card-value"><%= stats.todaysOrdersCount %></div>
                     <div class="card-change positive">
                         <i class="fas fa-arrow-up"></i> 12.5% from yesterday
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <div class="card-icon danger">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="card-title">Today's Revenue</div>
+                    <div class="card-value"><%= stats.todayRevenue %></div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i> 8.7% from last week
                     </div>
                 </div>
             </div>
@@ -438,8 +450,8 @@
                     <div class="card-icon warning">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="card-title">New Customers</div>
-                    <div class="card-value">7</div>
+                    <div class="card-title">Total Orders</div>
+                    <div class="card-value"><%= stats.totalOrders %></div>
                     <div class="card-change negative">
                         <i class="fas fa-arrow-down"></i> 2.3% from last week
                     </div>
@@ -450,8 +462,8 @@
                     <div class="card-icon danger">
                         <i class="fas fa-dollar-sign"></i>
                     </div>
-                    <div class="card-title">Revenue</div>
-                    <div class="card-value">$3,245</div>
+                    <div class="card-title">Total Revenue</div>
+                    <div class="card-value"><%= stats.totalRevenue %></div>
                     <div class="card-change positive">
                         <i class="fas fa-arrow-up"></i> 8.7% from last week
                     </div>
@@ -575,8 +587,19 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label for="productImage" class="form-label">Product Image</label>
-                                <input type="file" name="image" class="form-control" id="productImage" accept="image/*" required>
+                                <label for="tax" class="form-label">Tax (PKR)</label>
+                                <input type="number" name="tax" class="form-control" id="productPrice">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="shippingFee" class="form-label">Shipping Fee (PKR)</label>
+                                <input type="number" name="shippingFee" class="form-control" id="productPrice">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="productImage" class="form-label">Product Images (at least one)</label>
+                                <input type="file" name="images[]" class="form-control" id="productImage" accept="image/*" multiple required>
+                                <small class="text-muted">You can upload multiple images. First image will be used as thumbnail.</small>
                             </div>
                         </div>
 
@@ -586,18 +609,18 @@
                                 placeholder="e.g. New or Bestseller">
                         </div>
 
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Stock (optional)</label>
+                            <input type="number" name="stock" class="form-control" id="productBadge">
+                        </div>
+                        
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-save">Save Product</button>
                         </div>
                     </form>
-
-                    <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-save">Save Product</button>
-                </div> -->
                 </div>
             </div>
-        </div>
+        </div>  
 
         <!-- Edit Product Modal -->
         <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
@@ -720,6 +743,15 @@
             // Initialize when DOM is loaded
             document.addEventListener('DOMContentLoaded', function () {
                 initCharts();
+            });
+
+            document.querySelector('#addProductModal form').addEventListener('submit', function(e) {
+                const input = document.getElementById('productImage');
+                if (!input || !input.files || input.files.length === 0) {
+                    e.preventDefault();
+                    alert('Please upload at least one product image.');
+                    return false;
+                }
             });
 
             

@@ -11,8 +11,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts (Playfair Display + Montserrat) -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -230,6 +229,12 @@
             color: white;
         }
 
+        .carousel-item img {
+            height: 300px;
+            object-fit: cover;
+        }
+
+
         /* Pagination */
         .pagination {
             justify-content: center;
@@ -353,11 +358,30 @@
                                 <div class="product-badge"><%= product.productBadge %></div>
                                 <% } %>
                                 <div class="product-img">
-                                <img src="<%= product.images[0] %>" alt="<%= product.name %>" class="product-img-table">
+                                    <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <% product.images.forEach((img, index) => { %>
+                                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                            <img src="<%= img %>" class="d-block w-100 rounded" alt="Product image">
+                                        </div>
+                                        <% }) %>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    </div>
+
+                                    
                                 </div>
                                 <div class="product-body">
                                 <span class="product-category"><%= product.category %></span>
                                 <h3 class="product-title"><%= product.name %></h3>
+                                <h3 class="product-price"><%= product.price %></h3>
                                 <p class="product-desc"><%= product.description %></p>
                                 <a href="#" class="btn btn-product add-to-cart-btn" data-product-id="<%= product._id %>">  Add to Cart </a>
                                 </div>
