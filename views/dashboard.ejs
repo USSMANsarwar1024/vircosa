@@ -257,8 +257,25 @@
         <!-- Hero Section -->
         <section class="hero-section text-center">
             <div class="container">
-                <h1 class="display-3 brand-font mb-4">Welcome back, <%= user.firstname %>
-                        <%= user.lastname %> <span id="emoji"></span> </h1>
+                <h1 class="display-3 brand-font mb-4">Welcome back, 
+                    <% 
+                        if (user.gender === 'm') { 
+                    %>
+                        Mr. <%= user.lastname %>
+                    <% 
+                        } else if (user.gender === 'f') { // Assuming 'f' for female
+                    %>
+                        Ms. <%= user.lastname %>
+                    <% 
+                        } else { 
+                    %>
+                        <%= user.lastname %>
+                    <% 
+                        } 
+                    %>
+                    <span id="emoji"></span> 
+                </h1>
+                
                 <p class="lead mb-5" style="max-width: 45rem; margin: 0 auto; opacity: 0.9;">Rediscover your
                     individuality through scents that speak your story.
                     <br>Every fragrance in <strong>Vircosa</strong> is a reflection of timeless elegance and personal

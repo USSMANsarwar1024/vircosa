@@ -1,0 +1,14 @@
+products-ejs' css kharab ha {
+    only four products per row 
+    only 12 products per page 
+    then next page (pagination) 
+}
+i think you should remove tax (or maybe not)
+dashboard's products marquee - original marquee
+dashboard's stats dynamic
+user's wishlist
+
+
+user's orders -> {
+    
+}

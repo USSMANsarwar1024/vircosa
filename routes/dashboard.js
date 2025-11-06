@@ -3,14 +3,8 @@ const router = express.Router();
 const { isLoggedIn } = require("../middleware/auth");
 const userModel = require("../models/user"); 
 
-const findUser = async (req) => {
-  const user = await userModel.findOne({ email: req.user.email });
-  return user;
-};
-
-
 router.get("/dashboard", isLoggedIn, async (req, res) => {
-  let user = findUser;
+  const user = await userModel.findOne({ email: req.user.email });;
   res.render("dashboard", { user });
 });
 
