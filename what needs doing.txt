@@ -7,6 +7,10 @@ i think you should remove tax (or maybe not)
 dashboard's products marquee - original marquee
 dashboard's stats dynamic
 user's wishlist
+stock in products model {
+    exact stock mention ho kitnay products hn kitny rah gye?
+    =0 honay par no order placement
+}
 
 
 user's orders -> {

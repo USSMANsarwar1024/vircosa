@@ -123,10 +123,38 @@
 
         /* Product Grid */
         .product-grid {
-            display: flex;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
         }
+
+        .product-card {
+            flex: 1 1 calc(25% - 30px); /* 4 per row */
+            max-width: calc(25% - 30px);
+        }
+
+        @media (max-width: 992px) {
+            .product-card {
+                flex: 1 1 calc(33.333% - 30px);
+                max-width: calc(33.333% - 30px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-card {
+                flex: 1 1 calc(50% - 30px);
+                max-width: calc(50% - 30px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+
 
         .product-card {
             background-color: white;
@@ -391,29 +419,35 @@
                             <p class="text-center text-muted">No products exists.</p>
                         <% } %>
                         </div>
-
-                        
-
-
                     </div>
+                    
                     <!-- Pagination -->
                     <nav aria-label="Product pagination">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <ul class="pagination justify-content-center">
+                            <% if (currentPage > 1) { %>
                             <li class="page-item">
-                                <a class="page-link" href="#">
-                                    <i class="fas fa-chevron-right"></i>
+                                <a class="page-link" href="?page=<%= currentPage - 1 %>">
+                                <i class="fas fa-chevron-left"></i>
                                 </a>
                             </li>
+                            <% } %>
+
+                            <% for (let i = 1; i <= totalPages; i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                            </li>
+                            <% } %>
+
+                            <% if (currentPage < totalPages) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= currentPage + 1 %>">
+                                <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                            <% } %>
                         </ul>
-                    </nav>
+                        </nav>
+
         </section>
 
     <%- include('partials/newsletter') %>
