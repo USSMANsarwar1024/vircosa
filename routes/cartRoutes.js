@@ -50,20 +50,18 @@ router.get('/', isLoggedIn, async (req, res) => {
 });
 
 
+// /routes/cart.js
 router.post('/add', isLoggedIn, async (req, res) => {
     try {
         const { productId } = req.body;
-        console.log("Incoming add-to-cart request for productId:", productId);
 
         const product = await Product.findById(productId);
         if (!product) {
-            console.log("Product not found!");
+            req.flash('error', 'Product not found');
             return res.status(404).json({ message: 'Product not found' });
         }
 
-    const user = await userModel.findById(req.user._id);
-        console.log("User found:", user.email);
-
+        const user = await userModel.findById(req.user._id);
         const itemIndex = user.cart.findIndex(i => i.product.equals(product._id));
 
         if (itemIndex >= 0) {
@@ -73,10 +71,12 @@ router.post('/add', isLoggedIn, async (req, res) => {
         }
 
         await user.save();
-        console.log("Cart updated successfully!");
-        res.json({ success: true });
+        
+        // Use flash for success message
+        req.flash('success', 'Product added to cart successfully!');
+        res.json({ success: true, message: 'Product added to cart' });
     } catch (err) {
-        console.error("Server Error: ", err);
+        req.flash('error', 'Server error occurred');
         res.status(500).json({ message: 'Server Error' });
     }
 });

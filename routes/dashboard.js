@@ -4,7 +4,7 @@ const { isLoggedIn } = require("../middleware/auth");
 const userModel = require("../models/user"); 
 
 router.get("/dashboard", isLoggedIn, async (req, res) => {
-  const user = await userModel.findOne({ email: req.user.email });;
+  const user = await userModel.findOne({ email: req.user.email });
   res.render("dashboard", { user });
 });
 
