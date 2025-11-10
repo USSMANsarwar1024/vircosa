@@ -3,12 +3,29 @@ const express = require("express");
 const router = express.Router();
 const { isLoggedIn } = require("../middleware/auth");
 const userModel = require("../models/user"); 
+const product = require('../models/product');
 
-router.get('/', (req, res) => {
-    res.render('wishlist');
+const findUser = async (req) => {
+  const user = await userModel
+    .findOne({ email: req.user.email })
+    .populate("wishlist"); // ✅ correct populate path
+  return user;
+};
+
+
+router.get('/', isLoggedIn, async (req, res) => {
+    const user = await findUser(req);
+    if (!user) return res.redirect('/login');
+
+    const wishlistItems = user.wishlist;
+
+    res.render('wishlist', {
+        user,
+        wishlistItems, // wishlistItems.product -> all details of a product in ejs
+    });
 })
 
-// /routes/wishlist.js
+
 router.post('/add', isLoggedIn, async (req, res) => {
     try {
         const user = await userModel.findOne({ email: req.user.email });

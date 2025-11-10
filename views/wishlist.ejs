@@ -280,33 +280,38 @@
             <div class="row" id="wishlist-items">
                 <!-- Wishlist items will be dynamically inserted here -->
                 
-                <!-- Sample Wishlist Item 1 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="wishlist-item">
-                        <div class="wishlist-item-img">
-                            <img src="references/fleur.png" alt="Fleur Perfume">
-                        </div>
-                        <div class="wishlist-item-body">
-                            <h3 class="wishlist-item-title">Fleur</h3>
-                            <p class="wishlist-item-desc">A delicate floral bouquet with notes of jasmine, rose, and vanilla.</p>
-                            <p class="wishlist-item-price">$89.00</p>
-                            <div class="wishlist-item-actions">
-                                <button class="btn btn-wishlist-action btn-move-to-cart">Add to Cart</button>
-                                <button class="btn btn-wishlist-action btn-remove">Remove</button>
+                <% if (wishlistItems.length > 0) { %>
+                    <% wishlistItems.forEach(item => { %>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="wishlist-item" data-product-id="<%= item._id %>">
+                                <div class="wishlist-item-img">
+                                    <img src="<%= item.images[0] %>" alt="<%= item.name %>">
+                                </div>
+                                <div class="wishlist-item-body">
+                                    <h3 class="wishlist-item-title"> <%= item.name %> </h3>
+                                    <p class="wishlist-item-desc"> <%= item.description %> </p>
+                                    <p class="wishlist-item-price"> PKR <%= item.price %> </p>
+                                    <div class="wishlist-item-actions">
+                                        <button class="btn btn-wishlist-action btn-move-to-cart">Add to Cart</button>
+                                        <button class="btn btn-wishlist-action btn-remove">Remove</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    
+                    <% }) %>
+                <% } else { %>
+                    <!-- Empty Wishlist State (hidden by default) -->
+                    <div class="wishlist-empty" id="empty-wishlist">
+                        <i class="far fa-heart"></i>
+                        <h3>Your Wishlist is Empty</h3>
+                        <p>Start exploring our collection of luxury fragrances and add your favorites to your wishlist.</p>
+                        <a href="/product" class="btn btn-wishlist">Discover Scents</a>
                     </div>
-                </div>
+                <% } %>
                 
                 
-
-            <!-- Empty Wishlist State (hidden by default) -->
-            <div class="wishlist-empty" id="empty-wishlist" style="display: none;">
-                <i class="far fa-heart"></i>
-                <h3>Your Wishlist is Empty</h3>
-                <p>Start exploring our collection of luxury fragrances and add your favorites to your wishlist.</p>
-                <a href="product.html" class="btn btn-wishlist">Discover Scents</a>
-            </div>
+                
 
             <!-- Wishlist Actions -->
             <div class="text-center mt-5" id="wishlist-actions">
