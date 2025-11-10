@@ -3,6 +3,11 @@ products-ejs' css kharab ha {
     only 12 products per page 
     then next page (pagination) 
 }
+
+notification system -> {
+    globalize
+}
+
 i think you should remove tax (or maybe not)
 dashboard's products marquee - original marquee
 dashboard's stats dynamic

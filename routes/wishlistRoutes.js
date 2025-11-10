@@ -2,14 +2,14 @@
 const express = require("express");
 const router = express.Router();
 const { isLoggedIn } = require("../middleware/auth");
-const userModel = require("../models/user"); 
-const product = require('../models/product');
+const userModel = require("../models/user");
+const productModel = require('../models/product');
 
 const findUser = async (req) => {
-  const user = await userModel
-    .findOne({ email: req.user.email })
-    .populate("wishlist"); // ✅ correct populate path
-  return user;
+    const user = await userModel
+        .findOne({ email: req.user.email })
+        .populate("wishlist"); // ✅ correct populate path
+    return user;
 };
 
 
@@ -35,7 +35,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
             req.flash('error', 'Product not found');
             return res.status(404).json({ message: 'Product not found' });
         }
-        
+
         // Check if product already in wishlist
         if (user.wishlist.includes(productId)) {
             req.flash('info', 'Product already in wishlist');
@@ -44,7 +44,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
 
         user.wishlist.push(productId);
         await user.save();
-        
+
         req.flash('success', 'Product added to wishlist!');
         res.json({ success: true, message: 'Product added to wishlist' });
     } catch (err) {
@@ -53,16 +53,30 @@ router.post('/add', isLoggedIn, async (req, res) => {
     }
 });
 
-// router.post('/add', isLoggedIn, async (req, res) => {
-//   const user = await userModel.findOne({ email: req.user.email });
-//   const { productId } = req.body;
+// href="/wishlist/remove-product/<%= item._id %>"
+//  Remove product from wishlist
+router.post("/remove-product", isLoggedIn, async (req, res) => {
+    const { productId } = req.body;
+    try {
+        await userModel.findByIdAndUpdate(req.user._id, { $pull: { wishlist: productId } });
+        res.json({ success: true });
+    } catch (err) {
+        console.error('Error removing product:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
-//   if (!user.wishlist.includes(productId)) {
-//     user.wishlist.push(productId);
-//     await user.save();
-//   }
+router.post('/remove-all', isLoggedIn, async (req, res) => {
+  try {
+    await userModel.findByIdAndUpdate(req.user._id, { $set: { wishlist: [] } });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
-//   res.status(200).json({ success: true });
-// });
+
+
+
 
 module.exports = router;
