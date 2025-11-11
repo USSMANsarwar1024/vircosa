@@ -37,6 +37,10 @@ const productSchema = new mongoose.Schema({
     tax: { 
         type: Number, 
         default: 0
+    },
+    stock: { 
+        type: Number, 
+        default: 0
     }
 
 }, { timestamps: true });

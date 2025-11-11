@@ -1,21 +1,22 @@
-products-ejs' css kharab ha {
-    only four products per row 
-    only 12 products per page 
-    then next page (pagination) 
-}
-
 notification system -> {
     globalize
 }
 
 i think you should remove tax (or maybe not)
+
 dashboard's products marquee - original marquee
 dashboard's stats dynamic
-user's wishlist
+
+admin {
+    product edit
+    product delete (confirmation)
+}
+
 stock in products model {
     exact stock mention ho kitnay products hn kitny rah gye?
     =0 honay par no order placement
 }
+
 
 
 user's orders -> {

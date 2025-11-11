@@ -433,18 +433,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-6 col-lg-3">
-                <div class="dashboard-card">
-                    <div class="card-icon danger">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="card-title">Today's Revenue</div>
-                    <div class="card-value"><%= stats.todayRevenue %></div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i> 8.7% from last week
-                    </div>
-                </div>
-            </div> -->
             <div class="col-md-6 col-lg-3">
                 <div class="dashboard-card">
                     <div class="card-icon warning">
@@ -509,7 +497,7 @@
                                 </td>
                                 <td>PKR <%= product.price %>
                                 </td>
-                                <td><%= product.tax %></td>
+                                <td><%= product.stock %></td>
                                 <td>
                                     <% if (product.productBadge) { %>
                                         <span class="badge badge-stock badge-in-stock">
@@ -734,12 +722,7 @@
                 }
             });
 
-            // Sample data for chart (would be replaced with real data in production)
-            function initCharts() {
-                // This would be replaced with actual chart initialization
-                console.log("Charts would be initialized here with real data");
-            }
-
+            
             // Initialize when DOM is loaded
             document.addEventListener('DOMContentLoaded', function () {
                 initCharts();
