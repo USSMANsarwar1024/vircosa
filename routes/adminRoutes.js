@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product");  // Capital P (model)
-const Order = require("../models/order");      // Capital O
+const Product = require("../models/product"); // Capital P (model)
+const Order = require("../models/order"); // Capital O
 const multer = require("multer");
 const path = require("path");
 
@@ -24,7 +24,9 @@ const upload = multer({ storage });
 // ============================
 router.get("/", async (req, res) => {
   try {
-    // Fetch stats
+    const perPage = 8;
+    const page = parseInt(req.query.page) || 1;
+
     const totalProducts = await Product.countDocuments();
     const totalOrders = await Order.countDocuments();
 
@@ -37,17 +39,13 @@ router.get("/", async (req, res) => {
       createdAt: { $gte: startOfToday, $lte: endOfToday },
     });
 
-    // Total revenue
     const revenueResult = await Order.aggregate([
       { $match: { status: "completed" } },
       { $group: { _id: null, totalRevenue: { $sum: "$totalAmount" } } },
     ]);
-    const totalRevenue =
-      revenueResult[0] && revenueResult[0].totalRevenue
-        ? revenueResult[0].totalRevenue
-        : 0;
 
-    // Today's revenue
+    const totalRevenue = revenueResult[0]?.totalRevenue || 0;
+
     const todayRevenueResult = await Order.aggregate([
       {
         $match: {
@@ -57,15 +55,16 @@ router.get("/", async (req, res) => {
       },
       { $group: { _id: null, todayRevenue: { $sum: "$totalAmount" } } },
     ]);
-    const todayRevenue =
-      todayRevenueResult[0] && todayRevenueResult[0].todayRevenue
-        ? todayRevenueResult[0].todayRevenue
-        : 0;
 
-    // Fetch all products
-    const products = await Product.find().sort({ createdAt: -1 }).limit(50);
+    const todayRevenue = todayRevenueResult[0]?.todayRevenue || 0;
 
-    // Render once
+    const products = await Product.find()
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
+    const totalPages = Math.ceil(totalProducts / perPage);
+
     res.render("admin", {
       products,
       stats: {
@@ -75,12 +74,17 @@ router.get("/", async (req, res) => {
         totalRevenue,
         todayRevenue,
       },
+      pagination: {
+        currentPage: page,
+        totalPages,
+      },
     });
   } catch (err) {
     console.error("Error loading admin panel:", err);
     if (!res.headersSent) res.status(500).send("Server error loading admin panel");
   }
 });
+
 
 // ============================
 // Add Product
@@ -128,6 +132,48 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
   } catch (err) {
     console.error("Error adding product:", err);
     if (!res.headersSent) res.status(500).send("Server error adding product");
+  }
+});
+
+// ============================
+// Edit Product
+// ============================
+router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
+  try {
+    const {
+      name,
+      category,
+      description,
+      price,
+      productBadge,
+      shippingFee = 0,
+      tax = 0,
+      stock = 0,
+    } = req.body;
+
+    const updateData = {
+      name,
+      category,
+      description,
+      price: Number(price || 0),
+      productBadge,
+      shippingFee: Number(shippingFee || 0),
+      tax: Number(tax || 0),
+      stock: Number(stock || 0),
+    };
+
+    // If new images uploaded
+    if (req.files && req.files.length > 0) {
+      updateData.images = req.files.map(
+        (f) => "/uploads/products/" + f.filename
+      );
+    }
+
+    await Product.findByIdAndUpdate(req.params.id, updateData);
+    res.redirect("/admin?msg=updated");
+  } catch (err) {
+    console.error("Error editing product:", err);
+    res.status(500).send("Server error updating product");
   }
 });
 

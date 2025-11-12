@@ -4,8 +4,10 @@ notification system -> {
 
 i think you should remove tax (or maybe not)
 
-dashboard's products marquee - original marquee
-dashboard's stats dynamic
+dashboard{
+    products marquee - original marquee
+    dashboard's stats dynamic
+}
 
 admin {
     product edit
