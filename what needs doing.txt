@@ -4,14 +4,13 @@ notification system -> {
 
 i think you should remove tax (or maybe not)
 
-dashboard{
-    products marquee - original marquee
-    dashboard's stats dynamic
+
+product-details{
+    create
 }
 
-admin {
-    product edit
-    product delete (confirmation)
+login {
+    continue with google/apple/meta
 }
 
 stock in products model {
@@ -23,4 +22,9 @@ stock in products model {
 
 user's orders -> {
     
+}
+
+dashboard{
+    products marquee - original marquee
+    dashboard's stats dynamic
 }

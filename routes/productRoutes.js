@@ -2,17 +2,6 @@ const express = require("express");
 const router = express.Router();
 const product = require("../models/product");
 
-// GET all products
-// router.get("/", async (req, res) => {
-//   try {
-//     const products = await product.find().sort({ createdAt: -1 });
-//     res.render("products", { products }); // pass to products.ejs
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Error fetching products");
-//   }
-// });
-
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 8;
@@ -30,5 +19,22 @@ router.get("/", async (req, res) => {
     totalPages,
   });
 });
+
+router.get("/product-details/:id", async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const productDetails = await product.findById(productId);
+
+    if (!productDetails) {
+      return res.status(404).render("404", { message: "Product not found" });
+    }
+
+    res.render("product-details", { product: productDetails });
+  } catch (err) {
+    console.error("Error fetching product details:", err);
+    res.status(500).render("500", { message: "Server error fetching product details" });
+  }
+});
+
 
 module.exports = router;

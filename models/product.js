@@ -41,7 +41,19 @@ const productSchema = new mongoose.Schema({
     stock: { 
         type: Number, 
         default: 0
-    }
+    },
+    lasting: {
+        type: String,
+        default: "8-10 Hours"
+    },
+    sillage: {
+        type: String,
+        default: "Scent Trail"
+    },
+    concentration: {
+        type: String,
+        default: "Parfum"
+    },
 
 }, { timestamps: true });
 

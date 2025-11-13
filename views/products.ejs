@@ -206,11 +206,42 @@
         }
 
         .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
+            text-align: center;
+            margin-top: 8px;
         }
+
+        .product-title a {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Elegant underline hover effect */
+        .product-title a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .product-title a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .product-title a:hover::after {
+            width: 100%;
+        }
+
 
         .product-category {
             color: var(--primary-color);
@@ -250,6 +281,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             width: 100%;
+            margin-bottom: 8px;
         }
 
         .btn-product:hover {
@@ -443,35 +475,36 @@
                             <% } %>
                             <div class="product-img">
                                 <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <% product.images.forEach((img, index) => { %>
-                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                        <img src="<%= img %>" class="d-block w-100 rounded" alt="Product image">
+                                    <div class="carousel-inner">
+                                        <% product.images.forEach((img, index) => { %>
+                                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                            <a href="/products/product-details/<%= product._id %>"><img src="<%= img %>" class="d-block w-100 rounded" alt="Product image"></a>
+                                        </div>
+                                        <% }) %>
                                     </div>
-                                    <% }) %>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
                                 </div>
 
                                 
                             </div>
                             <div class="product-body">
-                            <span class="product-category"><%= product.category %></span>
-                            <h3 class="product-title"><%= product.name %></h3>
-                            <h3 class="product-price"><%= product.price %></h3>
-                            <p class="product-desc"><%= product.description %></p>
-                            <a href="#" class="btn btn-product add-to-cart-btn" data-product-id="<%= product._id %>">  Add to Cart </a>
-                            <a href="#" class="btn btn-product add-to-wishlist-btn" data-product-id="<%= product._id %>">
-                            ❤️ Add to Wishlist
-                            </a>
-
+                                <span class="product-category"><%= product.category %></span>
+                                <h3 class="product-title">
+                                    <a href="/products/product-details/<%= product._id %>"><%= product.name %></a>
+                                </h3>
+                                <h3 class="product-price">PKR <%= product.price %></h3>
+                                <!-- <p class="product-desc"><%= product.description %></p> -->
+                                <a href="#" class="btn btn-product add-to-cart-btn" data-product-id="<%= product._id %>">  Add to Cart </a>
+                                <a href="#" class="btn btn-product add-to-wishlist-btn" data-product-id="<%= product._id %>">
+                                Add to Wishlist
+                                </a>
                             </div>
                         </div>
                         <% }) %>
