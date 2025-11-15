@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fleur | Zephyra Luxe</title>
+    <title><%= product.name %> | Zephyra Luxe</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -17,15 +17,10 @@
     <style>
         :root {
             --primary-color: #8B5A2B;
-            /* Rich Amber */
             --secondary-color: #4A2C2A;
-            /* Deep Mahogany */
             --accent-color: #D4AF8E;
-            /* Soft Nude */
             --light-color: #F8F5F2;
-            /* Ivory */
             --dark-color: #2A2118;
-            /* Dark Espresso */
         }
 
         body {
@@ -35,101 +30,58 @@
             overflow-x: hidden;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        .navbar-brand {
+        h1, h2, h3, h4, .navbar-brand {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
         }
 
         /* ===== Navbar ===== */
-        h1,
-        h2,
-        h3,
-        h4,
-        .navbar-brand {
-        font-family: "Playfair Display", serif;
-        font-weight: 700;
-        }
-
-        /* ===== Navbar ===== */
         .navbar {
-        background-color: rgba(243, 221, 221, 0.98);
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
-        padding: 15px 0;
-        transition: all 0.3s ease;
-
-        border-radius: 2.5rem;
-        margin: 0.5rem;
+            background-color: rgba(243, 221, 221, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-radius: 2.5rem;
+            margin: 0.5rem;
         }
 
         .navbar.scrolled {
-        background-color: rgba(252, 231, 231, 0.95);
-        padding: 10px 0;
+            background-color: rgba(252, 231, 231, 0.95);
+            padding: 10px 0;
         }
 
         .navbar-brand {
-        font-size: 1.8rem;
-        color: var(--secondary-color);
-        letter-spacing: 1px;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            letter-spacing: 1px;
         }
 
         .navbar-brand span {
-        color: var(--primary-color);
+            color: var(--primary-color);
         }
 
         .nav-link {
-        color: var(--dark-color);
-        font-weight: 500;
-        margin: 0 8px;
-        padding: 8px 15px;
-        position: relative;
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px;
+            position: relative;
         }
 
         .nav-link:before {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background-color: var(--primary-color);
-        transition: width 0.3s ease;
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
         }
 
         .nav-link:hover:before,
         .nav-link.active:before {
-        width: 100%;
-        }
-
-        .btn-outline-perfume {
-        border: 1px solid var(--primary-color);
-        color: var(--primary-color);
-        transition: all 0.3s ease;
-        }
-
-        .btn-outline-perfume:hover {
-        background-color: var(--primary-color);
-        color: white;
-        }
-
-        .navbar-toggler {
-        border-radius: 1rem;
-        padding: 7.5px;
-        transition: all 0.3s ease;
-        border: 1px solid rgba(0, 0, 0, 0.5);
-        }
-
-        .navbar-toggler:hover {
-        border-color:rgb(233, 191, 187);
-        transform: scale(1.1);
-        border: 1px solid;
-        }
-
-        .navbar-toggler:focus {
-        box-shadow: none;
+            width: 100%;
         }
 
         .btn-outline-perfume {
@@ -143,24 +95,21 @@
             color: white;
         }
 
-        /* ===== Breadcrumb ===== */
-        .breadcrumb-section {
-            padding: 120px 0 30px;
-            background-color: rgba(255, 255, 255, 0.7);
+        .navbar-toggler {
+            border-radius: 1rem;
+            padding: 7.5px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.5);
         }
 
-        .breadcrumb {
-            background: transparent;
-            padding: 0;
+        .navbar-toggler:hover {
+            border-color: rgb(233, 191, 187);
+            transform: scale(1.1);
+            border: 1px solid;
         }
 
-        .breadcrumb-item a {
-            color: var(--dark-color);
-            text-decoration: none;
-        }
-
-        .breadcrumb-item.active {
-            color: var(--primary-color);
+        .navbar-toggler:focus {
+            box-shadow: none;
         }
 
         /* ===== Product Details Section ===== */
@@ -174,39 +123,23 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            width: 40em;
+            max-width: 40em;
             height: 40em;
-
-
+            margin: 0 auto;
         }
 
-        .main-product-image {
+        .carousel-inner {
+            height: 100%;
+        }
+
+        .carousel-item {
+            height: 100%;
+        }
+
+        .carousel-item img {
             width: 100%;
+            height: 100%;
             object-fit: contain;
-            transition: transform 0.5s ease;
-        }
-
-        .product-thumbnails {
-            display: flex;
-            margin-top: 20px;
-            gap: 15px;
-        }
-
-        .thumbnail {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 5px;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .thumbnail:hover,
-        .thumbnail.active {
-            opacity: 1;
-            border-color: var(--primary-color);
         }
 
         .product-info {
@@ -277,10 +210,11 @@
             display: flex;
             gap: 10px;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
 
         .size-option {
-            width: 50px;
+            min-width: 80px;
             height: 50px;
             border: 1px solid #ddd;
             display: flex;
@@ -289,6 +223,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 5px;
+            padding: 0 15px;
+            font-size: 0.9rem;
         }
 
         .size-option:hover,
@@ -301,6 +237,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 30px;
+            gap: 10px;
         }
 
         .quantity-btn {
@@ -312,15 +249,22 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
         .quantity-input {
             width: 60px;
             height: 40px;
             border: 1px solid #ddd;
-            border-left: none;
-            border-right: none;
             text-align: center;
+            border-radius: 5px;
         }
 
         .action-buttons {
@@ -342,6 +286,7 @@
 
         .btn-add-to-cart:hover {
             background-color: var(--secondary-color);
+            color: white;
         }
 
         .btn-wishlist {
@@ -375,87 +320,6 @@
         .meta-label {
             font-weight: 600;
             width: 120px;
-        }
-
-        /* ===== Tabs Section ===== */
-        .product-tabs-section {
-            padding: 0 0 80px;
-        }
-
-        .nav-tabs {
-            border-bottom: 1px solid #eee;
-            justify-content: center;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            padding: 15px 25px;
-            position: relative;
-        }
-
-        .nav-tabs .nav-link:before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: var(--primary-color);
-            background: transparent;
-        }
-
-        .nav-tabs .nav-link.active:before {
-            width: 100%;
-        }
-
-        .tab-content {
-            padding: 40px 0;
-        }
-
-        .tab-pane {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* ===== Reviews ===== */
-        .review-item {
-            padding: 25px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: between;
-            margin-bottom: 15px;
-        }
-
-        .reviewer-name {
-            font-weight: 600;
-            margin-right: 15px;
-        }
-
-        .review-date {
-            color: #777;
-            font-size: 0.9rem;
-        }
-
-        .review-rating {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .review-form {
-            background-color: #f9f9f9;
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 40px;
         }
 
         /* ===== Related Products ===== */
@@ -536,28 +400,6 @@
         .product-body {
             padding: 20px;
             text-align: center;
-        }
-
-        .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
-
-        .product-category {
-            color: var(--primary-color);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .product-price {
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
         }
 
         .btn-product {
@@ -670,7 +512,7 @@
                 margin-top: 40px;
             }
 
-            .main-product-image {
+            .product-image-container {
                 height: 400px;
             }
         }
@@ -702,6 +544,7 @@
                 font-size: 1.8rem;
             }
         }
+
         .btn-hero {
             background-color: var(--primary-color);
             color: white;
@@ -711,33 +554,43 @@
             letter-spacing: 1px;
             border: none;
             transition: all 0.3s ease;
-            }
+        }
 
-            .btn-hero:hover {
+        .btn-hero:hover {
             background-color: var(--secondary-color);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            }
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .stock-badge.in-stock {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .stock-badge.low-stock {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .stock-badge.out-of-stock {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
     </style>
 </head>
 
 <body>
     <!-- Navigation -->
-     <%- include('partials/navbar') %>
-
-    <!-- Breadcrumb -->
-    <!-- <section class="breadcrumb-section">
-        <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="products.html">Perfumes</a></li>
-                    <li class="breadcrumb-item"><a href="products.html">Floral</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Fleur</li>
-                </ol>
-            </nav>
-        </div>
-    </section> -->
+    <%- include('partials/navbar') %>
 
     <!-- Product Details -->
     <section class="product-details-section">
@@ -746,34 +599,27 @@
                 <div class="col-lg-6">
                     <div class="product-image-container">
                         <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                        <% product.images.forEach((img, index) => { %>
-                                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                            <a href="/products/product-details/<%= product._id %>"><img src="<%= img %>" class="d-block w-100 rounded" alt="Product image"></a>
-                                        </div>
-                                        <% }) %>
-                                    </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>    
+                            <div class="carousel-inner">
+                                <% product.images.forEach((img, index) => { %>
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                    <img src="<%= img %>" class="d-block w-100 rounded" alt="<%= product.name %>">
+                                </div>
+                                <% }) %>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>    
                     </div>
-                    <!-- <div class="product-thumbnails">
-                        <img src="<%= product.images[1] %>" class="d-block w-100 rounded" alt="<%= product.name %>">
-                        <img src="<%= product.images[2] %>" class="d-block w-100 rounded" alt="<%= product.name %>">
-                        <img src="<%= product.images[3] %>" class="d-block w-100 rounded" alt="<%= product.name %>">
-                        <img src="<%= product.images[4] %>" class="d-block w-100 rounded" alt="<%= product.name %>">
-
-                    </div> -->
                 </div>
                 <div class="col-lg-6">
                     <div class="product-info">
-                        <span class="product-category"><%= product.category %></span>
+                        <span class="product-category"><%= product.categories[0] %></span>
                         <h1 class="product-title"><%= product.name %></h1>
                         <div class="product-rating">
                             <span class="rating-stars">
@@ -783,9 +629,14 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                             </span>
-                            <span class="rating-count">(42 reviews)</span>
+                            <span class="rating-count">(<%= product.ratings.totalReviews %> reviews)</span>
                         </div>
-                        <div class="product-price">PKR <%= product.price %></div>
+                        <div class="product-price">
+                            PKR <span id="price"><%= product.variants[0].price %></span>
+                            <span id="stock-badge" class="stock-badge <%= product.variants[0].stock > 10 ? 'in-stock' : product.variants[0].stock > 0 ? 'low-stock' : 'out-of-stock' %>">
+                                <%= product.variants[0].stock > 10 ? 'In Stock' : product.variants[0].stock > 0 ? `Only ${product.variants[0].stock} left` : 'Out of Stock' %>
+                            </span>
+                        </div>
                         <p class="product-description"><%= product.description %></p>
                         
                         <div class="product-features">
@@ -794,12 +645,8 @@
                                 <span>Long-lasting: <%= product.lasting %></span>
                             </div>
                             <div class="feature-item">
-                                <i class="fas fa-wind feature-icon"></i>
-                                <span>Sillage: <%= product.sillage %></span>
-                            </div>
-                            <div class="feature-item">
                                 <i class="fas fa-certificate feature-icon"></i>
-                                <span>Concentration: <%= product.concentration %></span>
+                                <span>Concentration: <%= product.concentration %>%</span>
                             </div>
                             <div class="feature-item">
                                 <i class="fas fa-recycle feature-icon"></i>
@@ -810,21 +657,30 @@
                         <div class="size-selector">
                             <h5>Size</h5>
                             <div class="size-options">
-                                <div class="size-option active">30ml</div>
-                                <div class="size-option">50ml</div>
-                                <div class="size-option">100ml</div>
+                                <% if (product.variants && product.variants.length > 0) { %>
+                                    <% product.variants.forEach((variant, index) => { %>
+                                        <div class="size-option <%= index === 0 ? 'active' : '' %>" 
+                                             data-price="<%= variant.price %>"
+                                             data-stock="<%= variant.stock %>"
+                                             data-size="<%= variant.size %>">
+                                            <%= variant.size %>ml - PKR <%= variant.price %>
+                                        </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <div class="text-muted">No sizes available</div>
+                                <% } %>
                             </div>
                         </div>
-                        
+
                         <div class="quantity-selector">
                             <h5 class="me-3">Quantity:</h5>
-                            <button class="quantity-btn" id="decreaseQty">-</button>
-                            <input type="text" class="quantity-input" value="1" id="quantity">
-                            <button class="quantity-btn" id="increaseQty">+</button>
+                            <button class="quantity-btn" onclick="changeQty(-1)">-</button>
+                            <input type="number" class="quantity-input" value="1" id="quantity" min="1">
+                            <button class="quantity-btn" onclick="changeQty(1)">+</button>
                         </div>
-                        
+
                         <div class="action-buttons">
-                            <button class="btn btn-add-to-cart">
+                            <button class="btn btn-add-to-cart" id="addToCartBtn">
                                 <i class="fas fa-shopping-bag me-2"></i> Add to Cart
                             </button>
                             <button class="btn btn-wishlist">
@@ -835,15 +691,11 @@
                         <div class="product-meta">
                             <div class="meta-item">
                                 <span class="meta-label">SKU:</span>
-                                <span>ZLF001</span>
+                                <span><%= product.sku %></span>
                             </div>
                             <div class="meta-item">
                                 <span class="meta-label">Category:</span>
-                                <span>Floral, Women</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-label">Tags:</span>
-                                <span>Floral, Romantic, Daytime, Spring</span>
+                                <span><%= product.categories.join(', ') %></span>
                             </div>
                         </div>
                     </div>
@@ -1094,13 +946,13 @@
                     <div class="product-card">
                         <div class="product-badge">Bestseller</div>
                         <div class="product-img">
-                            <img src="references/zarva.jpg" alt="Zarva Perfume">
+                            <img src="/references/zarva.jpg" alt="Zarva Perfume">
                         </div>
                         <div class="product-body">
                             <span class="product-category">Oriental</span>
                             <h3 class="product-title">Zarva</h3>
-                            <p class="product-price">$79.00</p>
-                            <a href="product-details.html" class="btn btn-product">View Details</a>
+                            <p class="product-price">PKR 7,900</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -1108,13 +960,13 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="references/reve.jpg" alt="Rêve Perfume">
+                            <img src="/references/reve.jpg" alt="Rêve Perfume">
                         </div>
                         <div class="product-body">
                             <span class="product-category">Floral</span>
                             <h3 class="product-title">Rêve</h3>
-                            <p class="product-price">$84.00</p>
-                            <a href="product-details.html" class="btn btn-product">View Details</a>
+                            <p class="product-price">PKR 8,400</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -1123,13 +975,13 @@
                     <div class="product-card">
                         <div class="product-badge">New</div>
                         <div class="product-img">
-                            <img src="references/lumire.jpg" alt="Lumière Perfume">
+                            <img src="/references/lumire.jpg" alt="Lumière Perfume">
                         </div>
                         <div class="product-body">
                             <span class="product-category">Citrus</span>
                             <h3 class="product-title">Lumière</h3>
-                            <p class="product-price">$87.00</p>
-                            <a href="product-details.html" class="btn btn-product">View Details</a>
+                            <p class="product-price">PKR 8,700</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -1137,13 +989,13 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="references/baran.png" alt="Baran Perfume">
+                            <img src="/references/baran.png" alt="Baran Perfume">
                         </div>
                         <div class="product-body">
                             <span class="product-category">Earthy</span>
                             <h3 class="product-title">Baran</h3>
-                            <p class="product-price">$85.00</p>
-                            <a href="product-details.html" class="btn btn-product">View Details</a>
+                            <p class="product-price">PKR 8,500</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -1151,15 +1003,19 @@
         </div>
     </section>
 
-    
-        <%- include('partials/newsletter') %>
-        <%- include('partials/footer') %>
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JS -->
     <script>
+        // Store variants data
+        const variants = <%- JSON.stringify(product.variants) %>;
+        let selectedVariant = variants[0];
+        let qty = 1;
+
         // Navbar scroll effect
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
@@ -1170,90 +1026,102 @@
             }
         });
 
-        // Product image gallery
-        document.querySelectorAll('.thumbnail').forEach(thumb => {
-            thumb.addEventListener('click', function() {
-                // Update main image
-                document.getElementById('mainImage').src = this.getAttribute('data-image');
-                
-                // Update active thumbnail
-                document.querySelectorAll('.thumbnail').forEach(t => {
-                    t.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
-
-        // Quantity selector
-        document.getElementById('increaseQty').addEventListener('click', function() {
-            const quantityInput = document.getElementById('quantity');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-        });
-
-        document.getElementById('decreaseQty').addEventListener('click', function() {
-            const quantityInput = document.getElementById('quantity');
-            if (parseInt(quantityInput.value) > 1) {
-                quantityInput.value = parseInt(quantityInput.value) - 1;
-            }
-        });
-
-        // Size selector
-        document.querySelectorAll('.size-option').forEach(option => {
+        // Size selector with price update
+        document.querySelectorAll('.size-option').forEach((option, index) => {
             option.addEventListener('click', function() {
+                // Remove active from all options
                 document.querySelectorAll('.size-option').forEach(o => {
                     o.classList.remove('active');
                 });
+                
+                // Add active to clicked option
                 this.classList.add('active');
+                
+                // Update selected variant
+                selectedVariant = variants[index];
+                
+                // Update price display
+                updatePrice();
+                
+                // Update stock badge
+                updateStockBadge();
             });
         });
 
-        // Review rating stars
-        document.querySelectorAll('.rating-input i').forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
-                document.getElementById('reviewRating').value = rating;
-                
-                // Update star display
-                document.querySelectorAll('.rating-input i').forEach(s => {
-                    if (parseInt(s.getAttribute('data-rating')) <= rating) {
-                        s.classList.remove('far');
-                        s.classList.add('fas');
-                    } else {
-                        s.classList.remove('fas');
-                        s.classList.add('far');
-                    }
-                });
-            });
+        // Quantity change
+        function changeQty(change) {
+            qty += change;
+            if (qty < 1) qty = 1;
+            if (qty > selectedVariant.stock) {
+                qty = selectedVariant.stock;
+                alert(`Only ${selectedVariant.stock} items available in stock`);
+            }
+            document.getElementById('quantity').value = qty;
+            updatePrice();
+        }
+
+        // Update quantity on input change
+        document.getElementById('quantity').addEventListener('change', function() {
+            qty = parseInt(this.value) || 1;
+            if (qty < 1) qty = 1;
+            if (qty > selectedVariant.stock) {
+                qty = selectedVariant.stock;
+                alert(`Only ${selectedVariant.stock} items available in stock`);
+            }
+            this.value = qty;
+            updatePrice();
         });
+
+        // Update price display
+        function updatePrice() {
+            const totalPrice = selectedVariant.price * qty;
+            document.getElementById('price').textContent = totalPrice.toLocaleString();
+        }
+
+        // Update stock badge
+        function updateStockBadge() {
+            const stockBadge = document.getElementById('stock-badge');
+            const stock = selectedVariant.stock;
+            
+            stockBadge.className = 'stock-badge';
+            
+            if (stock > 10) {
+                stockBadge.classList.add('in-stock');
+                stockBadge.textContent = 'In Stock';
+            } else if (stock > 0) {
+                stockBadge.classList.add('low-stock');
+                stockBadge.textContent = `Only ${stock} left`;
+            } else {
+                stockBadge.classList.add('out-of-stock');
+                stockBadge.textContent = 'Out of Stock';
+            }
+        }
 
         // Add to cart functionality
-        document.querySelector('.btn-add-to-cart').addEventListener('click', function() {
-            const productName = document.querySelector('.product-title').textContent;
-            const quantity = document.getElementById('quantity').value;
-            const size = document.querySelector('.size-option.active').textContent;
+        document.getElementById('addToCartBtn').addEventListener('click', function() {
+            if (selectedVariant.stock === 0) {
+                alert('Sorry, this product is out of stock');
+                return;
+            }
+
+            if (qty > selectedVariant.stock) {
+                alert(`Only ${selectedVariant.stock} items available in stock`);
+                return;
+            }
+
+            const productName = '<%= product.name %>';
             
-            // Update cart count
-            const cartCount = document.querySelector('.cart-count');
-            cartCount.textContent = parseInt(cartCount.textContent) + parseInt(quantity);
+            // Here you would typically send this to your backend/cart
+            console.log({
+                productId: '<%= product._id %>',
+                name: productName,
+                size: selectedVariant.size,
+                price: selectedVariant.price,
+                quantity: qty,
+                totalPrice: selectedVariant.price * qty
+            });
             
-            // Show notification
-            const toastContainer = document.querySelector('.toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast align-items-center text-white bg-primary border-0 show';
-            toast.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body">
-                        Added ${quantity} x ${productName} (${size}) to your cart
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                </div>
-            `;
-            toastContainer.appendChild(toast);
-            
-            // Remove toast after 3 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
+            alert(`Added ${qty} x ${productName} (${selectedVariant.size}ml) to cart!`);
         });
 
         // Wishlist toggle
@@ -1262,13 +1130,13 @@
             if (icon.classList.contains('far')) {
                 icon.classList.remove('far');
                 icon.classList.add('fas');
-                this.style.backgroundColor = var('--primary-color');
+                this.style.backgroundColor = 'var(--primary-color)';
                 this.style.color = 'white';
             } else {
                 icon.classList.remove('fas');
                 icon.classList.add('far');
                 this.style.backgroundColor = 'transparent';
-                this.style.color = var('--primary-color');
+                this.style.color = 'var(--primary-color)';
             }
         });
     </script>

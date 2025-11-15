@@ -11,49 +11,50 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
+    categories: {
+        type: [String],
         required: true
     },
-    price: {
-        type: Number,
-        required: true,
-        min: 0
-    },
     images: {
-    type: [String],
-    validate: [(v) => v.length > 0, 'At least one image is required'],
-    required: true
-  }, // multiple product images but atleast one is necessary!
+        type: [String],
+        validate: [(v) => v.length > 0, 'At least one image is required'],
+        required: true
+    }, // multiple product images but atleast one is necessary!
     productBadge: String,
     ratings: {
         average: { type: Number, default: 0 },
         totalReviews: { type: Number, default: 0 },
     },
-    shippingFee: { 
-        type: Number, 
+    shippingFee: {
+        type: Number,
         default: 0
     },
-    tax: { 
-        type: Number, 
-        default: 0
-    },
-    stock: { 
-        type: Number, 
+    tax: {
+        type: Number,
         default: 0
     },
     lasting: {
         type: String,
         default: "8-10 Hours"
     },
-    sillage: {
-        type: String,
-        default: "Scent Trail"
-    },
     concentration: {
-        type: String,
-        default: "Parfum"
+        type: Number,
+        default: 40,
     },
+    sku: {
+        type: String,
+        trim: true
+    },
+
+    variants: [
+        {
+            size: { type: Number, required: true },
+            price: { type: Number, required: true },
+            stock: { type: Number, default: 0},
+        }
+    ],
+
+
 
 }, { timestamps: true });
 

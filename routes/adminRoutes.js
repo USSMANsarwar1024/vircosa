@@ -93,14 +93,36 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
   try {
     const {
       name,
-      category,
       description,
-      price,
+      // price,
       productBadge,
       shippingFee = 0,
       tax = 0,
-      stock = 0,
+      sku,
+      lasting,
+      concentration,
     } = req.body;
+
+    // Ensuring categories always becomes an array
+    let categories = req.body.categories;
+    if (!categories) categories = [];
+    if (!Array.isArray(categories)) categories = [categories];
+
+    let sizes = req.body.sizes || [];
+    let prices = req.body.prices || [];
+    let variantStock = req.body.variantStock || [];
+
+    if (!Array.isArray(sizes)) sizes = [sizes];
+    if (!Array.isArray(prices)) prices = [prices];
+    if (!Array.isArray(variantStock)) variantStock = [variantStock];
+
+    const variants = sizes.map((s, i) => ({
+        size: Number(s),
+        price: Number(prices[i] || 0),
+        stock: Number(variantStock[i] || 0)
+    }));
+
+
 
     const images = [];
     if (req.files && req.files.length > 0) {
@@ -116,14 +138,17 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
 
     const newProduct = new Product({
       name,
-      category,
       description,
-      price: Number(price || 0),
       images,
       productBadge,
       shippingFee: Number(shippingFee || 0),
       tax: Number(tax || 0),
-      stock: Number(stock || 0),
+      sku,
+      categories,
+      sizes,
+      lasting,
+      concentration,
+      variants,
     });
 
     await newProduct.save();
@@ -142,27 +167,52 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
   try {
     const {
       name,
-      category,
+      categories,
       description,
       price,
       productBadge,
       shippingFee = 0,
       tax = 0,
       stock = 0,
+      sku,
+      lasting,
+      concentration,
+      sizes
     } = req.body;
 
     const updateData = {
       name,
-      category,
       description,
       price: Number(price || 0),
-      productBadge,
+      productBadge: productBadge || undefined,
       shippingFee: Number(shippingFee || 0),
       tax: Number(tax || 0),
       stock: Number(stock || 0),
+      sku: sku || undefined,
+      lasting: lasting || "8-10 Hours",
+      concentration: Number(concentration || 40),
     };
 
-    // If new images uploaded
+    // Handle categories array
+    if (categories) {
+      // If single value, convert to array
+      updateData.categories = Array.isArray(categories) ? categories : [categories];
+    } else {
+      // If no categories selected, set empty array
+      updateData.categories = [];
+    }
+
+    // Handle sizes array
+    if (sizes) {
+      // Convert to numbers and handle single/multiple values
+      const sizesArray = Array.isArray(sizes) ? sizes : [sizes];
+      updateData.sizes = sizesArray.map(s => Number(s));
+    } else {
+      // If no sizes selected, set empty array
+      updateData.sizes = [];
+    }
+
+    // If new images uploaded, replace existing images
     if (req.files && req.files.length > 0) {
       updateData.images = req.files.map(
         (f) => "/uploads/products/" + f.filename

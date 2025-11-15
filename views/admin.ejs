@@ -504,7 +504,11 @@
                                 </td>
                                 <td><%= product.name %></td>
                                 <td><%= product.category %></td>
-                                <td>PKR <%= product.price.toLocaleString() %></td>
+                                <td>PKR <%= product.variants && product.variants.length > 0 
+                                    ? product.variants[0].price 
+                                    : product.price 
+                                %>
+                                </td>
                                 <td><%= product.stock || 0 %></td>
                                 <td>
                                     <% if (product.productBadge) { %>
@@ -517,19 +521,23 @@
                                         <span class="badge badge-stock badge-in-stock">In Stock</span>
                                     <% } %>
                                 </td>
-                                <td>
+                                <td>  
                                     <button class="action-btn edit edit-btn" 
                                             data-bs-toggle="modal"
                                             data-bs-target="#editProductModal" 
                                             data-id="<%= product._id %>"
                                             data-name="<%= product.name %>" 
-                                            data-category="<%= product.category %>"
+                                            data-categories="<%= product.categories ? product.categories.join(',') : '' %>"
                                             data-description="<%= product.description %>" 
                                             data-price="<%= product.price %>"
+                                            data-sku="<%= product.sku || '' %>"
                                             data-stock="<%= product.stock || 0 %>" 
                                             data-badge="<%= product.productBadge || '' %>"
                                             data-tax="<%= product.tax || 0 %>"
                                             data-shipping="<%= product.shippingFee || 0 %>"
+                                            data-lasting="<%= product.lasting || '8-10 Hours' %>"
+                                            data-concentration="<%= product.concentration || 40 %>"
+                                            data-sizes="<%= product.sizes ? product.sizes.join(',') : '' %>"
                                             data-image="<%= product.images && product.images[0] ? product.images[0] : '' %>">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -577,15 +585,45 @@
                                 <input type="text" name="name" class="form-control" id="productName" required>
                             </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="productCategory" class="form-label">Category</label>
-                                <select class="form-select" name="category" id="productCategory" required>
-                                    <option value="">Select Category</option>
-                                    <option value="women">Women</option>
-                                    <option value="men">Men</option>
-                                    <option value="unisex">Unisex</option>
-                                </select>
+                            <div class="mb-3">
+                                <label class="form-label">Categories</label>
+                                <div class="d-flex flex-wrap gap-3" style="border: 1px solid grey; border-radius: 7px; padding: 10px;">
+
+                                    <!-- Examples -->
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Women"> Women
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Men"> Men
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Unisex"> Unisex
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Floral"> Floral
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Citrus"> Citrus
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Earthy"> Earthy
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Sweet"> Sweet
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Woody"> Woody
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Fresh"> Fresh
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="categories" value="Oud"> Oud
+                                    </div>
+
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="mb-3">
@@ -594,26 +632,49 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="productPrice" class="form-label">Price (PKR)</label>
-                                <input type="number" name="price" class="form-control" id="productPrice" required>
-                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Sizes & Prices</label>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="productStock" class="form-label">Stock</label>
-                                <input type="number" name="stock" class="form-control" id="productStock" value="0">
+                                <div id="variant-container">
+
+                                    <div class="variant-row mb-3 d-flex gap-3">
+                                        <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" required>
+                                        <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" required>
+                                        <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" required>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-sm btn-primary mt-2" id="add-variant">
+                                    Add More Sizes
+                                </button>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label for="productTax" class="form-label">Tax (PKR)</label>
-                                <input type="number" name="tax" class="form-control" id="productTax" value="0">
+                                <input type="number" name="tax" class="form-control" id="productTax">
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label for="productShipping" class="form-label">Shipping Fee (PKR)</label>
-                                <input type="number" name="shippingFee" class="form-control" id="productShipping" value="0">
+                                <input type="number" name="shippingFee" class="form-control" id="productShipping">
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="skuInput" class="form-label">SKU (Stock Keeping Unit)</label>
+                            <input type="text" name="sku" class="form-control" id="skuInput" placeholder="Vi-12345">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="lasting" class="form-label">Lasting</label>
+                            <input type="text" name="lasting" class="form-control" id="lasting" placeholder="8-10 Hours">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="concentration" class="form-label">Concentration</label>
+                            <input type="number" name="concentration" class="form-control" id="concentration" placeholder="40">
+                        </div>
+
 
                         <div class="mb-3">
                             <label for="productBadge" class="form-label">Badge (optional)</label>
@@ -655,15 +716,41 @@
                                 <label for="editProductName" class="form-label">Product Name</label>
                                 <input type="text" name="name" id="editProductName" class="form-control" required>
                             </div>
+                        </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="editProductCategory" class="form-label">Category</label>
-                                <select class="form-select" name="category" id="editProductCategory" required>
-                                    <option value="">Select Category</option>
-                                    <option value="women">Women</option>
-                                    <option value="men">Men</option>
-                                    <option value="unisex">Unisex</option>
-                                </select>
+                        <div class="mb-3">
+                            <label class="form-label">Categories</label>
+                            <div class="d-flex flex-wrap gap-3" style="border: 1px solid grey; border-radius: 7px; padding: 10px;">
+                                <div>
+                                    <input type="checkbox" name="categories" value="Women" id="editCatWomen"> Women
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Men" id="editCatMen"> Men
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Unisex" id="editCatUnisex"> Unisex
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Floral" id="editCatFloral"> Floral
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Citrus" id="editCatCitrus"> Citrus
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Earthy" id="editCatEarthy"> Earthy
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Sweet" id="editCatSweet"> Sweet
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Woody" id="editCatWoody"> Woody
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Fresh" id="editCatFresh"> Fresh
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="categories" value="Oud" id="editCatOud"> Oud
+                                </div>
                             </div>
                         </div>
 
@@ -695,8 +782,25 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="editProductSku" class="form-label">SKU (Stock Keeping Unit)</label>
+                            <input type="text" name="sku" class="form-control" id="editProductSku" placeholder="Vi-12345">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editProductLasting" class="form-label">Lasting</label>
+                                <input type="text" name="lasting" class="form-control" id="editProductLasting" placeholder="8-10 Hours">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="editProductConcentration" class="form-label">Concentration</label>
+                                <input type="number" name="concentration" class="form-control" id="editProductConcentration" placeholder="40">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="editProductBadge" class="form-label">Badge (optional)</label>
-                            <input type="text" name="productBadge" class="form-control" id="editProductBadge">
+                            <input type="text" name="productBadge" class="form-control" id="editProductBadge" placeholder="e.g. New or Bestseller">
                         </div>
 
                         <div class="mb-3">
@@ -712,6 +816,17 @@
                             <small class="text-muted">Leave empty to keep current images</small>
                             <div class="image-preview-container" id="editImagePreview"></div>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Available Sizes (ml)</label>
+                            <div class="d-flex flex-wrap gap-3" style="border: 1px solid grey; border-radius: 7px; padding: 10px;">
+                                <label><input type="checkbox" name="sizes" value="12" id="editSize12"> 12ml</label>
+                                <label><input type="checkbox" name="sizes" value="20" id="editSize20"> 20ml</label>
+                                <label><input type="checkbox" name="sizes" value="30" id="editSize30"> 30ml</label>
+                                <label><input type="checkbox" name="sizes" value="50" id="editSize50"> 50ml</label>
+                                <label><input type="checkbox" name="sizes" value="100" id="editSize100"> 100ml</label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -722,6 +837,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
@@ -803,18 +919,22 @@
             });
         });
 
-        // Setup edit buttons - populate modal with product data
+        // Updated script for edit button functionality
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 const productId = this.getAttribute('data-id');
                 const productName = this.getAttribute('data-name');
-                const productCategory = this.getAttribute('data-category');
+                const productCategories = this.getAttribute('data-categories'); // Should be comma-separated
                 const productDescription = this.getAttribute('data-description');
                 const productPrice = this.getAttribute('data-price');
                 const productStock = this.getAttribute('data-stock');
                 const productBadge = this.getAttribute('data-badge');
                 const productTax = this.getAttribute('data-tax');
                 const productShipping = this.getAttribute('data-shipping');
+                const productSku = this.getAttribute('data-sku');
+                const productLasting = this.getAttribute('data-lasting');
+                const productConcentration = this.getAttribute('data-concentration');
+                const productSizes = this.getAttribute('data-sizes'); // Should be comma-separated
                 const productImage = this.getAttribute('data-image');
 
                 // Set form action to edit route
@@ -824,13 +944,41 @@
                 // Populate form fields
                 document.getElementById('editProductId').value = productId;
                 document.getElementById('editProductName').value = productName;
-                document.getElementById('editProductCategory').value = productCategory;
                 document.getElementById('editProductDescription').value = productDescription;
                 document.getElementById('editProductPrice').value = productPrice;
-                document.getElementById('editProductStock').value = productStock;
-                document.getElementById('editProductBadge').value = productBadge;
-                document.getElementById('editProductTax').value = productTax;
-                document.getElementById('editProductShipping').value = productShipping;
+                document.getElementById('editProductStock').value = productStock || 0;
+                document.getElementById('editProductBadge').value = productBadge || '';
+                document.getElementById('editProductTax').value = productTax || 0;
+                document.getElementById('editProductShipping').value = productShipping || 0;
+                document.getElementById('editProductSku').value = productSku || '';
+                document.getElementById('editProductLasting').value = productLasting || '8-10 Hours';
+                document.getElementById('editProductConcentration').value = productConcentration || 40;
+
+                // Handle categories checkboxes
+                // First, uncheck all
+                document.querySelectorAll('#editProductModal input[name="categories"]').forEach(cb => cb.checked = false);
+                
+                // Then check the ones that match
+                if (productCategories) {
+                    const categoriesArray = productCategories.split(',').map(c => c.trim());
+                    categoriesArray.forEach(category => {
+                        const checkbox = document.querySelector(`#editProductModal input[name="categories"][value="${category}"]`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+
+                // Handle sizes checkboxes
+                // First, uncheck all
+                document.querySelectorAll('#editProductModal input[name="sizes"]').forEach(cb => cb.checked = false);
+                
+                // Then check the ones that match
+                if (productSizes) {
+                    const sizesArray = productSizes.split(',').map(s => s.trim());
+                    sizesArray.forEach(size => {
+                        const checkbox = document.querySelector(`#editProductModal input[name="sizes"][value="${size}"]`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
 
                 // Set image preview
                 const imgPreview = document.getElementById('editPreviewImage');
@@ -877,6 +1025,19 @@
                 return false;
             }
         });
+
+        // for add products: size associated with price
+        document.getElementById('add-variant').addEventListener('click', () => {
+            const container = document.getElementById('variant-container');
+            container.insertAdjacentHTML('beforeend', `
+                <div class="variant-row mb-3 d-flex gap-3">
+                    <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" required>
+                    <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" required>
+                    <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" required>
+                </div>
+            `);
+        });
+
     </script>
 </body>
 
