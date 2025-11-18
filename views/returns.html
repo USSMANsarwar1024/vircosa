@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Request | Zephyr Luxe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B5A2B; /* Rich Amber */
+            --secondary-color: #4A2C2A; /* Deep Mahogany */
+            --accent-color: #D4AF8E; /* Soft Nude */
+            --light-color: #F8F5F2; /* Ivory */
+            --dark-color: #2A2118; /* Dark Espresso */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgba(243, 221, 221, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(252, 231, 231, 0.95);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px;
+            position: relative;
+        }
+
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:before,
+        .nav-link.active:before {
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(42, 33, 24, 0.7), rgba(42, 33, 24, 0.7)), 
+                         url('https://images.unsplash.com/photo-1605733513597-a8f8341084e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: cover;
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Return Section */
+        .return-section {
+            padding: 60px 0;
+        }
+
+        .return-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+        }
+
+        .form-control, .form-select {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.15);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Policy Section */
+        .policy-card {
+            background-color: rgba(212, 175, 142, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .policy-title {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .policy-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .policy-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .policy-list li:before {
+            content: "•";
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .process-steps:before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-color);
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .page-title {
+                font-size: 2.8rem;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .process-steps:before {
+                display: none;
+            }
+            
+            .step {
+                margin-bottom: 30px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .return-card {
+                padding: 25px;
+            }
+            
+            .page-title {
+                font-size: 2.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 100px 0 60px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Zephyr<span>Luxe</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">Perfumes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about-us.html">About Us</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="whishlist.html">Wishlist</a>
+                </li>
+            </ul>
+            <div class="ms-3 d-flex align-items-center">
+                <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
+                <a href="cart.html" class="btn btn-outline-perfume position-relative">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Added to cart notification (for all pages) -->
+<div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Elegance in Every Drop</h1>
+            <p class="hero-subtitle">Discover the art of fragrance with Zephyra Luxe</p>
+            <a href="#products" class="btn btn-hero">Explore Scents</a>
+        </div>
+    </section>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">Return Request</h1>
+            <p class="lead">We're here to make your return experience as seamless as our fragrances</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="row">
+            <!-- Return Form Column -->
+            <div class="col-lg-7">
+                <div class="return-card">
+                    <h2 class="section-title">Request a Return</h2>
+                    <p class="mb-4">Please fill out the form below to initiate your return. We'll send a confirmation email with return instructions.</p>
+                    
+                    <form id="returnForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" placeholder="Your first name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Your last name" required>
+                            </div>
+                        </div>
+                        
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="your.email@example.com" required>
+                        
+                        <label class="form-label">Order Number</label>
+                        <input type="text" class="form-control" placeholder="ZL-XXXXXX" required>
+                        
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" placeholder="+1 (555) 123-4567">
+                        
+                        <label class="form-label">Product to Return</label>
+                        <select class="form-select" required>
+                            <option value="" disabled selected>Select a product</option>
+                            <option>Fleur - 100ml</option>
+                            <option>Whim - 100ml</option>
+                            <option>Baran - 100ml</option>
+                            <option>Zarva - 100ml</option>
+                            <option>Fleur Gift Set</option>
+                            <option>Travel Collection</option>
+                        </select>
+                        
+                        <label class="form-label">Reason for Return</label>
+                        <select class="form-select" required>
+                            <option value="" disabled selected>Select a reason</option>
+                            <option>Product arrived damaged</option>
+                            <option>Wrong item received</option>
+                            <option>Product quality not as expected</option>
+                            <option>Changed my mind</option>
+                            <option>Allergic reaction</option>
+                        </select>
+                        
+                        <label class="form-label">Additional Details</label>
+                        <textarea class="form-control" rows="4" placeholder="Please provide any additional information about your return..."></textarea>
+                        
+                        <label class="form-label">Upload Supporting Documents (Optional)</label>
+                        <input type="file" class="form-control">
+                        <small class="text-muted">You can upload photos of damaged items, invoice, etc. (Max 5MB)</small>
+                        
+                        <button type="submit" class="btn btn-submit">Submit Return Request</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Policy Column -->
+            <div class="col-lg-5">
+                <div class="policy-card">
+                    <h3 class="policy-title">Our Return Policy</h3>
+                    <p>We want you to be completely satisfied with your Zephyr Luxe purchase. Please review our policy details:</p>
+                    
+                    <ul class="policy-list">
+                        <li>Returns are accepted within 30 days of purchase</li>
+                        <li>Products must be unopened and in original condition</li>
+                        <li>A return shipping label will be provided upon approval</li>
+                        <li>Refunds are processed within 5 business days of receiving your return</li>
+                        <li>Sale items are eligible for exchange or store credit only</li>
+                        <li>Perfumes that have been used or opened cannot be returned for health and safety reasons</li>
+                    </ul>
+                    
+                    <div class="mt-4">
+                        <h4 class="policy-title">Need Assistance?</h4>
+                        <p>Our customer care team is ready to help with your return:</p>
+                        <p><i class="fas fa-envelope me-2"></i> returns@zephyrluxe.com</p>
+                        <p><i class="fas fa-phone me-2"></i> +92 300 123-4567</p>
+                    </div>
+                </div>
+                
+                <div class="mt-5">
+                    <h3 class="section-title">Return Process</h3>
+                    
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h5 class="step-title">Submit Request</h5>
+                            <p>Complete the return form</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h5 class="step-title">Get Approval</h5>
+                            <p>We'll review within 24 hours</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <h5 class="step-title">Ship Item</h5>
+                            <p>Use our provided label</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <h5 class="step-title">Receive Refund</h5>
+                            <p>Or exchange item</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h3 class="footer-title">Zephyra<span>Luxe</span></h3>
+                    <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
+                    <div class="social-icons mt-4">
+                        <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Shop</h4>
+                        <ul>
+                            <li><a href="product.html">Women</a></li>
+                            <li><a href="product.html">Men</a></li>
+                            <li><a href="product.html">Gift Sets</a></li>
+                            <li><a href="product.html">Travel Sizes</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="index.html#about">Our Story</a></li>
+                            <li><a href="#">Ingredients</a></li>
+                            <li><a href="#">Sustainability</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
+                            <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
+                            <li><i class="fas fa-envelope me-2"></i> hello@zephyraluxe.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Zephyra Luxe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Form submission handling
+        document.getElementById('returnForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            alert('Your return request has been submitted successfully! Our team will review your request and contact you within 24 hours.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        
+    </script>
+</body>
+</html>

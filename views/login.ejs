@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vircosa | Login</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+
+    <style>
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(42, 33, 24, 0.85), rgba(42, 33, 24, 0.85)),
+                url('../images/login-hero-img.avif') no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: var(--dark-color);
+        }
+
+        .login-card {
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: none;
+            transition: all 0.3s ease;
+            background-color: rgba(248, 245, 242, 0.95);
+            backdrop-filter: blur(5px);
+
+            margin-top: 12rem;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: none;
+        }
+
+        .card-header h2 {
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .card-header i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: var(--secondary-color);
+        }
+
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding-left: 45px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.25);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        .btn-login {
+            background-color: var(--primary-color);
+            border: none;
+            height: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #6d4622;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .card-footer {
+            background-color: transparent;
+            border-top: none;
+            text-align: center;
+            padding: 1.5rem;
+            color: #7f8c8d;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: var(--primary-color);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .signup-link a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+
+        }
+
+        .btn-outline-perfume {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-perfume:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .back-to-home-btn{
+            background-color: var(--primary-color);
+            border: 1px solid var(--dark-color);
+            height: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            
+        }
+
+        .back-to-home-btn:hover {
+            background-color: #6d4622;
+            transform: translateY(-2px);
+            transition: all;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .login-card {
+                width: 90% !important;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .card-header {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-card card w-100">
+                    <div class="card-header">
+                        <i class="fas fa-spa"></i>
+                        <h2>Vircosa</h2>
+                        <p class="mb-0 mt-2" style="font-family: 'Montserrat'; font-size: 0.9rem; letter-spacing: 1px;">
+                            ACCESS YOUR ACCOUNT</p>
+                    </div>
+                    <div class="card-body">
+                        <form id="loginForm" action="/login" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Enter your password" required>
+                                <div class="forgot-password">
+                                    <br>
+                                    <a href="/forget-password">Forgot Password?</a>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-login w-100 mb-3 ">
+                                <i class="fas fa-sign-in-alt me-2"></i> SIGN IN
+                            </button>
+
+                            <div class="text-center mt-3">
+                                <a href="/" class="back-to-home-btn">
+                                    <i class="fas fa-arrow-left me-2"></i> Back to Home
+                                </a>
+                            </div>
+
+                            <div class="signup-link mt-4">
+                                New to Vircosa? <a href="/signup">Create an account</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <small>&copy; 2025 Vircosa. All Rights Reserved.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Collection | Vircosa</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
+
+    <style>
+        /* ===== Products Hero ===== */
+        .products-hero {
+            background: url('../images/products-hero-img.avif') no-repeat center center;
+            background-size: cover;
+            object-fit: cover;
+            object-position: center;
+            color: whitesmoke;
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 80px;
+            /* filter: blur(0.5px); */
+        }
+
+        .products-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .products-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .btn-hero {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== Products Section ===== */
+        .products-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Product Grid */
+        .product-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        }
+
+        .product-card {
+            flex: 1 1 calc(25% - 30px); /* 4 per row */
+            max-width: calc(25% - 30px);
+        }
+
+        @media (max-width: 992px) {
+            .product-card {
+                flex: 1 1 calc(33.333% - 30px);
+                max-width: calc(33.333% - 30px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-card {
+                flex: 1 1 calc(50% - 30px);
+                max-width: calc(50% - 30px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-img {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-title {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .product-title a {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Elegant underline hover effect */
+        .product-title a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .product-title a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .product-title a:hover::after {
+            width: 100%;
+        }
+
+
+        .product-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-desc {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .product-price .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .btn-product {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .btn-product:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .carousel-item img {
+            height: 300px;
+            object-fit: cover;
+        }
+
+
+        /* Pagination */
+        .pagination {
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .page-item .page-link {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            margin: 0 5px;
+            border-radius: 50% !important;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .products-hero h1 {
+                font-size: 3rem;
+            }
+
+            .product-img {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .products-hero {
+                padding: 120px 0 80px;
+            }
+
+            .products-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .products-hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sparkle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle, gold, transparent);
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        box-shadow: 0 0 15px gold, 0 0 30px white;
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-left: 4px solid #2E7D32;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            border-left: 4px solid #b71c1c;
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            border-left: 4px solid #0D47A1;
+        }
+
+        .notification-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            border-left: 4px solid #e65100;
+        }
+
+        /* Close button */
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <!-- Products Hero Section -->
+    <section class="products-hero">
+        <div class="container text-center">
+            <h1>Our Fragrance Collection</h1>
+            <h3>Where Emotion Wears Elegance</h3>
+            <p>Every scent begins with a memory, a moment that lingers long after it’s gone.
+                At <strong>Vircosa</strong>, we turn those moments into masterpieces —
+                where emotion meets elegance, and time pauses for just a heartbeat.</p>
+            <p>These aren’t merely fragrances. They’re reflections of you —
+                confident, mysterious, unforgettable.</p>
+        </div>
+    </section>
+
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Signature Scents</h2>
+                <p class="text-muted">Browse our complete collection of luxury fragrances</p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="women">For Women</button>
+                <button class="filter-btn" data-filter="men">For Men</button>
+                <button class="filter-btn" data-filter="unisex">Unisex</button>
+                <button class="filter-btn" data-filter="new">New Arrivals</button>
+                <button class="filter-btn" data-filter="bestsellers">Bestsellers</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid">
+                <div class="product-grid">
+                    <% if (products.length > 0) { %>
+                        <% products.forEach(product => { %>
+                        <div class="product-card" data-category="<%= product.category %>">
+                            <% if (product.productBadge) { %>
+                            <div class="product-badge"><%= product.productBadge %></div>
+                            <% } %>
+                            <div class="product-img">
+                                <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <% product.images.forEach((img, index) => { %>
+                                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                            <a href="/products/product-details/<%= product._id %>"><img src="<%= img %>" class="d-block w-100 rounded" alt="Product image"></a>
+                                        </div>
+                                        <% }) %>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+                                
+                            </div>
+                            <div class="product-body">
+                                <span class="product-category"><%= product.category %></span>
+                                <h3 class="product-title">
+                                    <a href="/products/product-details/<%= product._id %>"><%= product.name %></a>
+                                </h3>
+                                <h3 class="product-price">PKR <%= product.price %></h3>
+                                <!-- <p class="product-desc"><%= product.description %></p> -->
+                                <a href="#" class="btn btn-product add-to-cart-btn" data-product-id="<%= product._id %>">  Add to Cart </a>
+                                <a href="#" class="btn btn-product add-to-wishlist-btn" data-product-id="<%= product._id %>">
+                                Add to Wishlist
+                                </a>
+                            </div>
+                        </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p class="text-center text-muted">No products exists.</p>
+                    <% } %>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Product pagination">
+                    <ul class="pagination justify-content-center">
+                        <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= currentPage - 1 %>">
+                            <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                        </li>
+                        <% } %>
+
+                        <% if (currentPage < totalPages) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= currentPage + 1 %>">
+                            <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                    </nav>
+
+    </section>
+
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS (for navbar toggle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    console.log("🔥 products.ejs script loaded");
+    window.addEventListener('scroll', function () {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Simple filter functionality
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                if (filter === 'all' || product.getAttribute('data-category').includes(filter)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
+    });
+
+
+    // add to cart functionality
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const productId = btn.dataset.productId;
+
+            try {
+                const res = await fetch('/cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await res.json();
+
+                if (res.status === 401) {
+                    // Not logged in - redirect to login
+                    window.location.href = '/login';
+                    return;
+                }
+
+                if (res.ok) {
+                    // Show success notification
+                    showNotification('✨ Product added to cart!', 'success');
+                    
+                    // Optional: Update cart count in navbar
+                    updateCartCount();
+                } else {
+                    showNotification(data.message || 'Error adding to cart', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error occurred', 'error');
+            }
+        });
+    });
+
+    // Animate glitter trail 🌠
+    // const cartIcon = document.querySelector('.fa-shopping-bag');
+    // const sparkle = document.createElement('div');
+    // sparkle.classList.add('sparkle');
+    // document.body.appendChild(sparkle);
+    // const start = btn.getBoundingClientRect();
+    // const end = cartIcon.getBoundingClientRect();
+    // sparkle.style.left = `${start.left}px`;
+    // sparkle.style.top = `${start.top}px`;
+    // sparkle.animate([
+    // { transform: `translate(0,0) scale(1)`, opacity: 1 },
+    // { transform: `translate(${end.left - start.left}px, ${end.top - start.top}px) scale(0)`, opacity: 0 }
+    // ], { duration: 800, easing: 'ease-in-out' });
+    // setTimeout(() => sparkle.remove(), 800);
+
+    // // Show popup
+    // const choice = confirm("✨ Added to Cart! Go to cart or continue browsing?\n\nPress OK → Go to Cart\nCancel → Stay");
+    // if (choice) window.location.href = '/cart';
+
+
+    // wishlist add
+    document.querySelectorAll('.add-to-wishlist-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const productId = btn.dataset.productId;
+
+            try {
+                const res = await fetch('/wishlist/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await res.json();
+
+                if (res.status === 401) {
+                    window.location.href = '/login';
+                    return;
+                }
+
+                if (res.ok) {
+                    showNotification('💖 Added to Wishlist!', 'success');
+                } else {
+                    showNotification(data.message || 'Error adding to wishlist', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error occurred', 'error');
+            }
+        });
+    });
+
+
+    // Notification system
+    function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+
+        // Create new notification
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            ${message}
+            <button class="notification-close">&times;</button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Close button event
+        notification.querySelector('.notification-close').addEventListener('click', () => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        });
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 5000);
+    }
+
+    // Function to update cart count (optional)
+    async function updateCartCount() {
+        try {
+            const res = await fetch('/cart/count');
+            const data = await res.json();
+            if (data.success) {
+                const cartCount = document.querySelector('.cart-count');
+                if (cartCount) {
+                    cartCount.textContent = data.count;
+                }
+            }
+        } catch (error) {
+            console.error('Error updating cart count:', error);
+        }
+    }
+
+    // Check for flash messages on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check for server-side flash messages
+        const successMessage = '<%= typeof success !== "undefined" && success.length > 0 ? success[0] : "" %>';
+        const errorMessage = '<%= typeof error !== "undefined" && error.length > 0 ? error[0] : "" %>';
+        
+        if (successMessage) {
+            showNotification(successMessage, 'success');
+        }
+        if (errorMessage) {
+            showNotification(errorMessage, 'error');
+        }
+    });
+    </script>
+</body>
+
+</html>

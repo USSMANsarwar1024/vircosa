@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %> | Zephyra Luxe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #8B5A2B;
+            --secondary-color: #4A2C2A;
+            --accent-color: #D4AF8E;
+            --light-color: #F8F5F2;
+            --dark-color: #2A2118;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            background-color: rgba(243, 221, 221, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-radius: 2.5rem;
+            margin: 0.5rem;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(252, 231, 231, 0.95);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px;
+            position: relative;
+        }
+
+        .nav-link:before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:before,
+        .nav-link.active:before {
+            width: 100%;
+        }
+
+        .btn-outline-perfume {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-perfume:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .navbar-toggler {
+            border-radius: 1rem;
+            padding: 7.5px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-toggler:hover {
+            border-color: rgb(233, 191, 187);
+            transform: scale(1.1);
+            border: 1px solid;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* ===== Product Details Section ===== */
+        .product-details-section {
+            margin-top: 3rem;
+            padding: 50px 0 80px;
+        }
+
+        .product-image-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 40em;
+            height: 40em;
+            margin: 0 auto;
+        }
+
+        .carousel-inner {
+            height: 100%;
+        }
+
+        .carousel-item {
+            height: 100%;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding-left: 40px;
+        }
+
+        .product-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .product-rating {
+            margin-bottom: 20px;
+        }
+
+        .rating-stars {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .rating-count {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .product-description {
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .product-features {
+            margin-bottom: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .feature-icon {
+            color: var(--primary-color);
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .size-selector {
+            margin-bottom: 25px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .size-option {
+            min-width: 80px;
+            height: 50px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            padding: 0 15px;
+            font-size: 0.9rem;
+        }
+
+        .size-option:hover,
+        .size-option.active {
+            border-color: var(--primary-color);
+            background-color: rgba(139, 90, 43, 0.05);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ddd;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn-add-to-cart {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 2;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-wishlist {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-wishlist:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .product-meta {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            width: 120px;
+        }
+
+        /* ===== Related Products ===== */
+        .related-products-section {
+            padding: 80px 0;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .btn-product {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-product:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .product-info {
+                padding-left: 0;
+                margin-top: 40px;
+            }
+
+            .product-image-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .product-title {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-wishlist {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        .btn-hero {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .stock-badge.in-stock {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .stock-badge.low-stock {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .stock-badge.out-of-stock {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <%- include('partials/navbar') %>
+
+    <!-- Product Details -->
+    <section class="product-details-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product-image-container">
+                        <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <% product.images.forEach((img, index) => { %>
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                    <img src="<%= img %>" class="d-block w-100 rounded" alt="<%= product.name %>">
+                                </div>
+                                <% }) %>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>    
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product-info">
+                        <span class="product-category"><%= product.categories[0] %></span>
+                        <h1 class="product-title"><%= product.name %></h1>
+                        <div class="product-rating">
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </span>
+                            <span class="rating-count">(<%= product.ratings.totalReviews %> reviews)</span>
+                        </div>
+                        <div class="product-price">
+                            PKR <span id="price"><%= product.variants[0].price %></span>
+                            <span id="stock-badge" class="stock-badge <%= product.variants[0].stock > 10 ? 'in-stock' : product.variants[0].stock > 0 ? 'low-stock' : 'out-of-stock' %>">
+                                <%= product.variants[0].stock > 10 ? 'In Stock' : product.variants[0].stock > 0 ? `Only ${product.variants[0].stock} left` : 'Out of Stock' %>
+                            </span>
+                        </div>
+                        <p class="product-description"><%= product.description %></p>
+                        
+                        <div class="product-features">
+                            <div class="feature-item">
+                                <i class="fas fa-clock feature-icon"></i>
+                                <span>Long-lasting: <%= product.lasting %></span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-certificate feature-icon"></i>
+                                <span>Concentration: <%= product.concentration %>%</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-recycle feature-icon"></i>
+                                <span>Cruelty-free & Vegan</span>
+                            </div>
+                        </div>
+                        
+                        <div class="size-selector">
+                            <h5>Size</h5>
+                            <div class="size-options">
+                                <% if (product.variants && product.variants.length > 0) { %>
+                                    <% product.variants.forEach((variant, index) => { %>
+                                        <div class="size-option <%= index === 0 ? 'active' : '' %>" 
+                                             data-price="<%= variant.price %>"
+                                             data-stock="<%= variant.stock %>"
+                                             data-size="<%= variant.size %>">
+                                            <%= variant.size %>ml - PKR <%= variant.price %>
+                                        </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <div class="text-muted">No sizes available</div>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="quantity-selector">
+                            <h5 class="me-3">Quantity:</h5>
+                            <button class="quantity-btn" onclick="changeQty(-1)">-</button>
+                            <input type="number" class="quantity-input" value="1" id="quantity" min="1">
+                            <button class="quantity-btn" onclick="changeQty(1)">+</button>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-add-to-cart add-to-cart-btn" 
+                                    id="addToCartBtn"
+                                    data-product-id="<%= product._id %>">
+                                <i class="fas fa-shopping-bag me-2"></i> Add to Cart
+                            </button>
+                            <button class="btn btn-wishlist">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="product-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">SKU:</span>
+                                <span><%= product.sku %></span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Category:</span>
+                                <span><%= product.categories.join(', ') %></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Tabs -->
+    <!-- 
+    <section class="product-tabs-section">
+        <div class="container">
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="ingredients-tab" data-bs-toggle="tab" data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="how-to-use-tab" data-bs-toggle="tab" data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use" aria-selected="false">How To Use</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews (42)</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="productTabsContent">
+                <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                    <h3>The Story of Fleur</h3>
+                    <p>Fleur was inspired by the first blooms of spring, capturing that magical moment when nature awakens from its winter slumber. Our master perfumers spent two years perfecting this fragrance to embody the delicate balance between freshness and warmth.</p>
+                    
+                    <h4>Fragrance Notes</h4>
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <h5>Top Notes</h5>
+                            <ul>
+                                <li>Bergamot</li>
+                                <li>Green Accord</li>
+                                <li>Peach Nectar</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Heart Notes</h5>
+                            <ul>
+                                <li>Jasmine Sambac</li>
+                                <li>Rose de Mai</li>
+                                <li>Peony</li>
+                                <li>Lily of the Valley</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Base Notes</h5>
+                            <ul>
+                                <li>Vanilla</li>
+                                <li>White Musk</li>
+                                <li>Sandalwood</li>
+                                <li>Amber</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mt-4">Occasion</h4>
+                    <p>Fleur is perfect for daytime wear, especially in spring and summer. Its delicate yet persistent character makes it suitable for both casual outings and special occasions like brunches, garden parties, and romantic dates.</p>
+                </div>
+                
+                <div class="tab-pane fade" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+                    <h3>Natural & Sustainable Ingredients</h3>
+                    <p>At Zephyra Luxe, we're committed to using ethically sourced, high-quality ingredients. Fleur contains 92% naturally derived components.</p>
+                    
+                    <h4>Key Ingredients</h4>
+                    <ul>
+                        <li><strong>Jasmine Sambac:</strong> Sourced from Grasse, France, known for its intensely floral and slightly fruity scent</li>
+                        <li><strong>Rose de Mai:</strong> Hand-picked at dawn in Bulgaria to capture its full aromatic potential</li>
+                        <li><strong>Bergamot:</strong> Cold-pressed from Italian bergamot oranges for a fresh, citrusy opening</li>
+                        <li><strong>Sandalwood:</strong> Sustainably harvested from Mysore, India, providing a creamy, woody base</li>
+                        <li><strong>Vanilla:</strong> Ethically sourced from Madagascar, offering a warm, sweet dry-down</li>
+                    </ul>
+                    
+                    <div class="alert alert-info mt-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Allergy Information:</strong> This product contains natural ingredients that may cause allergic reactions in some individuals. Please perform a patch test before use.
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="how-to-use" role="tabpanel" aria-labelledby="how-to-use-tab">
+                    <h3>How To Get The Most From Your Fragrance</h3>
+                    
+                    <h4>Application Tips</h4>
+                    <ul>
+                        <li>Apply to pulse points: wrists, neck, behind ears, and behind knees</li>
+                        <li>Spray from a distance of 15-20cm for even distribution</li>
+                        <li>Don't rub your wrists together after application - this can break down the fragrance molecules</li>
+                        <li>Layer with our matching Fleur body lotion for longer-lasting scent</li>
+                    </ul>
+                    
+                    <h4>Storage Recommendations</h4>
+                    <ul>
+                        <li>Store in a cool, dark place away from direct sunlight</li>
+                        <li>Keep the cap tightly closed when not in use</li>
+                        <li>Avoid storing in humid environments like bathrooms</li>
+                        <li>For optimal preservation, store between 15-25°C (59-77°F)</li>
+                    </ul>
+                    
+                    <h4>Fragrance Layering</h4>
+                    <p>Fleur pairs beautifully with our other floral scents like Rêve for a more complex fragrance experience. For a warmer twist, layer with Zarva's oriental notes.</p>
+                </div>
+                
+                <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                    <h3>Customer Reviews</h3>
+                    <p class="text-muted">Based on 42 verified purchases</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="rating-stars me-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span>4.5 out of 5</span>
+                            </div>
+                            <div>
+                                <span class="me-3">5 star <i class="fas fa-star text-warning"></i> (28)</span>
+                                <span class="me-3">4 star <i class="fas fa-star text-warning"></i> (10)</span>
+                                <span class="me-3">3 star <i class="fas fa-star text-warning"></i> (3)</span>
+                                <span class="me-3">2 star <i class="fas fa-star text-warning"></i> (1)</span>
+                                <span>1 star <i class="fas fa-star text-warning"></i> (0)</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <button class="btn btn-product" data-bs-toggle="modal" data-bs-target="#reviewModal">Write a Review</button>
+                        </div>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Sarah Johnson</span>
+                            <span class="review-date">March 15, 2025</span>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5>Absolutely in love with this scent!</h5>
+                        <p>Fleur is everything I hoped for and more. The floral notes are so authentic and not at all synthetic like some other perfumes. It lasts all day on my skin and I've received so many compliments. Will definitely repurchase!</p>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Emma Wilson</span>
+                            <span class="review-date">February 28, 2025</span>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <h5>Beautiful daytime fragrance</h5>
+                        <p>This is my new go-to spring scent. It's light enough for daytime but has enough depth to be interesting. The jasmine and rose combination is perfectly balanced. The only reason I didn't give 5 stars is that I wish the projection was a bit stronger.</p>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Michael Brown</span>
+                            <span class="review-date">February 10, 2025</span>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5>Bought it for my wife - she loves it!</h5>
+                        <p>I purchased Fleur as an anniversary gift for my wife, and it was a huge hit! The packaging was beautiful and the scent is sophisticated without being overpowering. She says it makes her feel elegant and feminine. Great customer service too!</p>
+                    </div>
+                    
+                    <nav aria-label="Review pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="review-form">
+                        <h4>Write a Review</h4>
+                        <form>
+                            <div class="mb-3">
+                                <label for="reviewRating" class="form-label">Your Rating</label>
+                                <div class="rating-input">
+                                    <i class="far fa-star" data-rating="1"></i>
+                                    <i class="far fa-star" data-rating="2"></i>
+                                    <i class="far fa-star" data-rating="3"></i>
+                                    <i class="far fa-star" data-rating="4"></i>
+                                    <i class="far fa-star" data-rating="5"></i>
+                                </div>
+                                <input type="hidden" id="reviewRating" name="rating" value="0">
+                            </div>
+                            <div class="mb-3">
+                                <label for="reviewTitle" class="form-label">Review Title</label>
+                                <input type="text" class="form-control" id="reviewTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reviewText" class="form-label">Your Review</label>
+                                <textarea class="form-control" id="reviewText" rows="4" required></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="reviewerName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="reviewerName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="reviewerEmail" class="form-label">Your Email</label>
+                                    <input type="email" class="form-control" id="reviewerEmail" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-add-to-cart">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Related Products -->
+    <section class="related-products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>You May Also Like</h2>
+                <p class="text-muted">Discover more fragrances from our collection</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <div class="product-badge">Bestseller</div>
+                        <div class="product-img">
+                            <img src="/references/zarva.jpg" alt="Zarva Perfume">
+                        </div>
+                        <div class="product-body">
+                            <span class="product-category">Oriental</span>
+                            <h3 class="product-title">Zarva</h3>
+                            <p class="product-price">PKR 7,900</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="/references/reve.jpg" alt="Rêve Perfume">
+                        </div>
+                        <div class="product-body">
+                            <span class="product-category">Floral</span>
+                            <h3 class="product-title">Rêve</h3>
+                            <p class="product-price">PKR 8,400</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <div class="product-badge">New</div>
+                        <div class="product-img">
+                            <img src="/references/lumire.jpg" alt="Lumière Perfume">
+                        </div>
+                        <div class="product-body">
+                            <span class="product-category">Citrus</span>
+                            <h3 class="product-title">Lumière</h3>
+                            <p class="product-price">PKR 8,700</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="/references/baran.png" alt="Baran Perfume">
+                        </div>
+                        <div class="product-body">
+                            <span class="product-category">Earthy</span>
+                            <h3 class="product-title">Baran</h3>
+                            <p class="product-price">PKR 8,500</p>
+                            <a href="/products/product-details" class="btn btn-product">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <!-- Also update the JavaScript section at the bottom -->
+<script>
+    // Store variants data
+    const variants = <%- JSON.stringify(product.variants) %>;
+    let selectedVariant = variants[0];
+    let qty = 1;
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Size selector with price update
+    document.querySelectorAll('.size-option').forEach((option, index) => {
+        option.addEventListener('click', function() {
+            // Remove active from all options
+            document.querySelectorAll('.size-option').forEach(o => {
+                o.classList.remove('active');
+            });
+            
+            // Add active to clicked option
+            this.classList.add('active');
+            
+            // Update selected variant
+            selectedVariant = variants[index];
+            
+            // Update price display
+            updatePrice();
+            
+            // Update stock badge
+            updateStockBadge();
+        });
+    });
+
+    // Quantity change
+    function changeQty(change) {
+        qty += change;
+        if (qty < 1) qty = 1;
+        if (qty > selectedVariant.stock) {
+            qty = selectedVariant.stock;
+            alert(`Only ${selectedVariant.stock} items available in stock`);
+        }
+        document.getElementById('quantity').value = qty;
+        updatePrice();
+    }
+
+    // Update quantity on input change
+    document.getElementById('quantity').addEventListener('change', function() {
+        qty = parseInt(this.value) || 1;
+        if (qty < 1) qty = 1;
+        if (qty > selectedVariant.stock) {
+            qty = selectedVariant.stock;
+            alert(`Only ${selectedVariant.stock} items available in stock`);
+        }
+        this.value = qty;
+        updatePrice();
+    });
+
+    // Update price display
+    function updatePrice() {
+        const totalPrice = selectedVariant.price * qty;
+        document.getElementById('price').textContent = totalPrice.toLocaleString();
+    }
+
+    // Update stock badge
+    function updateStockBadge() {
+        const stockBadge = document.getElementById('stock-badge');
+        const stock = selectedVariant.stock;
+        
+        stockBadge.className = 'stock-badge';
+        
+        if (stock > 10) {
+            stockBadge.classList.add('in-stock');
+            stockBadge.textContent = 'In Stock';
+        } else if (stock > 0) {
+            stockBadge.classList.add('low-stock');
+            stockBadge.textContent = `Only ${stock} left`;
+        } else {
+            stockBadge.classList.add('out-of-stock');
+            stockBadge.textContent = 'Out of Stock';
+        }
+    }
+
+    // Notification function
+    function showNotification(message, type) {
+        const toastContainer = document.querySelector('.toast-container') || createToastContainer();
+        
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-white ${type === 'success' ? 'bg-success' : 'bg-danger'} border-0`;
+        toast.setAttribute('role', 'alert');
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+        
+        toastContainer.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        toast.addEventListener('hidden.bs.toast', () => {
+            toast.remove();
+        });
+    }
+
+    function createToastContainer() {
+        const container = document.createElement('div');
+        container.className = 'position-fixed bottom-0 end-0 p-3 toast-container';
+        container.style.zIndex = '11';
+        document.body.appendChild(container);
+        return container;
+    }
+
+    // Update cart count
+    function updateCartCount() {
+        fetch('/cart/count')
+            .then(res => res.json())
+            .then(data => {
+                const badge = document.querySelector('.badge');
+                if (badge) {
+                    badge.textContent = data.count || 0;
+                }
+            })
+            .catch(err => console.error('Failed to update cart count:', err));
+    }
+
+    // Add to cart functionality - FIXED VERSION
+    document.getElementById('addToCartBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        // Get product ID from button's data attribute
+        const productId = '<%= product._id %>';
+
+        // Check if a size is selected
+        const activeVariant = document.querySelector('.size-option.active');
+        if (!activeVariant) {
+            showNotification("Please select a size first.", "error");
+            return;
+        }
+
+        // Get selected variant details
+        const size = parseInt(activeVariant.dataset.size);
+        const price = parseInt(activeVariant.dataset.price);
+        const stock = parseInt(activeVariant.dataset.stock);
+
+        // Get quantity
+        const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
+        // Check stock availability
+        if (stock <= 0) {
+            showNotification("This item is out of stock.", "error");
+            return;
+        }
+
+        if (quantity > stock) {
+            showNotification(`Only ${stock} items available in stock.`, "error");
+            return;
+        }
+
+        try {
+            const res = await fetch('/cart/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    productId,
+                    size,
+                    price,
+                    quantity
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.status === 401) {
+                window.location.href = '/login';
+                return;
+            }
+
+            if (res.ok) {
+                showNotification("✨ Added to cart!", "success");
+                updateCartCount();
+            } else {
+                showNotification(data.message || "Failed to add to cart", "error");
+            }
+        } catch (err) {
+            console.error('Add to cart error:', err);
+            showNotification("Network error. Please try again.", "error");
+        }
+    });
+
+    // Wishlist toggle
+    document.querySelector('.btn-wishlist').addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        if (icon.classList.contains('far')) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            this.style.backgroundColor = 'var(--primary-color)';
+            this.style.color = 'white';
+        } else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+            this.style.backgroundColor = 'transparent';
+            this.style.color = 'var(--primary-color)';
+        }
+    });
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        updatePrice();
+        updateStockBadge();
+    });
+</script>
+</body>
+
+</html>

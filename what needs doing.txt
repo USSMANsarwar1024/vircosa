@@ -1,0 +1,30 @@
+notification system -> {
+    globalize
+}
+
+i think you should remove tax (or maybe not)
+
+
+product-details{
+    create
+}
+
+login {
+    continue with google/apple/meta
+}
+
+stock in products model {
+    exact stock mention ho kitnay products hn kitny rah gye?
+    =0 honay par no order placement
+}
+
+
+
+user's orders -> {
+    
+}
+
+dashboard{
+    products marquee - original marquee
+    dashboard's stats dynamic
+}

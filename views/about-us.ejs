@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Vircosa</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styes.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <style>
+        /* ===== Hero Section ===== */
+        .hero-section {
+            background: linear-gradient(rgba(42, 33, 24, 0.4), rgba(42, 33, 24, 0.4)),
+                url('../images/about-us-hero.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 180px 0 150px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .btn-hero {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== About Story Section ===== */
+        .about-story {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1615634262417-ae5a67be6a0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center;
+            background-size: cover;
+            opacity: 0.03;
+            z-index: 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .story-timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .story-timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--accent-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: var(--light-color);
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid var(--light-color);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--light-color);
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid var(--light-color);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--light-color) transparent transparent;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-year {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        /* ===== Team Section ===== */
+        .team-section {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .team-card {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent-color);
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .team-position {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .team-social a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(139, 90, 43, 0.1);
+            color: var(--primary-color);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .team-social a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+
+        /* Team Section Marquee Animation */
+        .team-marquee {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .team-track {
+            display: flex;
+            gap: 2rem;
+            width: auto;
+            animation: scroll-left 15s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .team-card {
+            min-width: 280px;
+            background-color: var(--light-color);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .team-marquee:hover .team-track {
+            animation-play-state: paused;
+        }
+
+
+        /* ===== Values Section ===== */
+        .values-section {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .value-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(139, 90, 43, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover .value-icon {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .value-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        /* ===== CTA Section ===== */
+        .cta-section {
+            padding: 120px 0;
+            background: linear-gradient(rgba(42, 33, 24, 0.8), rgba(42, 33, 24, 0.8)),
+                url('../images/login-hero-img.avif') no-repeat center center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .btn-cta {
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background-color: #4A2C2A;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .hero-about-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .hero-about {
+                padding: 120px 0 80px;
+            }
+
+            .hero-about-title {
+                font-size: 2.8rem;
+            }
+
+            .story-timeline::after {
+                left: 31px;
+            }
+
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-container::after {
+                left: 18px;
+            }
+
+            .left::before,
+            .right::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+
+            .right {
+                left: 0%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-about-title {
+                font-size: 2.2rem;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <%- include('partials/navbar') %>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Each drop is an echo of elegance</h1>
+            <p class="hero-subtitle">Vircosa stands where luxury meets longevity — where scent becomes legacy.</p>
+            <a href="/products" class="btn btn-hero">Explore Scents</a>
+        </div>
+    </section>
+
+
+    <!-- About Story Section -->
+    <section class="about-story">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It All Began</h2>
+                <p class="text-muted">From a university spark to a growing fragrance vision</p>
+            </div>
+
+            <div class="story-timeline">
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Spring 2024</div>
+                        <h3 class="timeline-title">The Beginning of a Scented Journey</h3>
+                        <p>It all started with curiosity — I’ve always been drawn to perfumes, not just for their aroma
+                            but for the
+                            stories they tell. From gifting fragrances to friends to sharing insights about trending
+                            scents, the passion
+                            kept growing.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Summer 2024</div>
+                        <h3 class="timeline-title">The Zephyr Lux Chapter</h3>
+                        <p>During our university semester project, my team and I launched <strong>Zephyr Lux</strong> —
+                            a mini perfume
+                            brand that unexpectedly stole the show. Our classmates, coordinators, and even our
+                            instructor loved the
+                            fragrances. We received a special certification — the only group to earn that honor.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Fall 2024</div>
+                        <h3 class="timeline-title">The Spark Turns into a Vision</h3>
+                        <p>That appreciation became a spark. We realized this wasn’t just a project — it was the
+                            beginning of
+                            something meaningful. Combining creativity with my tech expertise in DevOps and backend
+                            development, we
+                            decided to take the leap beyond the classroom.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025 & Beyond</div>
+                        <h3 class="timeline-title">The Birth of Vircosa</h3>
+                        <p><strong>Vircosa</strong> was born from passion, perseverance, and purpose — a brand inspired
+                            by luxury,
+                            longevity, and inclusivity. We’re starting locally in Lahore, then Punjab, and one day, the
+                            world
+                            <em>(Insha’Allah)</em>. Every bottle reflects where we came from — and where we’re headed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Noses Behind the Scents</h2>
+                <p class="text-muted">Our master perfumers combine artistry with chemistry</p>
+            </div>
+
+            <div class="team-marquee">
+                <div class="team-track">
+                    <!-- Paste all your .team-card columns here -->
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="../images/usman-sarwar.jpg" alt="Usman Sarwar">
+                        </div>
+                        <h4 class="team-name">Usman Sarwar</h4>
+                        <p class="team-position">Founder & Master Perfumer</p>
+                        <p>Fourth-generation nose trained in Grasse, specializes in floral-oriental
+                            compositions.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                alt="Rafael Moreno">
+                        </div>
+                        <h4 class="team-name">Haseeb Raza</h4>
+                        <p class="team-position">Head of Chemistry</p>
+                        <p>PhD in Organic Chemistry, creates our signature accords and sustainable extraction
+                            methods.
+                        </p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                alt="Sophie Laurent">
+                        </div>
+                        <h4 class="team-name">Bakir Raza</h4>
+                        <p class="team-position">Creative Director</p>
+                        <p>Former fashion editor who translates cultural trends into olfactory experiences.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="../images/muhammad-waqas.jpg"
+                                alt="Jamal Ahmed">
+                        </div>
+                        <h4 class="team-name">M. Waqas</h4>
+                        <p class="team-position">Sourcing Specialist</p>
+                        <p>Works directly with farmers worldwide to ensure ethical, sustainable ingredient
+                            sourcing.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                alt="Jamal Ahmed">
+                        </div>
+                        <h4 class="team-name">Mudassar Arif</h4>
+                        <p class="team-position">Sourcing Specialist</p>
+                        <p>Works directly with farmers worldwide to ensure ethical, sustainable ingredient
+                            sourcing.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- duplicate once more for infinite loop illusion -->
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="../images/usman-sarwar.jpg" alt="Usman Sarwar">
+                        </div>
+                        <h4 class="team-name">Usman Sarwar</h4>
+                        <p class="team-position">Founder & Master Perfumer</p>
+                        <p>Fourth-generation nose trained in Grasse, specializes in floral-oriental
+                            compositions.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                alt="Rafael Moreno">
+                        </div>
+                        <h4 class="team-name">Haseeb Raza</h4>
+                        <p class="team-position">Head of Chemistry</p>
+                        <p>PhD in Organic Chemistry, creates our signature accords and sustainable extraction
+                            methods.
+                        </p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                alt="Sophie Laurent">
+                        </div>
+                        <h4 class="team-name">Bakir Raza</h4>
+                        <p class="team-position">Creative Director</p>
+                        <p>Former fashion editor who translates cultural trends into olfactory experiences.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                alt="Jamal Ahmed">
+                        </div>
+                        <h4 class="team-name">M. Waqas</h4>
+                        <p class="team-position">Sourcing Specialist</p>
+                        <p>Works directly with farmers worldwide to ensure ethical, sustainable ingredient
+                            sourcing.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                alt="Jamal Ahmed">
+                        </div>
+                        <h4 class="team-name">Mudassar Arif</h4>
+                        <p class="team-position">Sourcing Specialist</p>
+                        <p>Works directly with farmers worldwide to ensure ethical, sustainable ingredient
+                            sourcing.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Makes Vircosa Different</h2>
+                <p class="text-muted">More than fragrance — it’s how you feel wearing it</p>
+            </div>
+
+            <div class="row">
+                <!-- Value 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3 class="value-title">Nature, Nurtured</h3>
+                        <p>
+                            Every drop begins with respect — for nature, for artisans, for you.
+                            We source responsibly, blending rare botanicals that not only smell divine
+                            but carry the purity of the earth itself
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3 class="value-title">Crafted, Not Produced</h3>
+                        <p>
+                            Each scent is born in small batches — aged, refined, perfected.
+                            Because your confidence deserves the same attention to detail as a masterpiece.
+                            One spray, and you don’t just walk in — you arrive
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="value-title">Fragrance That Feels</h3>
+                        <p>
+                            A Vircosa perfume isn’t worn — it’s felt
+                            To impress your loved one, to lift your spirit, to make an ordinary day unforgettable.
+                            Each note is a whisper of confidence, elegance, and emotion
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <%- include('partials/cta-section') %>
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS (for navbar toggle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Minimal JS for Navbar Scroll Effect -->
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animation for timeline items
+        document.addEventListener('DOMContentLoaded', function () {
+            const timelineItems = document.querySelectorAll('.timeline-container');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transition = 'all 0.6s ease ' + (index * 0.2) + 's';
+
+                if (item.classList.contains('left')) {
+                    item.style.transform = 'translateX(-50px)';
+                } else {
+                    item.style.transform = 'translateX(50px)';
+                }
+
+                observer.observe(item);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

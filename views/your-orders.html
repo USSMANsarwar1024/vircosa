@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zephyr Luxe | Your Orders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #8B5A2B;
+            /* Rich Amber */
+            --secondary-color: #4A2C2A;
+            /* Deep Mahogany */
+            --accent-color: #D4AF8E;
+            /* Soft Nude */
+            --light-color: #F8F5F2;
+            /* Ivory */
+            --dark-color: #2A2118;
+            /* Dark Espresso */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            background-color: rgba(243, 221, 221, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(252, 231, 231, 0.95);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px;
+            position: relative;
+        }
+
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:before,
+        .nav-link.active:before {
+            width: 100%;
+        }
+
+        .btn-outline-perfume {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-perfume:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== Order Section ===== */
+        .order-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .order-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            margin-bottom: 30px;
+            border: 1px solid rgba(139, 90, 43, 0.1);
+        }
+
+        .order-header {
+            background-color: var(--light-color);
+            padding: 20px;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-pending {
+            background-color: #FFF3CD;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background-color: #F8D7DA;
+            color: #721C24;
+        }
+
+        .order-body {
+            padding: 25px;
+        }
+
+        .order-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(139, 90, 43, 0.2);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .order-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .order-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-details {
+            flex-grow: 1;
+        }
+
+        .order-item-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .order-item-price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .order-summary {
+            background-color: var(--light-color);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-row.total {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(139, 90, 43, 0.3);
+        }
+
+        .btn-order {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-order:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-order-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-order-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .order-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        /* Confirmation Modal */
+        .confirmation-modal .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+        }
+
+        .confirmation-modal .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+
+        .confirmation-modal .modal-body {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .confirmation-modal .modal-body i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .order-item {
+                flex-direction: column;
+            }
+
+            .order-item-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+            .order-actions .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Zephyr<span>Luxe</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">Perfumes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about-us.html">About Us</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="whishlist.html">Wishlist</a>
+                </li>
+            </ul>
+            <div class="ms-3 d-flex align-items-center">
+                <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
+                <a href="cart.html" class="btn btn-outline-perfume position-relative">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Added to cart notification (for all pages) -->
+<div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Elegance in Every Drop</h1>
+            <p class="hero-subtitle">Discover the art of fragrance with Zephyra Luxe</p>
+            <a href="#products" class="btn btn-hero">Explore Scents</a>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section class="order-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your Orders</h2>
+                <p class="text-muted">Review and manage your fragrance journey</p>
+            </div>
+
+            <!-- Current Order (Pending) -->
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <h4>Order #ZL-2025-0428</h4>
+                        <small class="text-muted">Placed on April 28, 2025</small>
+                    </div>
+                    <span class="order-status status-pending">Pending</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="references/fleur.png" alt="Fleur Perfume">
+                        </div>
+                        <div class="order-item-details">
+                            <h5 class="order-item-title">Fleur</h5>
+                            <p class="mb-1">Floral bouquet with notes of jasmine, rose, and vanilla</p>
+                            <p class="order-item-price">$89.00</p>
+                        </div>
+                        <div class="order-item-quantity">
+                            <span class="badge bg-light text-dark">Qty: 1</span>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="references/whim.png" alt="Whim Perfume">
+                        </div>
+                        <div class="order-item-details">
+                            <h5 class="order-item-title">Whim</h5>
+                            <p class="mb-1">Bold and woody with hints of Amber and Bergamot</p>
+                            <p class="order-item-price">$95.00</p>
+                        </div>
+                        <div class="order-item-quantity">
+                            <span class="badge bg-light text-dark">Qty: 1</span>
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>$184.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>$8.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax</span>
+                            <span>$14.72</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span>$206.72</span>
+                        </div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-order-outline" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                            <i class="fas fa-times me-2"></i>Cancel Order
+                        </button>
+                        <button class="btn btn-order" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                            <i class="fas fa-check me-2"></i>Confirm Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past Orders -->
+            <h4 class="mt-5 mb-4">Order History</h4>
+
+            <!-- Order 1 (Confirmed) -->
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <h4>Order #ZL-2025-0321</h4>
+                        <small class="text-muted">Placed on March 21, 2025</small>
+                    </div>
+                    <span class="order-status status-confirmed">Delivered</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="references/baran.png" alt="Baran Perfume">
+                        </div>
+                        <div class="order-item-details">
+                            <h5 class="order-item-title">Baran</h5>
+                            <p class="mb-1">Mysterious. Earthy. Elemental power.</p>
+                            <p class="order-item-price">$85.00</p>
+                        </div>
+                        <div class="order-item-quantity">
+                            <span class="badge bg-light text-dark">Qty: 1</span>
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>$85.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax</span>
+                            <span>$6.80</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span>$91.80</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-order-outline">
+                            <i class="fas fa-redo me-2"></i>Reorder
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order 2 (Cancelled) -->
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <h4>Order #ZL-2025-0214</h4>
+                        <small class="text-muted">Placed on February 14, 2025</small>
+                    </div>
+                    <span class="order-status status-cancelled">Cancelled</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="references/zarva.jpg" alt="Zarva Perfume">
+                        </div>
+                        <div class="order-item-details">
+                            <h5 class="order-item-title">Zarva</h5>
+                            <p class="mb-1">Daring. Charismatic. Smooth chaos.</p>
+                            <p class="order-item-price">$79.00</p>
+                        </div>
+                        <div class="order-item-quantity">
+                            <span class="badge bg-light text-dark">Qty: 1</span>
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>$79.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>$8.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax</span>
+                            <span>$6.96</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span>$93.96</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-order-outline">
+                            <i class="fas fa-shopping-bag me-2"></i>Shop Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Confirmation Modal -->
+    <div class="modal fade confirmation-modal" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Order Confirmation</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Thank You for Your Order!</h4>
+                    <p>Your order #ZL-2025-0428 has been confirmed and is being processed.</p>
+                    <p>A confirmation email has been sent to your registered email address.</p>
+                    <div class="mt-4">
+                        <button class="btn btn-order" data-bs-dismiss="modal">
+                            Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Order Modal -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to cancel your order #ZL-2025-0428?</p>
+                    <p class="text-muted">This action cannot be undone.</p>
+                    <div class="mt-4 d-flex justify-content-between">
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Go Back
+                        </button>
+                        <button class="btn btn-danger" id="confirmCancel">
+                            Yes, Cancel Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h3 class="footer-title">Zephyra<span>Luxe</span></h3>
+                    <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
+                    <div class="social-icons mt-4">
+                        <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Shop</h4>
+                        <ul>
+                            <li><a href="product.html">Women</a></li>
+                            <li><a href="product.html">Men</a></li>
+                            <li><a href="product.html">Gift Sets</a></li>
+                            <li><a href="product.html">Travel Sizes</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="index.html#about">Our Story</a></li>
+                            <li><a href="#">Ingredients</a></li>
+                            <li><a href="#">Sustainability</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
+                            <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
+                            <li><i class="fas fa-envelope me-2"></i> hello@zephyraluxe.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Zephyra Luxe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Cancel order functionality
+        document.getElementById('confirmCancel').addEventListener('click', function() {
+            // In a real application, you would send an AJAX request to cancel the order
+            // For this demo, we'll just show an alert and close the modal
+            const cancelModal = bootstrap.Modal.getInstance(document.getElementById('cancelModal'));
+            cancelModal.hide();
+            
+            // Show success message
+            alert('Your order has been cancelled successfully.');
+            
+            // In a real app, you would update the UI to reflect the cancelled status
+            // For this demo, we'll just reload the page
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        });
+
+        // Order confirmation functionality is handled by the modal itself
+    </script>
+</body>
+
+</html>

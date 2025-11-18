@@ -1,0 +1,33 @@
+{
+  "name": "vircosa",
+  "version": "1.0.0",
+  "description": "**Spray Once. Rule the Day.**  \r Welcome to the official website of **Vircosa**, a unisex perfume brand that embodies elegance, confidence, and lasting impressions.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USSMANsarwar1024/vircosa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/USSMANsarwar1024/vircosa/issues"
+  },
+  "homepage": "https://github.com/USSMANsarwar1024/vircosa#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "flash": "^1.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.2",
+    "multer": "^2.0.2"
+  }
+}

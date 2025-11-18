@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vircosa | Luxury Fragrances</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
+    <link rel="stylesheet" href="../stylesheets/newsletter-styles.css">
+
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/dashboard-hero-img.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            margin-bottom: 50px;
+        }
+
+        .perfume-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .perfume-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .badge-sale {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e53935;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        }
+
+        .marquee-content {
+        display: inline-flex;
+        gap: 1.5rem;
+        animation: scrollLeft 40s linear infinite;
+        }
+
+        .marquee-content .card {
+        flex: 0 0 auto;
+        width: 300px;
+        }
+
+        .marquee-content:hover {
+        animation-play-state: paused;
+    }
+
+        @keyframes scrollLeft {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+        }
+
+        /* Responsive: on small screens, stop animation and stack horizontally */
+        @media (max-width: 768px) {
+        .marquee {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            animation: none;
+            display: flex;
+            gap: 1rem;
+        }
+        .marquee-content .card {
+            width: 220px;
+        }
+        }
+
+
+        .dashboard-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            height: 100%;
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .review-card {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .star-rating {
+            color: #ffc107;
+        }
+
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .newsletter-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-zephyra {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            transition: all 0.3s;
+        }
+
+        .btn-zephyra:hover {
+            background-color: var(--dark-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .sidebar-link {
+            color: var(--dark-color);
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .purchase-history-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .purchase-history-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('partials/navbar') %>
+
+        <!-- Hero Section -->
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-3 brand-font mb-4">Welcome back, 
+                    <% 
+                        if (user.gender === 'm') { 
+                    %>
+                        Mr. <%= user.lastname %>
+                    <% 
+                        } else if (user.gender === 'f') { // Assuming 'f' for female
+                    %>
+                        Ms. <%= user.lastname %>
+                    <% 
+                        } else { 
+                    %>
+                        <%= user.lastname %>
+                    <% 
+                        } 
+                    %>
+                    <span id="emoji"></span> 
+                </h1>
+                
+                <p class="lead mb-5" style="max-width: 45rem; margin: 0 auto; opacity: 0.9;">Rediscover your
+                    individuality through scents that speak your story.
+                    <br>Every fragrance in <strong>Vircosa</strong> is a reflection of timeless elegance and personal
+                    allure.
+                </p>
+                <a href="/perfumes" class="btn btn-zephyra btn-lg">Explore Collection</a>
+            </div>
+        </section>
+
+        <%- include('partials/perfume-partials') %>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title brand-font">Your Dashboard</h2>
+
+                <div class="row">
+                    <div class="col-lg-3 mb-4">
+                        <div class="sidebar">
+                            <div class="d-flex align-items-center mb-4">
+                                <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User"
+                                    class="user-avatar me-3">
+                                <div>
+                                    <h6 class="mb-0">
+                                        <%= user.firstname %>
+                                            <%= user.lastname %>
+                                    </h6>
+
+                                </div>
+                            </div>
+
+                            <a href="/dashboard" class="sidebar-link active">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <a href="/orders" class="sidebar-link">
+                                <i class="fas fa-shopping-bag"></i> Orders
+                            </a>
+                            <a href="/wishlist" class="sidebar-link">
+                                <i class="fas fa-heart"></i> Wishlist
+                            </a>
+                            <a href="#reviews" class="sidebar-link">
+                                <i class="fas fa-star"></i> Reviews
+                            </a>
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <a href="/logout" id="logoutBtn" class="sidebar-link">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="dashboard-card p-4 text-center">
+                                    <div class="dashboard-icon">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <h5>12</h5>
+                                    <p class="text-muted mb-0">Total Orders</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="dashboard-card p-4 text-center">
+                                    <div class="dashboard-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <h5>7</h5>
+                                    <p class="text-muted mb-0">Wishlist Items</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="dashboard-card p-4 text-center">
+                                    <div class="dashboard-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <h5>5</h5>
+                                    <p class="text-muted mb-0">Reviews</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Recent Orders</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="purchase-history-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2">
+                                            <img src="https://images.unsplash.com/photo-1611068814580-ab4380fa0a0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                                                alt="Velvet Rose" class="img-fluid rounded">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h6 class="mb-1">Velvet Rose</h6>
+                                            <small class="text-muted">Order #ZL-45678</small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <small>June 12, 2023</small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span class="badge bg-success">Delivered</span>
+                                        </div>
+                                        <div class="col-md-1 text-end">
+                                            <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="purchase-history-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2">
+                                            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                                                alt="Midnight Orchid" class="img-fluid rounded">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h6 class="mb-1">Midnight Orchid</h6>
+                                            <small class="text-muted">Order #ZL-45677</small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <small>May 28, 2023</small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span class="badge bg-success">Delivered</span>
+                                        </div>
+                                        <div class="col-md-1 text-end">
+                                            <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="purchase-history-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2">
+                                            <img src="https://images.unsplash.com/photo-1615634262417-98ba8a8bd9b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                                                alt="Solar Bloom" class="img-fluid rounded">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h6 class="mb-1">Solar Bloom</h6>
+                                            <small class="text-muted">Order #ZL-45676</small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <small>April 15, 2023</small>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span class="badge bg-success">Delivered</span>
+                                        </div>
+                                        <div class="col-md-1 text-end">
+                                            <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card reviews">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Your Reviews</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4 p-3 bg-light review-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6 class="mb-0">Velvet Rose</h6>
+                                        <div class="star-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                    </div>
+                                    <p class="mb-2">"Absolutely love this scent! It's become my signature perfume. Lasts
+                                        all
+                                        day and gets so many compliments."</p>
+                                    <small class="text-muted">Reviewed on June 15, 2023</small>
+                                </div>
+
+                                <div class="mb-4 p-3 bg-light review-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6 class="mb-0">Midnight Orchid</h6>
+                                        <div class="star-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="mb-2">"Mysterious and alluring. Perfect for evening wear. The vanilla note
+                                        makes it warm and cozy."</p>
+                                    <small class="text-muted">Reviewed on June 5, 2023</small>
+                                </div>
+
+                                <div class="p-3 bg-light review-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6 class="mb-0">Solar Bloom</h6>
+                                        <div class="star-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="mb-2">"My perfect summer scent! Fresh but not too citrusy, floral but not
+                                        overpowering. Will definitely repurchase."</p>
+                                    <small class="text-muted">Reviewed on May 1, 2023</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <img src="https://images.unsplash.com/photo-1595425964073-46806a31a74d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                            alt="About ZephyraLuxe" class="img-fluid rounded">
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="section-title brand-font">Our Story</h2>
+                        <p>Founded in 2010, ZephyraLuxe began as a small perfumery in Grasse, France, with a passion for
+                            creating unique, luxurious fragrances that tell a story.</p>
+                        <p>Each of our perfumes is crafted with the finest ingredients sourced from around the world,
+                            blended by master perfumers with decades of experience.</p>
+                        <p>We believe that a fragrance should be as unique as the person wearing it, which is why we
+                            offer
+                            personalized consultations to help you find your perfect scent.</p>
+                        <a href="#" class="btn btn-zephyra mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include('partials/newsletter') %>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-5">
+                <div class="container">
+                    <h2 class="section-title brand-font text-center mb-5">Contact Us</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-4 mb-md-0">
+                            <div class="text-center">
+                                <div class="dashboard-icon mb-3">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <h5>Visit Us</h5>
+                                <p class="mb-0">123 Fragrance Avenue<br>Grasse, France 06130</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4 mb-md-0">
+                            <div class="text-center">
+                                <div class="dashboard-icon mb-3">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <h5>Call Us</h5>
+                                <p class="mb-0">+33 4 93 40 53 20<br>Mon-Fri, 9am-5pm CET</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="dashboard-icon mb-3">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h5>Email Us</h5>
+                                <p class="mb-0">info@zephyraluxe.com<br>We reply within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <%- include('partials/footer') %>
+
+
+                <!-- Bootstrap JS -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <!-- Custom JS -->
+                <script>
+
+                    window.addEventListener('scroll', function () {
+                        const navbar = document.querySelector('.navbar');
+                        if (window.scrollY > 50) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+                    });
+
+                    const flowerEmojis = ["🌸", "🌹", "🌺", "🌼", "🌻", "💐", "🌷", "🏵️", "💮", "🥀", "🍀", "🌱", "💜"];
+                    const randomEmoji = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+                    document.getElementById("emoji").textContent = randomEmoji;
+
+                </script>
+</body>
+
+</html>
