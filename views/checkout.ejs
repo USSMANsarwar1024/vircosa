@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vircosa | Luxury Fragrances</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
+
+    <!-- Custom CSS -->
+    <style>
+        /* Checkout specific styles */
+        .checkout-header {
+            background: linear-gradient(rgba(42, 33, 24, 0.7), rgba(42, 33, 24, 0.7)),
+                url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .checkout-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .step.active .step-number {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .step-name {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+        }
+
+        .step.active .step-name {
+            color: white;
+            font-weight: 600;
+        }
+
+        .step.completed .step-name {
+            color: var(--accent-color);
+        }
+
+        .step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 70px;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-color);
+            z-index: 1;
+        }
+
+        .checkout-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .checkout-card-title {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.25);
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background-color: rgba(139, 90, 43, 0.05);
+        }
+
+        .payment-method input {
+            margin-right: 15px;
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--primary-color);
+        }
+
+        .payment-details {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .payment-details.active {
+            display: block;
+        }
+
+        .order-summary {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .order-summary-title {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .order-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .order-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .order-item-price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .order-totals {
+            margin-top: 20px;
+        }
+
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .order-total-label {
+            color: var(--secondary-color);
+        }
+
+        .order-total-amount {
+            font-weight: 600;
+        }
+
+        .order-grand-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .btn-checkout {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-checkout:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .checkout-header {
+                padding: 100px 0 60px;
+            }
+
+            .checkout-title {
+                font-size: 2.2rem;
+            }
+
+            .step:not(:last-child):after {
+                width: 30px;
+                left: 55px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .checkout-steps {
+                flex-wrap: wrap;
+            }
+
+            .step {
+                margin: 0 10px 20px;
+            }
+
+            .step:not(:last-child):after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <%- include('partials/navbar') %>
+
+    <!-- Checkout Header -->
+    <section class="checkout-header">
+        <div class="container">
+            <h1 class="checkout-title">Complete Your Purchase</h1>
+            <div class="checkout-steps">
+                <div class="step completed">
+                    <div class="step-number">1</div>
+                    <div class="step-name">Product</div>
+                </div>
+                <div class="step completed">
+                    <div class="step-number">2</div>
+                    <div class="step-name">Cart</div>
+                </div>
+                <div class="step active">
+                    <div class="step-number">3</div>
+                    <div class="step-name">Details</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-name">Checkout</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Form -->
+    <div class="container">
+        <div class="row">
+            <!-- Payment and Shipping Information -->
+            <div class="col-lg-8">
+                <div class="checkout-card">
+                    <h3 class="checkout-card-title">Shipping Information</h3>
+                    <form id="shippingForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" value="<%= user.firstname %>"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" value="<%= user.lastname %>"
+                                    required>
+                            </div>
+                        </div>
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" value="<%= user.email %>" required>
+
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" value="<%= user.phone %>" required>
+
+                        <label for="address" class="form-label">Street Address</label>
+                        <input type="text" class="form-control" id="address" value="<%= user.address %>" required>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="zipCode" class="form-label">ZIP Code</label>
+                                <input type="text" class="form-control" id="zipCode">
+                            </div>
+                        </div>
+                        <label for="country" class="form-label">Country</label>
+                        <select class="form-select" id="country" required>
+                            <option value="">Select Country</option>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="CA">Canada</option>
+                            <option value="AU">Australia</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="checkout-card">
+                    <h3 class="checkout-card-title">Payment Method</h3>
+                    <div class="payment-options">
+                        <div class="payment-method" onclick="selectPaymentMethod('bankTransfer')">
+                            <input type="radio" name="paymentMethod" id="bankTransfer" checked>
+                            <i class="fas fa-university payment-icon"></i>
+                            <div>
+                                <h6>Bank Transfer</h6>
+                                <p class="small text-muted">Send payment via any Banking app HBL/ Easypaisa/ JazzCash or any, and upload the voucher screenshot</p>
+                            </div>
+                        </div>
+
+                        <div class="payment-method" onclick="selectPaymentMethod('cod')">
+                            <input type="radio" name="paymentMethod" id="cod">
+                            <i class="fas fa-money-bill-wave payment-icon"></i>
+                            <div>
+                                <h6>Cash on Delivery</h6>
+                                <p class="small text-muted">Pay when you receive your order</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bank Transfer Details -->
+                    <div class="payment-details active" id="bankTransferDetails">
+                        <div class="alert alert-info">
+                            <strong>Our Bank Details:</strong><br>
+                            <b>Bank:</b> HBL (Habib Bank Limited)<br>
+                            <b>Account Title:</b> Usman IAA<br>
+                            <b>Account Number:</b> 50607914640903<br>
+                            <b>IBAN:</b> PK00HABB0000000000000
+                        </div>
+
+                        <label class="form-label">Upload Payment Screenshot</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <input type="file" class="form-control d-none" id="paymentScreenshot" accept="image/*" onchange="handleFileUpload(this)">
+                            <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('paymentScreenshot').click()">
+                                <i class="fas fa-upload me-2"></i>Upload Voucher
+                            </button>
+                            <span id="fileUploadStatus" class="text-muted small">No file selected</span>
+                        </div>
+                        <div id="imagePreview" class="mt-3" style="display: none;">
+                            <img id="previewImg" src="" alt="Payment Screenshot" style="max-width: 200px; border-radius: 8px; border: 2px solid #ddd;">
+                            <button type="button" class="btn btn-sm btn-danger ms-2" onclick="removeUpload()">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cash on Delivery Details -->
+                    <div class="payment-details" id="codDetails">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            You'll pay in cash when your order is delivered. Extra PKR <%= shipping %> processing applies.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h3 class="order-summary-title">Your Order</h3>
+
+                    <% cartItems.forEach(item=> { %>
+                        <div class="order-item">
+                            <div class="order-item-img">
+                                <img src="<%= item.product.images[0] %>" alt="<%= item.product.name %>">
+                            </div>
+
+                            <div class="order-item-details">
+                                <div class="order-item-name">
+                                    <%= item.product.name %>
+                                </div>
+                                <div class="small text-muted">
+                                    <%= item.size %>ml
+                                </div>
+                                <div class="order-item-price">PKR <%= item.price.toFixed(2) %>
+                                </div>
+                            </div>
+
+                            <div class="order-item-quantity">×<%= item.quantity %>
+                            </div>
+                        </div>
+                        <% }) %>
+
+
+                            <div class="order-totals">
+                                <div class="order-total-row">
+                                    <span class="order-total-label">Subtotal</span>
+                                    <span class="order-total-amount">PKR <%= subtotal.toFixed(2) %></span>
+                                </div>
+
+                                <div class="order-total-row">
+                                    <span class="order-total-label">Shipping</span>
+                                    <span class="order-total-amount">PKR <%= shipping %></span>
+                                </div>
+
+                                <div class="order-total-row order-grand-total">
+                                    <span class="order-total-label">Total</span>
+                                    <span class="order-total-amount">PKR <%= total.toFixed(2) %></span>
+                                </div>
+
+                            </div>
+
+                            <button href="#" class="btn btn-checkout mt-4" onclick="placeOrder()">
+                                <i class="fas fa-lock me-2"></i>Complete Order
+                            </button>
+
+                            <div class="mt-3 small text-muted text-center">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                Your transaction is secure and encrypted
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Payment method selection
+        function selectPaymentMethod(method) {
+            // Hide all payment detail sections
+            const sections = ['bankTransferDetails', 'codDetails'];
+            sections.forEach(sec => {
+                const el = document.getElementById(sec);
+                if (el) el.classList.remove('active');
+            });
+
+            // Show the one user selected
+            const activeSection = document.getElementById(method + 'Details');
+            if (activeSection) activeSection.classList.add('active');
+
+            // Update radio button
+            document.getElementById(method).checked = true;
+        }
+
+
+        let uploadedFile = null;
+
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                uploadedFile = file;
+                
+                // Update status
+                document.getElementById('fileUploadStatus').textContent = file.name;
+                document.getElementById('fileUploadStatus').classList.remove('text-muted');
+                document.getElementById('fileUploadStatus').classList.add('text-success');
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeUpload() {
+            uploadedFile = null;
+            document.getElementById('paymentScreenshot').value = '';
+            document.getElementById('fileUploadStatus').textContent = 'No file selected';
+            document.getElementById('fileUploadStatus').classList.remove('text-success');
+            document.getElementById('fileUploadStatus').classList.add('text-muted');
+            document.getElementById('imagePreview').style.display = 'none';
+        }
+
+        // Updated placeOrder function
+        function placeOrder() {
+            // Validate form
+            const form = document.getElementById('shippingForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Get payment method
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
+
+            // Screenshot validation for bank transfer
+            if (paymentMethod === "bankTransfer") {
+                if (!uploadedFile) {
+                    alert("Please upload your bank transfer payment screenshot.");
+                    return;
+                }
+            }
+
+            // Disable button to prevent double submission
+            const submitBtn = document.querySelector('.btn-checkout');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+
+            // Prepare order data
+            const orderData = new FormData();
+            orderData.append('shipping', JSON.stringify({
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                zipCode: document.getElementById('zipCode').value,
+                country: document.getElementById('country').value
+            }));
+            orderData.append('paymentMethod', paymentMethod);
+            
+            if (uploadedFile) {
+                orderData.append('screenshot', uploadedFile);
+            }
+
+            fetch('/dashboard/orders', {
+                method: 'POST',
+                body: orderData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order placed successfully!');
+                    window.location.href = "/dashboard/orders";
+                } else {
+                    alert(data.message || "Something went wrong.");
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-lock me-2"></i>Complete Order';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Server error while placing order.");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-lock me-2"></i>Complete Order';
+            });
+        }
+    </script>
+</body>
+
+</html>

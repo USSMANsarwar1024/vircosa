@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vircosa | Create Account</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+  <link rel="stylesheet" href="../stylesheets/main-styles.css">
+
+  <style>
+    :root {
+      --primary-color: #8b5a2b;
+      --secondary-color: #2c3e50;
+      --accent-color: #d4af37;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+      --warning-color: #ffc107;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(rgba(248, 245, 242, 0.92), rgba(139, 90, 43, 0.35)), url('../images/signup-hero-img.avif') no-repeat center center;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      color: var(--secondary-color);
+    }
+
+    .register-card {
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      margin-top: 6rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .register-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: none;
+    }
+
+    .card-header h2 {
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-header p {
+      font-family: 'Montserrat';
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      margin-bottom: 0;
+    }
+
+    .card-header i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .card-body {
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+      color: var(--secondary-color);
+    }
+
+    .form-control {
+      height: 50px;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+      padding-left: 45px;
+      transition: all 0.3s ease;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.25);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--secondary-color);
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+
+    .btn-register {
+      background-color: var(--primary-color);
+      border: none;
+      height: 50px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .btn-register:hover {
+      background-color: #6d4622;
+      transform: translateY(-2px);
+    }
+
+    .password-strength {
+      height: 5px;
+      background: #eee;
+      border-radius: 3px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .strength-bar {
+      height: 100%;
+      width: 0;
+      transition: all 0.3s;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--secondary-color);
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .toggle-password:hover {
+      opacity: 1;
+    }
+
+    textarea.form-control {
+      height: auto;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .form-check-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .invalid-feedback {
+      display: none;
+      color: var(--error-color);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    .was-validated .form-control:invalid,
+    .form-control.is-invalid {
+      border-color: var(--error-color);
+      padding-right: calc(1.5em + 0.75rem);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 3.6.4.4.4-.4'/%3e%3cpath d='M6 7v1'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right calc(0.375em + 0.1875rem) center;
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+
+    .was-validated .form-control:valid,
+    .form-control.is-valid {
+      border-color: var(--success-color);
+      padding-right: calc(1.5em + 0.75rem);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right calc(0.375em + 0.1875rem) center;
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+
+    .btn-outline-perfume {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-perfume:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .preview-image {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .register-card {
+        width: 90% !important;
+      }
+
+      .card-body {
+        padding: 1.5rem;
+      }
+
+      .card-header {
+        padding: 1.5rem;
+      }
+
+      .gender-options {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <%- include('partials/navbar') %>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="register-card card w-100">
+          <div class="card-header">
+            <i class="fas fa-user-plus"></i>
+            <h2>Join Vircosa</h2>
+            <p>CREATE YOUR FRAGRANT ACCOUNT</p>
+          </div>
+
+          <div class="card-body">
+            <!-- Display flash messages if any -->
+            <% if (typeof message !== 'undefined' && message.length > 0) { %>
+              <div class="alert alert-danger" role="alert">
+                <%= message %>
+              </div>
+            <% } %>
+
+            <form id="signupForm" action="/signup" method="POST">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" class="form-control" id="firstName" name="firstname" minlength="2" maxlength="50" placeholder="John" required>
+                    <div class="invalid-feedback">Please provide a valid first name (2-50 characters).</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" class="form-control" id="lastName" name="lastname" minlength="2" maxlength="50" placeholder="Doe" required>
+                    <div class="invalid-feedback">Please provide a valid last name (2-50 characters).</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label>
+                <div class="d-flex gap-4 flex-wrap">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="m" checked>
+                    <label class="form-check-label" for="male"><i class="fas fa-male"></i> Male</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="f">
+                    <label class="form-check-label" for="female"><i class="fas fa-female"></i> Female</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="o">
+                    <label class="form-check-label" for="other"><i class="fas fa-genderless"></i> Other</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" class="form-control" id="email" name="email" placeholder="john@example.com" required>
+                <div class="invalid-feedback">Please provide a valid email address.</div>
+              </div>
+
+              <div class="form-group position-relative">
+                <label for="password">Password</label>
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" class="form-control" id="password" name="password" minlength="8" placeholder="Create a strong password" required>
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                <small class="text-muted">At least 8 characters, including uppercase, number & special symbol</small>
+                <div class="password-strength mt-2"><div class="strength-bar" id="strengthBar"></div></div>
+                <div class="invalid-feedback">Password must be at least 8 characters with uppercase, number, and special character.</div>
+              </div>
+
+              <div class="form-group position-relative">
+                <label for="confirmPassword">Confirm Password</label>
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="8" placeholder="Confirm your password" required>
+                <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+                <div class="invalid-feedback">Passwords do not match.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <i class="fas fa-phone input-icon"></i>
+                <input type="tel" class="form-control" id="phoneNumber" name="phone" placeholder="03xxxxxxxxx" pattern="^(\+92|92|0)?3\d{9}$" required>
+                <small class="text-muted">Valid Pakistani number only (e.g., 03001234567)</small>
+                <div class="invalid-feedback">Please provide a valid Pakistani phone number.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="address">Address</label>
+                <i class="fas fa-map-marker-alt input-icon"></i>
+                <textarea class="form-control" id="address" name="address" placeholder="Enter your shipping address" rows="2" maxlength="200"></textarea>
+                <div class="invalid-feedback">Address cannot exceed 200 characters.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="profilePicture">Profile Picture</label>
+                <i class="fas fa-image input-icon"></i>
+                <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
+                <small class="text-muted">Optional. Max file size: 5MB. Supported formats: JPG, PNG, GIF.</small>
+                <img id="preview" class="preview-image" src="#" alt="Profile preview" />
+              </div>
+
+              <div class="form-group form-check mt-4">
+                <input type="checkbox" class="form-check-input" id="terms" required>
+                <label class="form-check-label" for="terms">
+                  I agree to the <a href="/terms" target="_blank">Terms of Service</a> and <a href="/privacy" target="_blank">Privacy Policy</a>
+                </label>
+                <div class="invalid-feedback">You must agree to the terms and conditions.</div>
+              </div>
+
+              <button type="submit" class="btn btn-register w-100 mt-3">
+                <i class="fas fa-user-plus me-2"></i> Create Account
+              </button>
+
+              <div class="text-center mt-4">
+                Already have an account? <a href="/login" class="fw-semibold text-decoration-none">Sign in</a>
+              </div>
+            </form>
+          </div>
+
+          <div class="card-footer text-center">
+            <a href="/" class="btn btn-outline-perfume mt-2"><i class="fas fa-arrow-left me-2"></i> Back to Home</a>
+            <div class="mt-3"><small>&copy; 2025 Vircosa. All Rights Reserved.</small></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Password strength indicator
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const bar = document.getElementById('strengthBar');
+    
+    password.addEventListener('input', () => {
+      const val = password.value;
+      let strength = 0;
+      
+      // Check password criteria
+      if (val.length >= 8) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+      
+      // Update strength bar
+      bar.style.width = (strength * 25) + '%';
+      bar.style.backgroundColor = ['#e74c3c', '#f39c12', '#27ae60', '#2ecc71'][strength - 1] || 'transparent';
+      
+      // Validate password match
+      validatePasswordMatch();
+    });
+    
+    // Password match validation
+    function validatePasswordMatch() {
+      if (password.value !== confirmPassword.value) {
+        confirmPassword.classList.add('is-invalid');
+        confirmPassword.classList.remove('is-valid');
+      } else {
+        confirmPassword.classList.remove('is-invalid');
+        if (confirmPassword.value.length > 0) {
+          confirmPassword.classList.add('is-valid');
+        }
+      }
+    }
+    
+    confirmPassword.addEventListener('input', validatePasswordMatch);
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    togglePassword.addEventListener('click', () => {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      togglePassword.classList.toggle('fa-eye');
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    toggleConfirmPassword.addEventListener('click', () => {
+      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      confirmPassword.setAttribute('type', type);
+      toggleConfirmPassword.classList.toggle('fa-eye');
+      toggleConfirmPassword.classList.toggle('fa-eye-slash');
+    });
+
+    // Profile picture preview
+    const profilePicture = document.getElementById('profilePicture');
+    const preview = document.getElementById('preview');
+    
+    profilePicture.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        
+        reader.addEventListener('load', function() {
+          preview.style.display = 'block';
+          preview.src = reader.result;
+        });
+        
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+        preview.src = '';
+      }
+    });
+
+    // Form validation
+    (function() {
+      'use strict';
+      
+      // Fetch the form we want to apply validation to
+      const form = document.getElementById('signupForm');
+      
+      form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        
+        form.classList.add('was-validated');
+      }, false);
+    })();
+
+    // Real-time validation for specific fields
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const email = document.getElementById('email');
+    const phoneNumber = document.getElementById('phoneNumber');
+    const address = document.getElementById('address');
+    
+    // Real-time validation for name fields
+    [firstName, lastName].forEach(field => {
+      field.addEventListener('input', function() {
+        if (this.value.length >= 2 && this.value.length <= 50) {
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+        } else {
+          this.classList.remove('is-valid');
+          if (this.value.length > 0) {
+            this.classList.add('is-invalid');
+          }
+        }
+      });
+    });
+    
+    // Real-time validation for email
+    email.addEventListener('input', function() {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(this.value)) {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+      } else {
+        this.classList.remove('is-valid');
+        if (this.value.length > 0) {
+          this.classList.add('is-invalid');
+        }
+      }
+    });
+    
+    // Real-time validation for phone
+    phoneNumber.addEventListener('input', function() {
+      const phoneRegex = /^(\+92|92|0)?3\d{9}$/;
+      if (phoneRegex.test(this.value)) {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+      } else {
+        this.classList.remove('is-valid');
+        if (this.value.length > 0) {
+          this.classList.add('is-invalid');
+        }
+      }
+    });
+    
+    // Real-time validation for address
+    address.addEventListener('input', function() {
+      if (this.value.length <= 200) {
+        this.classList.remove('is-invalid');
+        if (this.value.length > 0) {
+          this.classList.add('is-valid');
+        }
+      } else {
+        this.classList.add('is-invalid');
+        this.classList.remove('is-valid');
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vircosa | Hi, <%= user ? user.firstname : "User" %></title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
+
+    <!-- Custom CSS -->
+    <style>
+        /* ===== Verification Section ===== */
+        .verification-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 0 80px;
+        }
+
+        .verification-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+        }
+
+        .verification-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 30px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .verification-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+
+        .verification-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .verification-body {
+            padding: 40px 30px;
+        }
+
+        .email-display {
+            background-color: rgba(139, 90, 43, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .email-display i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .otp-input-container {
+            margin-bottom: 30px;
+        }
+
+        .otp-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .otp-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.2);
+            outline: none;
+        }
+
+        .otp-input.filled {
+            border-color: var(--primary-color);
+            background-color: rgba(139, 90, 43, 0.05);
+        }
+
+        .timer {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .timer span {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .btn-verify {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-verify:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-verify:active {
+            transform: translateY(0);
+        }
+
+        .resend-link {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .resend-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .resend-link a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .help-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        .security-notice {
+            background-color: rgba(139, 90, 43, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .security-notice i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        .security-notice p {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .verification-container {
+                margin: 0 20px;
+            }
+
+            .verification-header {
+                padding: 30px 20px 25px;
+            }
+
+            .verification-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .verification-body {
+                padding: 30px 20px;
+            }
+
+            .otp-input {
+                width: 45px;
+                height: 55px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .verification-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .otp-input {
+                width: 40px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .otp-inputs {
+                justify-content: space-around;
+            }
+
+            .otp-input {
+                width: 35px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <%- include('partials/navbar') %>
+
+    <!-- Verification Section -->
+    <section class="verification-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="verification-container">
+                        <div class="verification-header">
+                            <div class="verification-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h2>Email Verification</h2>
+                            <p>Secure your Vircosa account</p>
+                        </div>
+                        <div class="verification-body">
+                            <p class="text-center mb-4">We've sent a 6-digit verification code to your email address.
+                                Please enter it below to complete your registration.</p>
+
+                            <div class="email-display">
+                                <i class="fas fa-envelope"></i>
+                                <b id="user-email"><%= user ? user.email : "user@vircosa.com" %></b>
+                            </div>
+
+                            <form id="verification-form" action="/verify-email" method="POST">
+                                <input type="hidden" name="email" id="hidden-email" value="<%= email %>">
+                                <input type="hidden" name="otp" id="hidden-otp">
+
+                                <div class="otp-input-container">
+                                    <label for="otp-input-1" class="form-label">Enter Verification Code</label>
+                                    <div class="otp-inputs">
+                                        <input type="text" class="otp-input" id="otp-input-1" maxlength="1"
+                                            data-index="1">
+                                        <input type="text" class="otp-input" id="otp-input-2" maxlength="1"
+                                            data-index="2">
+                                        <input type="text" class="otp-input" id="otp-input-3" maxlength="1"
+                                            data-index="3">
+                                        <input type="text" class="otp-input" id="otp-input-4" maxlength="1"
+                                            data-index="4">
+                                        <input type="text" class="otp-input" id="otp-input-5" maxlength="1"
+                                            data-index="5">
+                                        <input type="text" class="otp-input" id="otp-input-6" maxlength="1"
+                                            data-index="6">
+                                    </div>
+                                </div>
+
+                                <div class="timer">
+                                    Code expires in: <span id="countdown">05:00</span>
+                                </div>
+
+                                <button type="submit" class="btn btn-verify" id="verify-button">
+                                    <i class="fas fa-shield-check me-2"></i> Verify Email
+                                </button>
+
+                                <div class="resend-link">
+                                    <a href="#" id="resend-otp">Resend verification code</a>
+                                </div>
+
+                                <div class="help-text">
+                                    Didn't receive the code? Check your spam folder or try resending.
+                                </div>
+
+                                <div class="security-notice">
+                                    <i class="fas fa-info-circle"></i>
+                                    <p>For your security, this verification code will expire in 5 minutes. Do not share
+                                        this code with anyone.</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        document.getElementById("verification-form").addEventListener("submit", function (e) {
+            let otp = "";
+            for (let i = 1; i <= 6; i++) {
+                otp += document.getElementById("otp-input-" + i).value;
+            }
+            document.getElementById("hidden-otp").value = otp; // ⬅ fill hidden field
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Countdown timer
+        let timeLeft = 300; // 5 minutes in seconds
+        const countdownElement = document.getElementById('countdown');
+        const resendLink = document.getElementById('resend-otp');
+        
+        function updateCountdown() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                countdownElement.textContent = '00:00';
+                resendLink.style.pointerEvents = 'auto';
+                resendLink.style.opacity = '1';
+            }
+        }
+        
+        // Start countdown
+        updateCountdown();
+        
+        // Resend OTP functionality
+        resendLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Reset timer
+            timeLeft = 300;
+            updateCountdown();
+            
+            // Disable resend link
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = '0.5';
+            
+            // Show success message
+            alert('A new verification code has been sent to your email.');
+            
+            // In a real application, you would make an API call here to resend the OTP
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const otpInputs = document.querySelectorAll(".otp-input");
+            const hiddenOtpInput = document.getElementById("hidden-otp");
+            const verifyForm = document.getElementById("verification-form");
+
+            // Focus first input on page load
+            otpInputs[0].focus();
+
+            // Move to next input automatically, backspace handling, and auto-submit
+            otpInputs.forEach((input, index) => {
+
+                input.addEventListener("input", () => {
+                    input.classList.add("filled");
+
+                    // Auto-move to next box
+                    if (input.value.length === 1 && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+
+                    updateHiddenOtp();
+
+                    // Auto-submit when 6 digits filled
+                    if (hiddenOtpInput.value.length === 6) {
+                        verifyForm.submit();
+                    }
+                });
+
+                // Auto-backspace to previous input
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Backspace" && input.value === "" && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // When Enter is pressed anywhere → submit
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    updateHiddenOtp();
+                    verifyForm.submit();
+                }
+            });
+
+            // Build OTP and store in hidden field
+            function updateHiddenOtp() {
+                let otp = "";
+                otpInputs.forEach(i => otp += i.value);
+                hiddenOtpInput.value = otp;
+            }
+        });
+
+        document.getElementById("resend-otp").addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("hidden-email").value;
+
+            const response = await fetch("/resend-otp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert("New OTP sent to your email.");
+                resetCountdown(); // Restart timer
+            } else {
+                alert(result.message);
+            }
+        });
+        function resetCountdown() {
+            let time = 300; // 5 min
+            const countdownElem = document.getElementById("countdown");
+
+            clearInterval(window.countdownInterval);
+
+            window.countdownInterval = setInterval(() => {
+                const minutes = String(Math.floor(time / 60)).padStart(2, '0');
+                const seconds = String(time % 60).padStart(2, '0');
+                countdownElem.textContent = `${minutes}:${seconds}`;
+
+                if (time <= 0) clearInterval(window.countdownInterval);
+
+                time--;
+            }, 1000);
+        }
+        resetCountdown();
+
+
+    </script>
+
+</body>
+
+</html>

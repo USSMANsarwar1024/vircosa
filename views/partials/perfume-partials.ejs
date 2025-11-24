@@ -1,0 +1,308 @@
+<!-- partials/perfumes-section.ejs -->
+<!-- Perfumes Section -->
+<section id="perfumes" class="py-5">
+  <div class="container">
+    <h2 class="section-title brand-font">Our Perfumes</h2>
+
+    <!-- Marquee wrapper -->
+    <div class="marquee">
+      <div class="marquee-content">
+        <% if (featuredProducts && featuredProducts.length > 0) { %>
+          <!-- First set of products -->
+          <% featuredProducts.forEach(product => { %>
+            <div class="card perfume-card">
+              <% if (product.productBadge) { %>
+                <span class="badge-sale"><%= product.productBadge.toUpperCase() %></span>
+              <% } %>
+              <a href="/products/product-details/<%= product._id %>">
+                <img src="<%= product.images[0] %>" 
+                     class="card-img-top" 
+                     alt="<%= product.name %>" 
+                     loading="lazy" />
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/products/product-details/<%= product._id %>" class="text-decoration-none text-dark">
+                    <%= product.name %>
+                  </a>
+                </h5>
+                <p class="card-text"><%= product.description.substring(0, 60) %>...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="price">PKR <%= product.variants[0].price %></span>
+                    <% if (product.variants[0].oldPrice) { %>
+                      <span class="old-price ms-2">PKR <%= product.variants[0].oldPrice %></span>
+                    <% } %>
+                  </div>
+                  <a href="#" 
+                     class="btn btn-zephyra btn-sm add-to-cart-marquee" 
+                     data-product-id="<%= product._id %>">
+                    Add to Cart
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+
+          <!-- Duplicate set for seamless infinite scroll -->
+          <% featuredProducts.forEach(product => { %>
+            <div class="card perfume-card">
+              <% if (product.productBadge) { %>
+                <span class="badge-sale"><%= product.productBadge.toUpperCase() %></span>
+              <% } %>
+              <a href="/products/product-details/<%= product._id %>">
+                <img src="<%= product.images[0] %>" 
+                     class="card-img-top" 
+                     alt="<%= product.name %>" 
+                     loading="lazy" />
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/products/product-details/<%= product._id %>" class="text-decoration-none text-dark">
+                    <%= product.name %>
+                  </a>
+                </h5>
+                <p class="card-text"><%= product.description.substring(0, 60) %>...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="price">PKR <%= product.variants[0].price %></span>
+                    <% if (product.variants[0].oldPrice) { %>
+                      <span class="old-price ms-2">PKR <%= product.variants[0].oldPrice %></span>
+                    <% } %>
+                  </div>
+                  <a href="#" 
+                     class="btn btn-zephyra btn-sm add-to-cart-marquee" 
+                     data-product-id="<%= product._id %>">
+                    Add to Cart
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <!-- Fallback if no products -->
+          <div class="text-center w-100 py-5">
+            <p class="text-muted">No products available at the moment.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="/products" class="btn btn-outline-dark">View All Perfumes</a>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Marquee Styles */
+.marquee {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  background: linear-gradient(90deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
+  padding: 20px 0;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 20px;
+  animation: scroll 40s linear infinite;
+  width: fit-content;
+}
+
+.marquee:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.perfume-card {
+  min-width: 280px;
+  max-width: 280px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.perfume-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.perfume-card img {
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.perfume-card:hover img {
+  transform: scale(1.05);
+}
+
+.badge-sale {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.perfume-card .card-body {
+  padding: 20px;
+}
+
+.perfume-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--secondary-color, #2c3e50);
+}
+
+.perfume-card .card-title a:hover {
+  color: var(--primary-color, #8b5cf6);
+}
+
+.perfume-card .card-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+  min-height: 45px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color, #8b5cf6);
+}
+
+.old-price {
+  font-size: 0.9rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.btn-zephyra {
+  background-color: var(--primary-color, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-zephyra:hover {
+  background-color: var(--secondary-color, #2c3e50);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: var(--secondary-color, #2c3e50);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--primary-color, #8b5cf6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .perfume-card {
+    min-width: 240px;
+    max-width: 240px;
+  }
+
+  .perfume-card img {
+    height: 240px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+</style>
+
+<script>
+// Add to cart functionality for marquee items
+document.querySelectorAll('.add-to-cart-marquee').forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const productId = btn.dataset.productId;
+
+    try {
+      const res = await fetch('/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+      });
+
+      const data = await res.json();
+
+      if (res.status === 401) {
+        window.location.href = '/login';
+        return;
+      }
+
+      if (res.ok) {
+        // Show success notification (reuse existing notification function if available)
+        if (typeof showNotification === 'function') {
+          showNotification('✨ Product added to cart!', 'success');
+        } else {
+          alert('✨ Product added to cart!');
+        }
+        
+        // Update cart count
+        if (typeof updateCartCount === 'function') {
+          updateCartCount();
+        }
+      } else {
+        if (typeof showNotification === 'function') {
+          showNotification(data.message || 'Error adding to cart', 'error');
+        } else {
+          alert(data.message || 'Error adding to cart');
+        }
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      if (typeof showNotification === 'function') {
+        showNotification('Network error occurred', 'error');
+      } else {
+        alert('Network error occurred');
+      }
+    }
+  });
+});
+</script>

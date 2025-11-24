@@ -1,0 +1,15 @@
+notification system -> {
+    globalize
+}
+stock in products model {
+    exact stock mention ho kitnay products hn kitny rah gye?
+    =0 honay par no order placement
+}
+
+user's orders -> {
+    
+}
+
+dashboard{
+    dashboard's stats dynamic
+}

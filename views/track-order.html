@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order | Zephyr</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #8B5A2B;
+            /* Rich Amber */
+            --secondary-color: #4A2C2A;
+            /* Deep Mahogany */
+            --accent-color: #D4AF8E;
+            /* Soft Nude */
+            --light-color: #F8F5F2;
+            /* Ivory */
+            --dark-color: #2A2118;
+            /* Dark Espresso */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            background-color: rgba(243, 221, 221, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(252, 231, 231, 0.95);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px;
+            position: relative;
+        }
+
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:before,
+        .nav-link.active:before {
+            width: 100%;
+        }
+
+        .btn-outline-perfume {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-perfume:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== Hero Section ===== */
+        .track-hero {
+            background: linear-gradient(rgba(42, 33, 24, 0.4), rgba(42, 33, 24, 0.4)),
+                url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .track-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .track-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== Tracking Section ===== */
+        .tracking-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .tracking-card {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .tracking-form .form-control {
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding-left: 20px;
+            font-size: 1rem;
+        }
+
+        .tracking-form .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.25);
+        }
+
+        .btn-track {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 5px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            height: 50px;
+        }
+
+        .btn-track:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tracking Results */
+        .tracking-result {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .order-summary {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .order-status {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .status-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-step.completed .step-icon,
+        .status-step.active .step-icon {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .status-step.completed .step-text,
+        .status-step.active .step-text {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .status-step.completed .step-date,
+        .status-step.active .step-date {
+            opacity: 1;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            color: #999;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-content {
+            flex-grow: 1;
+        }
+
+        .step-text {
+            font-weight: 500;
+            color: #777;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .step-date {
+            font-size: 0.9rem;
+            color: #999;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .progress-line {
+            position: absolute;
+            height: 100%;
+            width: 2px;
+            background-color: #eee;
+            left: 25px;
+            top: 0;
+            z-index: 0;
+        }
+
+        .progress-bar {
+            position: absolute;
+            height: 0;
+            width: 2px;
+            background-color: var(--primary-color);
+            left: 25px;
+            top: 0;
+            z-index: 1;
+            transition: height 1s ease;
+        }
+
+        .order-details {
+            margin-top: 40px;
+        }
+
+        .detail-row {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            width: 200px;
+            flex-shrink: 0;
+        }
+
+        .detail-value {
+            color: #555;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .total-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        /* Help Section */
+        .help-section {
+            background-color: var(--light-color);
+            padding: 60px 0;
+            border-radius: 10px;
+        }
+
+        .help-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .help-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-title span {
+            color: var(--accent-color);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .track-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .track-hero {
+                padding: 120px 0 80px;
+            }
+
+            .track-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .detail-row {
+                flex-direction: column;
+            }
+
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .tracking-card {
+                padding: 25px;
+            }
+
+            .status-step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .progress-line,
+            .progress-bar {
+                left: 25px;
+                height: 100%;
+                width: 2px;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Zephyr<span>Luxe</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">Perfumes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about-us.html">About Us</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="whishlist.html">Wishlist</a>
+                </li>
+            </ul>
+            <div class="ms-3 d-flex align-items-center">
+                <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
+                <a href="cart.html" class="btn btn-outline-perfume position-relative">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Added to cart notification (for all pages) -->
+<div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Elegance in Every Drop</h1>
+            <p class="hero-subtitle">Discover the art of fragrance with Zephyra Luxe</p>
+            <a href="#products" class="btn btn-hero">Explore Scents</a>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="track-hero">
+        <div class="container">
+            <h1>Track Your Order</h1>
+            <p>Follow your Zephyruxe journey from our workshop to your doorstep. Enter your order details below to check the current status of your shipment.</p>
+        </div>
+    </section>
+
+    <!-- Tracking Section -->
+    <section class="tracking-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="tracking-card">
+                        <h2 class="text-center mb-4">Where's My Order?</h2>
+                        <form class="tracking-form" id="trackingForm">
+                            <div class="mb-4">
+                                <label for="orderNumber" class="form-label">Order Number</label>
+                                <input type="text" class="form-control" id="orderNumber" placeholder="e.g. ZL-2023-45678" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                            </div>
+                            <button type="submit" class="btn btn-track">Track Order</button>
+                        </form>
+
+                        <!-- Tracking Results (Initially Hidden) -->
+                        <div class="tracking-result mt-5" id="trackingResult">
+                            <div class="order-summary">
+                                <h3 class="mb-4">Order Summary</h3>
+                                <div class="order-status">
+                                    <div class="progress-line"></div>
+                                    <div class="progress-bar" id="progressBar"></div>
+                                    
+                                    <div class="status-step completed">
+                                        <div class="step-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <div class="step-text">Order Placed</div>
+                                            <div class="step-date">June 1, 2023</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-step completed">
+                                        <div class="step-icon">
+                                            <i class="fas fa-box"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <div class="step-text">Processing</div>
+                                            <div class="step-date">June 2, 2023</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-step active">
+                                        <div class="step-icon">
+                                            <i class="fas fa-shipping-fast"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <div class="step-text">Shipped</div>
+                                            <div class="step-date">June 4, 2023</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-step">
+                                        <div class="step-icon">
+                                            <i class="fas fa-home"></i>
+                                        </div>
+                                        <div class="step-content">
+                                            <div class="step-text">Delivered</div>
+                                            <div class="step-date">Estimated June 7, 2023</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="order-details">
+                                    <h4 class="mb-4">Order Details</h4>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Order Number</div>
+                                        <div class="detail-value">ZL-2023-45678</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Order Date</div>
+                                        <div class="detail-value">June 1, 2023 at 2:45 PM</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Shipping Method</div>
+                                        <div class="detail-value">Express Delivery (2-3 business days)</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Tracking Number</div>
+                                        <div class="detail-value">ZP123456789US <a href="#" class="ms-2">(View Carrier Details)</a></div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Shipping Address</div>
+                                        <div class="detail-value">
+                                            Sarah Johnson<br>
+                                            123 Fragrance Lane<br>
+                                            Suite 45<br>
+                                            Scentville, SC 12345<br>
+                                            United States
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="mt-5 mb-4">Order Items</h4>
+                                <div class="product-item">
+                                    <div class="product-img">
+                                        <img src="references/fleur.png" alt="Fleur Perfume">
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Fleur Eau de Parfum</div>
+                                        <div class="product-price">$89.00</div>
+                                        <div>Quantity: 1</div>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <div class="product-img">
+                                        <img src="references/whim.png" alt="Whim Perfume">
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Whim Eau de Parfum</div>
+                                        <div class="product-price">$95.00</div>
+                                        <div>Quantity: 1</div>
+                                    </div>
+                                </div>
+
+                                <div class="total-amount">
+                                    Order Total: $184.00
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h4>Need Help?</h4>
+                        <p>Our customer service team is available 24/7 to assist with any questions about your order.</p>
+                        <a href="contact.html" class="btn btn-outline-perfume mt-3">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4>Returns & Exchanges</h4>
+                        <p>Not completely satisfied? Learn about our easy return and exchange policy.</p>
+                        <a href="#" class="btn btn-outline-perfume mt-3">Return Policy</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4>Order Confirmation</h4>
+                        <p>Can't find your order confirmation email? We can resend it to you.</p>
+                        <a href="#" class="btn btn-outline-perfume mt-3">Resend Email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h3 class="footer-title">Zephyra<span>Luxe</span></h3>
+                    <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
+                    <div class="social-icons mt-4">
+                        <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Shop</h4>
+                        <ul>
+                            <li><a href="product.html">Women</a></li>
+                            <li><a href="product.html">Men</a></li>
+                            <li><a href="product.html">Gift Sets</a></li>
+                            <li><a href="product.html">Travel Sizes</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="index.html#about">Our Story</a></li>
+                            <li><a href="#">Ingredients</a></li>
+                            <li><a href="#">Sustainability</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
+                            <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
+                            <li><i class="fas fa-envelope me-2"></i> hello@zephyraluxe.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Zephyra Luxe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (for navbar toggle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Tracking Form Submission
+        document.getElementById('trackingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate API call with timeout
+            setTimeout(function() {
+                // Show tracking results
+                document.getElementById('trackingResult').style.display = 'block';
+                
+                // Animate progress bar (75% complete in this example)
+                document.getElementById('progressBar').style.height = '75%';
+                
+                // Scroll to results
+                document.getElementById('trackingResult').scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        });
+
+        // Initialize progress bar height to 0
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('progressBar').style.height = '0';
+        });
+
+        
+    </script>
+</body>
+
+</html>

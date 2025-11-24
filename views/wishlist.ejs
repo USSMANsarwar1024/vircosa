@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vircosa | Luxury Fragrances</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
+
+    <!-- Custom CSS -->
+    <style>
+        /* ===== Wishlist Header ===== */
+        .wishlist-header {
+            background: linear-gradient(rgba(42, 33, 24, 0.7), rgba(42, 33, 24, 0.7)) ;
+                background-image: url("D:\Zephyr Website\WhatsApp Image 2025-05-26 at 8.55.08 PM.jpeg") no-repeat center center;
+
+            background-size: cover;
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .wishlist-title {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .wishlist-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== Wishlist Section ===== */
+        .wishlist-section {
+            padding: 60px 0 100px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .wishlist-empty {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .wishlist-empty i {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .wishlist-empty h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .wishlist-empty p {
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-wishlist {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-wishlist:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        /* Wishlist Items */
+        .wishlist-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .wishlist-item-img {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .wishlist-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .wishlist-item:hover .wishlist-item-img img {
+            transform: scale(1.05);
+            
+        }
+
+        .wishlist-item-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wishlist-item-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .wishlist-item-desc {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .wishlist-item-price {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .wishlist-item-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            
+        }
+
+        .btn-wishlist-action {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-move-to-cart {
+            background-color: var(--primary-color);
+            color: white;
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-move-to-cart:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-remove {
+            background-color: transparent;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .btn-remove:hover {
+            background-color: #BB9351;
+            color: white;
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .wishlist-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .wishlist-header {
+                padding: 100px 0 60px;
+            }
+
+            .wishlist-item-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .wishlist-title {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .wishlist-item-actions {
+                flex-direction: column;
+            }
+
+            .btn-wishlist-action {
+                width: 100%;
+            }
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-left: 4px solid #2E7D32;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            border-left: 4px solid #b71c1c;
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            border-left: 4px solid #0D47A1;
+        }
+
+        .notification-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            border-left: 4px solid #e65100;
+        }
+
+        /* Close button */
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
+        /* confirm remove-all button */
+        .confirm-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(3px);
+        }
+
+        .confirm-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px 40px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: popupFade 0.3s ease;
+        }
+
+        .confirm-box h4 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .confirm-box p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .confirm-buttons .btn {
+            flex: 1;
+            border-radius: 6px;
+            padding: 8px 15px;
+        }
+
+        @keyframes popupFade {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+
+
+    <!-- Wishlist Header -->
+    <section class="wishlist-header">
+        <div class="container">
+            <h1 class="wishlist-title">Your Dream Scents Await</h1>
+            <p class="wishlist-subtitle">Don’t just admire them — make them yours and let your aura speak luxury.</p>
+        </div>
+    </section>
+
+    <!-- Wishlist Section -->
+    <section class="wishlist-section">
+        <div class="container">
+            
+            <% if (wishlistItems.length > 0) { %>
+                <div class="section-title">
+                    <h2>Saved For Later</h2>
+                    <p class="text-muted">These fragrances deserve a place on your shelf, not just your wishlist.</p>
+                </div>
+    
+                <!-- Wishlist Items Grid -->
+                <div class="row" id="wishlist-items">
+                    <% wishlistItems.forEach(item => { %>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="wishlist-item" data-product-id="<%= item._id %>">
+                                <div class="wishlist-item-img">
+                                    <img src="<%= item.images[0] %>" alt="<%= item.name %>">
+                                </div>
+                                <div class="wishlist-item-body">
+                                    <h3 class="wishlist-item-title"> <%= item.name %> </h3>
+                                    <p class="wishlist-item-desc"> <%= item.description %> </p>
+                                    <p class="wishlist-item-price"> PKR <%= item.price %> </p>
+                                    <div class="wishlist-item-actions">
+                                        <a href="#" class="btn btn-wishlist-action btn-move-to-cart" data-product-id="<%= item._id %>">  Add to Cart </a>
+                                        <a href="#" class="btn btn-wishlist-action btn-remove" data-product-id="<%= item._id %>"> Remove </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <% }) %>
+                <% } else { %>
+                    <!-- Empty Wishlist State (hidden by default) -->
+                    <div class="wishlist-empty" id="empty-wishlist">
+                        <i class="far fa-heart"></i>
+                        <h3>Your Wishlist is Empty</h3>
+                        <p>Start exploring our collection of luxury fragrances and add your favorites to your wishlist.</p>
+                        <a href="/products" class="btn btn-wishlist">Discover Scents</a>
+                    </div>
+                <% } %>
+                
+                
+                
+
+            <!-- Wishlist Actions -->
+            <div class="text-center mt-5" id="wishlist-actions">
+                <a href="#" class="btn btn-outline-perfume me-2" id="clear-wishlist">Clear Wishlist</a>
+                <a href="/products" class="btn btn-wishlist">Continue Shopping</a>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+    
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script>
+
+        // remove 1 from wishlist functionality
+        document.querySelectorAll('.btn-remove').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const productId = btn.closest('.wishlist-item').dataset.productId;
+
+                try {
+                const res = await fetch('/wishlist/remove-product', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    btn.closest('.col-md-6').remove(); // remove product visually
+                    showNotification('❌ Removed from wishlist', 'info');
+                } else {
+                    showNotification(data.message || 'Failed to remove item', 'error');
+                }
+                } catch {
+                showNotification('Network error', 'error');
+                }
+            });
+        });
+
+
+        // add to cart functionality
+        document.querySelectorAll('.btn-move-to-cart').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const productId = btn.dataset.productId;
+
+                try {
+                const res = await fetch('/cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await res.json().catch(() => null);
+
+                if (res.status === 401) {
+                    window.location.href = '/login';
+                    return;
+                }
+
+                if (res.ok && data?.success) {
+                    showNotification('✨ Product added to cart!', 'success');
+                } else {
+                    showNotification(data?.message || 'Error adding to cart', 'error');
+                }
+                } catch (error) {
+                showNotification('⚠️ Network issue — please try again', 'error');
+                }
+            });
+        });
+
+
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notif => notif.remove());
+
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                ${message}
+                <button class="notification-close">&times;</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Close button event
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // Check for flash messages on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for server-side flash messages
+            const successMessage = '<%= typeof success !== "undefined" && success.length > 0 ? success[0] : "" %>';
+            const errorMessage = '<%= typeof error !== "undefined" && error.length > 0 ? error[0] : "" %>';
+            
+            if (successMessage) {
+                showNotification(successMessage, 'success');
+            }
+            if (errorMessage) {
+                showNotification(errorMessage, 'error');
+            }
+        });
+
+        // confirm delete every item:
+        document.getElementById('clear-wishlist').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'confirm-overlay';
+            overlay.innerHTML = `
+                <div class="confirm-box">
+                <h4>Clear Wishlist?</h4>
+                <p>This will remove all saved fragrances. Are you sure?</p>
+                <div class="confirm-buttons">
+                    <button id="confirm-yes" class="btn btn-danger">Yes, clear all</button>
+                    <button id="confirm-no" class="btn btn-secondary">Cancel</button>
+                </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            document.getElementById('confirm-no').onclick = (e) => {
+                e.stopPropagation();
+                overlay.remove();
+            };
+
+            document.getElementById('confirm-yes').onclick = async (e) => {
+                e.stopPropagation();
+                try {
+                const res = await fetch('/wishlist/remove-all', { method: 'POST' });
+                if (res.ok) {
+                    document.getElementById('wishlist-items').innerHTML = '';
+                    showNotification('🗑️ Wishlist cleared successfully', 'info');
+                } else {
+                    showNotification('Failed to clear wishlist', 'error');
+                }
+                } catch {
+                showNotification('Network error', 'error');
+                } finally {
+                overlay.remove();
+                }
+            };
+        });
+
+
+
+    </script>
+
+    
+</body>
+
+</html>

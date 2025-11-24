@@ -1,0 +1,36 @@
+
+since we are just starting out, this feel more lie than truth, but i wanna share a story. from 2024 - onwards i had been a fragrant enthusiast and i like to buy and gift and use perfumes talk about them share insights with fellas and talking about more trending scents. we recently launched zephyr lux in our university - a mini brand or i should say a semester project and boom it went amazing our teacher liked the scents most, the students male female everyone, the co-ordinators loved the scents and we were given a special certifiation from our teacher no group was given that and it encouraged me and my fellows too much that instaead of staying a university project lets build a mini or local brand and i am devops and backend dev i can do tech stuff myself. so we are locally launching our perfume brand, first in lahore area then punjab, then nationally then internationally (Inshallah!).
+
+so this is my story!
+
+
+my-project/
+├── models/
+│   └── user.js
+├── public/
+├── views/
+├── .env
+├── app.js             <-- Main server configuration and setup
+└── routes/
+    ├── index.js       <-- General routes (/ /, /products, /about-us, etc.)
+    ├── auth.js        <-- Authentication routes (/signup, /login, /logout, /forget-password)
+    └── dashboard.js   <-- Protected routes (/dashboard)
+
+
+🟩Use PowerShell filtering (recommended)
+
+Run this inside your project root:
+Get-ChildItem -Recurse -Directory | 
+Where-Object { $_.FullName -notmatch 'node_modules' } |
+ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\', '') }
+✅ This prints a clean folder structure excluding node_modules/.
+
+If you want to include files too:
+Get-ChildItem -Recurse -File | 
+Where-Object { $_.FullName -notmatch 'node_modules' } |
+ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\', '') }
+
+
+Get-ChildItem -Recurse -File | 
+Where-Object { $_.FullName -notmatch 'node_modules' } |
+ForEach-Object { $_.FullName.Replace((Get-Location).Path + '\', '') }
