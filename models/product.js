@@ -20,7 +20,6 @@ const productSchema = new mongoose.Schema({
         validate: [(v) => v.length > 0, 'At least one image is required'],
         required: true
     }, // multiple product images but atleast one is necessary!
-    productBadge: String,
     ratings: {
         average: { type: Number, default: 0 },
         totalReviews: { type: Number, default: 0 },
