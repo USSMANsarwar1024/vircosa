@@ -43,6 +43,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const googleAuthRoutes = require("./routes/authGoogle");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 // Mount routes AFTER all middleware
 app.use("/", indexRoutes);
@@ -53,6 +54,7 @@ app.use("/admin", adminRoutes);
 app.use("/cart", cartRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/auth", googleAuthRoutes);
+app.use("/reviews", reviewRoutes);
 
 // --- Server Start ---
 app.listen(PORT, () => {

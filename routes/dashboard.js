@@ -1,3 +1,4 @@
+// /routes/dashboard.js
 const express = require("express");
 const router = express.Router();
 const { isLoggedIn } = require("../middleware/auth");
@@ -8,6 +9,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const sendEmail = require("../utils/sendEmail");
+const Review = require('../models/review');
 
 // Create uploads directory if it doesn't exist
 const uploadDir = path.join(__dirname, '../public/uploads/vouchers');
@@ -50,9 +52,14 @@ router.get("/", isLoggedIn, async (req, res) => {
       .sort({ createdAt: -1 })
       .lean();
 
+    
+
     const orders = await Order.find({ user: user._id })
       .populate('items.product')
       .sort({ createdAt: -1 });
+
+    const myReviews = await Review.find({ user: req.user._id }).populate("product", "name images");
+
 
     // Count total orders
     const totalOrders = orders.length;
@@ -62,6 +69,7 @@ router.get("/", isLoggedIn, async (req, res) => {
       featuredProducts,
       orders,
       totalOrders,
+      myReviews,
     });
   } catch (error) {
     const user = await userModel.findOne({ email: req.user.email });

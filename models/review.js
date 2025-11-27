@@ -1,24 +1,37 @@
 const mongoose = require("mongoose");
 
-const ReviewSchema = new mongoose.Schema({
-    product: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'product', 
-        required: true 
-    },
+const reviewSchema = new mongoose.Schema({
     user: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'user', 
+        ref: "user", 
         required: true 
     },
+    product: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "product", 
+        required: true 
+    },
+    order: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "order" 
+    },
+
     rating: { 
         type: Number, 
-        required: true, 
-        min: 1, max: 5 
+        min: 1, 
+        max: 5, 
+        required: true 
     },
-    comment: { type: String, trim: true, maxlength: 500 },
-    // Ensure one user can only review a product once
-    unique: true,
+    title: { 
+        type: String, 
+        trim: true 
+    },
+    comment: { 
+        type: String, 
+        trim: true, 
+        required: true 
+    },
+
 }, { timestamps: true });
 
-module.exports = mongoose.model("review", ReviewSchema);
+module.exports = mongoose.model("review", reviewSchema);

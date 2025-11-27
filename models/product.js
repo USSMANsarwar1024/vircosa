@@ -22,8 +22,9 @@ const productSchema = new mongoose.Schema({
     }, // multiple product images but atleast one is necessary!
     ratings: {
         average: { type: Number, default: 0 },
-        totalReviews: { type: Number, default: 0 },
+        totalReviews: { type: Number, default: 0 }
     },
+    productBadge: String,
     shippingFee: {
         type: Number,
         default: 0
@@ -45,7 +46,7 @@ const productSchema = new mongoose.Schema({
         {
             size: { type: Number, required: true },
             price: { type: Number, required: true },
-            stock: { type: Number, default: 0},
+            stock: { type: Number, default: 0 },
         }
     ],
 
