@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
-
 const Review = require("../models/review");
 const Product = require("../models/product");
+const { isLoggedIn } = require("../middleware/auth");
 
-// POST /reviews/add
-router.post("/add", async (req, res) => {
+router.post("/add", isLoggedIn, async (req, res) => {
     try {
         const { productId, rating, title, comment } = req.body;
 
         const review = await Review.create({
-            user: req.user?._id, // make sure user is logged in
+            user: req.user._id,
             product: productId,
             rating,
             title,
@@ -19,7 +18,7 @@ router.post("/add", async (req, res) => {
 
         // Recalculate product ratings
         const stats = await Review.aggregate([
-            { $match: { product: productId } },
+            { $match: { product: review.product } },
             {
                 $group: {
                     _id: null,
@@ -31,15 +30,15 @@ router.post("/add", async (req, res) => {
 
         await Product.findByIdAndUpdate(productId, {
             $set: {
-                "ratings.average": stats[0]?.avgRating || 0,
-                "ratings.totalReviews": stats[0]?.total || 0
+                "ratings.average": stats[0].avgRating,
+                "ratings.totalReviews": stats[0].total
             }
         });
 
         return res.json({ success: true, review });
     } catch (err) {
-        console.log("Error adding review:", err);
-        return res.json({ success: false, message: "Server error" });
+        console.error(err);
+        return res.status(500).json({ success: false, error: err.message });
     }
 });
 

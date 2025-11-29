@@ -60,7 +60,6 @@ router.get("/", isLoggedIn, async (req, res) => {
 
     const myReviews = await Review.find({ user: req.user._id }).populate("product", "name images");
 
-
     // Count total orders
     const totalOrders = orders.length;
 

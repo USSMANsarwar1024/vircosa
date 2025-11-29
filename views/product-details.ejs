@@ -709,9 +709,11 @@
     <%- include('partials/navbar') %>
 
     <!-- Product Details -->
+    <!-- Product Details -->
     <section class="product-details-section">
         <div class="container">
             <div class="row">
+                <!-- Product Images -->
                 <div class="col-lg-6">
                     <div class="product-image-container">
                         <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
@@ -723,301 +725,235 @@
                                 <% }) %>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="carousel-control-prev-icon"></span>
                             </button>
                             <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="carousel-control-next-icon"></span>
                             </button>
                         </div>    
                     </div>
                 </div>
+
+                <!-- Product Info -->
                 <div class="col-lg-6">
                     <div class="product-info">
                         <span class="product-category"><%= product.categories[0] %></span>
                         <h1 class="product-title"><%= product.name %></h1>
-                        <div class="product-rating">
+                        
+                        <div class="product-rating mb-3">
                             <span class="rating-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+                                <% for(let i=1; i<=5; i++){ %>
+                                    <i class="fas fa-star <%= i <= Math.round(overallRating) ? '' : 'text-light' %>"></i>
+                                <% } %>
                             </span>
-                            <span class="rating-count">(<%= product.ratings.totalReviews %> reviews)</span>
+                            <span class="rating-count">(<%= reviews.length %> reviews)</span>
                         </div>
+
                         <div class="product-price">
                             PKR <span id="price"><%= product.variants[0].price %></span>
                             <span id="stock-badge" class="stock-badge <%= product.variants[0].stock > 10 ? 'in-stock' : product.variants[0].stock > 0 ? 'low-stock' : 'out-of-stock' %>">
                                 <%= product.variants[0].stock > 10 ? 'In Stock' : product.variants[0].stock > 0 ? `Only ${product.variants[0].stock} left` : 'Out of Stock' %>
                             </span>
                         </div>
+
                         <p class="product-description"><%= product.description %></p>
                         
-                        <div class="product-features">
-                            <div class="feature-item">
-                                <i class="fas fa-clock feature-icon"></i>
-                                <span>Long-lasting: <%= product.lasting %></span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-certificate feature-icon"></i>
-                                <span>Concentration: <%= product.concentration %>%</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-recycle feature-icon"></i>
-                                <span>Cruelty-free & Vegan</span>
-                            </div>
-                        </div>
-                        
-                        <div class="size-selector">
+                        <!-- Size Selector -->
+                        <div class="size-selector mb-4">
                             <h5>Size</h5>
-                            <div class="size-options">
-                                <% if (product.variants && product.variants.length > 0) { %>
-                                    <% product.variants.forEach((variant, index) => { %>
-                                        <div class="size-option <%= index === 0 ? 'active' : '' %>" 
-                                             data-price="<%= variant.price %>"
-                                             data-stock="<%= variant.stock %>"
-                                             data-size="<%= variant.size %>">
-                                            <%= variant.size %>ml - PKR <%= variant.price %>
-                                        </div>
-                                    <% }) %>
-                                <% } else { %>
-                                    <div class="text-muted">No sizes available</div>
-                                <% } %>
+                            <div class="d-flex gap-2 flex-wrap mt-2">
+                                <% product.variants.forEach((variant, index) => { %>
+                                    <div class="size-option <%= index === 0 ? 'active' : '' %>" 
+                                         data-price="<%= variant.price %>"
+                                         data-stock="<%= variant.stock %>"
+                                         data-size="<%= variant.size %>">
+                                        <%= variant.size %>ml - PKR <%= variant.price %>
+                                    </div>
+                                <% }) %>
                             </div>
                         </div>
 
-                        <div class="quantity-selector">
-                            <h5 class="me-3">Quantity:</h5>
-                            <button class="quantity-btn" onclick="changeQty(-1)">-</button>
-                            <input type="number" class="quantity-input" value="1" id="quantity" min="1">
-                            <button class="quantity-btn" onclick="changeQty(1)">+</button>
+                        <!-- Quantity Selector -->
+                        <div class="d-flex align-items-center gap-2 mb-4">
+                            <h5 class="me-3 mb-0">Quantity:</h5>
+                            <button class="btn btn-outline-secondary" onclick="changeQty(-1)">-</button>
+                            <input type="number" class="form-control text-center" style="width: 80px;" value="1" id="quantity" min="1">
+                            <button class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
                         </div>
 
-                        <div class="action-buttons">
-                            <button class="btn btn-add-to-cart add-to-cart-btn" 
-                                    id="addToCartBtn"
-                                    data-product-id="<%= product._id %>">
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-3 mb-4">
+                            <button class="btn btn-add-to-cart" id="addToCartBtn" data-product-id="<%= product._id %>">
                                 <i class="fas fa-shopping-bag me-2"></i> Add to Cart
                             </button>
-                            <button class="btn btn-wishlist">
+                            <button class="btn btn-outline-secondary rounded-circle" style="width: 50px; height: 50px;">
                                 <i class="far fa-heart"></i>
                             </button>
                         </div>
                         
-                        <div class="product-meta">
-                            <div class="meta-item">
-                                <span class="meta-label">SKU:</span>
-                                <span><%= product.sku %></span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-label">Category:</span>
-                                <span><%= product.categories.join(', ') %></span>
-                            </div>
+                        <div class="border-top pt-3">
+                            <p class="mb-2"><strong>SKU:</strong> <%= product.sku %></p>
+                            <p class="mb-0"><strong>Category:</strong> <%= product.categories.join(', ') %></p>
                         </div>
-
-                        
                     </div>
                 </div>
             </div>
-            <!-- Reviews Section -->
-            <div class="reviews-section mt-5">
+
+            <!-- ✅ REVIEWS SECTION - PROPERLY STRUCTURED -->
+            <div class="reviews-section">
                 <div class="row">
+                    <!-- Left Column: Write Review Form -->
                     <div class="col-lg-5">
-                        <!-- Reviews Summary -->
-                        <div class="reviews-summary mb-5">
-                            <h4 class="mb-4">Customer Reviews</h4>
-                            
-                            <!-- Overall Rating -->
-                            <div class="overall-rating mb-4">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="rating-display me-3">
-                                        <span class="rating-number display-4 fw-bold text-amber"><%= overallRating || '0.0' %></span>
-                                        <span class="text-muted">/ 5.0</span>
-                                    </div>
-                                    <div class="rating-stars">
-                                        <div class="stars-large mb-2">
-                                            <% for(let i=1; i<=5; i++){ %>
-                                                <i class="fas fa-star <%= i <= Math.round(overallRating || 0) ? 'text-amber' : 'text-light' %>"></i>
-                                            <% } %>
-                                        </div>
-                                        <p class="text-muted mb-0"><%= reviews.length %> verified reviews</p>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <!-- Rating Breakdown -->
-                            <div class="rating-breakdown">
-                                <% [5,4,3,2,1].forEach(stars => { 
-                                    const count = reviews.filter(r => r.rating === stars).length;
-                                    const percentage = reviews.length > 0 ? (count / reviews.length) * 100 : 0;
-                                %>
-                                <div class="rating-bar mb-2">
-                                    <div class="d-flex align-items-center">
-                                        <span class="rating-label me-2"><%= stars %></span>
-                                        <i class="fas fa-star text-amber me-2"></i>
-                                        <div class="progress flex-grow-1 me-2" style="height: 6px;">
-                                            <div class="progress-bar bg-amber" role="progressbar" 
-                                                style="width: <%= percentage %>%;" 
-                                                aria-valuenow="<%= percentage %>" 
-                                                aria-valuemin="0" 
-                                                aria-valuemax="100">
+                        <h3 class="mb-4">
+                            <i class="fas fa-star text-amber me-2"></i>Customer Reviews
+                        </h3>
+
+                        <!-- ✅ CONDITIONAL WRITE REVIEW BUTTON/FORM -->
+                        <% if (typeof user !== 'undefined' && user) { %>
+                            <% if (canReview) { %>
+                                <!-- Show Review Form -->
+                                <div class="card border-0 shadow-sm p-4 mb-4">
+                                    <h5 class="mb-3">Write Your Review</h5>
+                                    <form id="reviewForm">
+                                        <!-- Rating -->
+                                        <div class="mb-3">
+                                            <label class="form-label">Rating *</label>
+                                            <div class="rating-input-large">
+                                                <% for(let i=1; i<=5; i++){ %>
+                                                    <i class="far fa-star" data-rating="<%= i %>"></i>
+                                                <% } %>
                                             </div>
+                                            <input type="hidden" name="rating" id="reviewRating" required>
                                         </div>
-                                        <span class="rating-count text-muted" style="min-width: 30px;"><%= count %></span>
-                                    </div>
+
+                                        <!-- Order Selection -->
+                                        <div class="mb-3">
+                                            <label for="orderSelect" class="form-label">Your Order *</label>
+                                            <select class="form-select" name="orderId" id="orderSelect" required>
+                                                <option value="">Select your order...</option>
+                                                <% deliveredOrders.forEach(order => { %>
+                                                    <option value="<%= order._id %>"><%= order.orderNumber %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+
+                                        <!-- Title -->
+                                        <div class="mb-3">
+                                            <label for="reviewTitle" class="form-label">Title</label>
+                                            <input type="text" class="form-control" id="reviewTitle" name="title" 
+                                                   placeholder="Sum up your experience" maxlength="100">
+                                        </div>
+
+                                        <!-- Comment -->
+                                        <div class="mb-3">
+                                            <label for="reviewComment" class="form-label">Review *</label>
+                                            <textarea class="form-control" id="reviewComment" name="comment" rows="4" 
+                                                      placeholder="Share your thoughts..." 
+                                                      minlength="10" maxlength="1000" required></textarea>
+                                            <small class="text-muted">Minimum 10 characters</small>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-amber w-100">
+                                            <i class="fas fa-paper-plane me-2"></i>Submit Review
+                                        </button>
+                                    </form>
                                 </div>
-                                <% }) %>
-                            </div>
-                        </div>
-    
-                        <!-- Write Review Button -->
-                        <button class="btn btn-outline-amber w-100 mb-4" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            <i class="fas fa-pen me-2"></i>Write a Review
-                        </button>
-                    </div>
-    
-                    <div class="col-lg-7">
-                        <!-- Reviews List -->
-                        <div class="reviews-list">
-                            <% if (reviews.length === 0) { %>
-                            <div class="no-reviews text-center py-5">
-                                <div class="no-reviews-icon mb-3">
-                                    <i class="fas fa-star text-muted" style="font-size: 3rem;"></i>
+
+                            <% } else if (hasReviewed) { %>
+                                <!-- Already Reviewed -->
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <strong>Thank you!</strong> You've already reviewed this product.
                                 </div>
-                                <h5 class="text-muted mb-3">No Reviews Yet</h5>
-                                <p class="text-muted mb-4">Be the first to share your experience with this fragrance</p>
-                                <button class="btn btn-amber" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                                    Write First Review
-                                </button>
-                            </div>
+
                             <% } else { %>
-                            
-                            <!-- Sort Options -->
-                            <div class="sort-options mb-4">
-                                <select class="form-select form-select-sm w-auto d-inline-block" id="sortReviews">
+                                <!-- Cannot Review Yet -->
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Purchase Required:</strong> You need to receive this product before reviewing.
+                                </div>
+                            <% } %>
+                        <% } else { %>
+                            <!-- Not Logged In -->
+                            <div class="alert alert-info">
+                                <i class="fas fa-sign-in-alt me-2"></i>
+                                <a href="/login" class="alert-link">Login</a> to write a review
+                            </div>
+                        <% } %>
+
+                        <!-- Rating Breakdown -->
+                        <% if (reviews.length > 0) { %>
+                        <div class="card border-0 shadow-sm p-4">
+                            <h6 class="mb-3">Rating Breakdown</h6>
+                            <% [5,4,3,2,1].forEach(stars => { 
+                                const count = reviews.filter(r => r.rating === stars).length;
+                                const percentage = (count / reviews.length) * 100;
+                            %>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="me-2"><%= stars %><i class="fas fa-star text-amber ms-1"></i></span>
+                                <div class="progress flex-grow-1 me-2" style="height: 8px;">
+                                    <div class="progress-bar bg-amber" style="width: <%= percentage %>%;"></div>
+                                </div>
+                                <span class="text-muted" style="min-width: 30px;"><%= count %></span>
+                            </div>
+                            <% }) %>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <!-- Right Column: Reviews List -->
+                    <div class="col-lg-7">
+                        <% if (reviews.length === 0) { %>
+                            <!-- Empty State -->
+                            <div class="no-reviews text-center">
+                                <i class="fas fa-star text-muted mb-3" style="font-size: 3rem;"></i>
+                                <h5 class="text-muted mb-2">No Reviews Yet</h5>
+                                <p class="text-muted">Be the first to share your experience!</p>
+                            </div>
+                        <% } else { %>
+                            <!-- Sort Dropdown -->
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="mb-0"><%= reviews.length %> Reviews</h5>
+                                <select class="form-select form-select-sm w-auto" id="sortReviews">
                                     <option value="newest">Newest First</option>
                                     <option value="highest">Highest Rating</option>
                                     <option value="lowest">Lowest Rating</option>
                                 </select>
-                                <span class="text-muted ms-2"><%= reviews.length %> reviews</span>
                             </div>
-    
+
                             <!-- Reviews -->
-                            <% reviews.forEach(r => { %>
-                            <div class="review-item card border-0 shadow-sm mb-4" data-rating="<%= r.rating %>" data-date="<%= r.createdAt.getTime() %>">
-                                <div class="card-body">
-                                    <!-- Review Header -->
-                                    <div class="review-header d-flex justify-content-between align-items-start mb-3">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-avatar me-3">
-                                                <div class="avatar-circle bg-amber text-white d-flex align-items-center justify-content-center">
-                                                    <%= r.user.firstname.charAt(0).toUpperCase() + r.user.lastname.charAt(0).toUpperCase() %>
+                            <div class="reviews-list">
+                                <% reviews.forEach(r => { %>
+                                <div class="review-item card border-0 shadow-sm mb-3" data-rating="<%= r.rating %>" data-date="<%= r.createdAt.getTime() %>">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-circle bg-amber text-white d-flex align-items-center justify-content-center me-3">
+                                                    <%= r.user.firstname.charAt(0) + r.user.lastname.charAt(0) %>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0"><%= r.user.firstname %> <%= r.user.lastname %></h6>
+                                                    <div class="text-amber">
+                                                        <% for(let i=1; i<=5; i++){ %>
+                                                            <i class="fas fa-star <%= i <= r.rating ? '' : 'text-light' %>" style="font-size: 0.8rem;"></i>
+                                                        <% } %>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <h6 class="reviewer-name mb-1"><%= r.user.firstname %> <%= r.user.lastname %></h6>
-                                                <div class="review-rating">
-                                                    <% for(let i=1; i<=5; i++){ %>
-                                                        <i class="fas fa-star <%= i <= r.rating ? 'text-amber' : 'text-light' %>" style="font-size: 0.8rem;"></i>
-                                                    <% } %>
-                                                </div>
-                                            </div>
+                                            <small class="text-muted">
+                                                <%= r.createdAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                                            </small>
                                         </div>
-                                        <span class="review-date text-muted"><%= r.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
-                                    </div>
-    
-                                    <!-- Review Content -->
-                                    <% if (r.title) { %>
-                                    <h6 class="review-title mb-2 text-dark"><%= r.title %></h6>
-                                    <% } %>
-                                    
-                                    <p class="review-comment mb-3"><%= r.comment %></p>
-    
-                                    <!-- Review Actions -->
-                                    <div class="review-actions d-flex align-items-center">
-                                        <button class="btn btn-sm btn-outline-secondary me-2">
-                                            <i class="fas fa-thumbs-up me-1"></i>Helpful
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary">
-                                            <i class="fas fa-flag me-1"></i>Report
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <% }) %>
-    
-                            <!-- Load More Button -->
-                            <% if (reviews.length > 5) { %>
-                            <div class="text-center mt-4">
-                                <button class="btn btn-outline-amber" id="loadMoreReviews">
-                                    Load More Reviews
-                                </button>
-                            </div>
-                            <% } %>
-                            
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Review Modal -->
-            <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title" id="reviewModalLabel">Write a Review</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="reviewForm">
-                                <!-- Rating -->
-                                <div class="mb-4">
-                                    <label class="form-label">Overall Rating</label>
-                                    <div class="rating-input-large">
-                                        <% for(let i=1; i<=5; i++){ %>
-                                            <i class="far fa-star" data-rating="<%= i %>" style="font-size: 2rem; cursor: pointer;"></i>
+
+                                        <% if (r.title) { %>
+                                            <h6 class="mb-2"><%= r.title %></h6>
                                         <% } %>
-                                    </div>
-                                    <input type="hidden" name="rating" id="reviewRating" required>
-                                </div>
-    
-                                <!-- Title -->
-                                <div class="mb-3">
-                                    <label for="reviewTitle" class="form-label">Review Title</label>
-                                    <input type="text" class="form-control" id="reviewTitle" name="title" placeholder="Summarize your experience" maxlength="100">
-                                </div>
-    
-                                <!-- Comment -->
-                                <div class="mb-4">
-                                    <label for="reviewComment" class="form-label">Your Review</label>
-                                    <textarea class="form-control" id="reviewComment" name="comment" rows="5" placeholder="Share your experience with this fragrance..." maxlength="1000" required></textarea>
-                                    <div class="form-text">Minimum 10 characters</div>
-                                </div>
-    
-                                <!-- Recommendation -->
-                                <div class="mb-4">
-                                    <label class="form-label">Would you recommend this product?</label>
-                                    <div class="btn-group w-100" role="group">
-                                        <input type="radio" class="btn-check" name="recommend" id="recommendYes" value="yes" checked>
-                                        <label class="btn btn-outline-success" for="recommendYes">
-                                            <i class="fas fa-thumbs-up me-2"></i>Yes
-                                        </label>
-                                        
-                                        <input type="radio" class="btn-check" name="recommend" id="recommendNo" value="no">
-                                        <label class="btn btn-outline-danger" for="recommendNo">
-                                            <i class="fas fa-thumbs-down me-2"></i>No
-                                        </label>
+                                        <p class="mb-0"><%= r.comment %></p>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" form="reviewForm" class="btn btn-amber">Submit Review</button>
-                        </div>
+                                <% }) %>
+                            </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -1266,168 +1202,54 @@
     
     <!-- Custom JS -->
     <script>
-        // Store variants data
+        // Product functionality
         const variants = <%- JSON.stringify(product.variants) %>;
         let selectedVariant = variants[0];
         let qty = 1;
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function () {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Size selector with price update
+        // Size selector
         document.querySelectorAll('.size-option').forEach((option, index) => {
             option.addEventListener('click', function() {
-                // Remove active from all options
-                document.querySelectorAll('.size-option').forEach(o => {
-                    o.classList.remove('active');
-                });
-                
-                // Add active to clicked option
+                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('active'));
                 this.classList.add('active');
-                
-                // Update selected variant
                 selectedVariant = variants[index];
-                
-                // Update price display
                 updatePrice();
-                
-                // Update stock badge
                 updateStockBadge();
             });
         });
 
-        // Quantity change
         function changeQty(change) {
-            qty += change;
-            if (qty < 1) qty = 1;
-            if (qty > selectedVariant.stock) {
-                qty = selectedVariant.stock;
-                alert(`Only ${selectedVariant.stock} items available in stock`);
-            }
+            qty = Math.max(1, Math.min(qty + change, selectedVariant.stock));
             document.getElementById('quantity').value = qty;
             updatePrice();
         }
 
-        // Update quantity on input change
-        document.getElementById('quantity').addEventListener('change', function() {
-            qty = parseInt(this.value) || 1;
-            if (qty < 1) qty = 1;
-            if (qty > selectedVariant.stock) {
-                qty = selectedVariant.stock;
-                alert(`Only ${selectedVariant.stock} items available in stock`);
-            }
-            this.value = qty;
-            updatePrice();
-        });
-
-        // Update price display
         function updatePrice() {
-            const totalPrice = selectedVariant.price * qty;
-            document.getElementById('price').textContent = totalPrice.toLocaleString();
+            document.getElementById('price').textContent = (selectedVariant.price * qty).toLocaleString();
         }
 
-        // Update stock badge
         function updateStockBadge() {
-            const stockBadge = document.getElementById('stock-badge');
+            const badge = document.getElementById('stock-badge');
             const stock = selectedVariant.stock;
-            
-            stockBadge.className = 'stock-badge';
+            badge.className = 'stock-badge';
             
             if (stock > 10) {
-                stockBadge.classList.add('in-stock');
-                stockBadge.textContent = 'In Stock';
+                badge.classList.add('in-stock');
+                badge.textContent = 'In Stock';
             } else if (stock > 0) {
-                stockBadge.classList.add('low-stock');
-                stockBadge.textContent = `Only ${stock} left`;
+                badge.classList.add('low-stock');
+                badge.textContent = `Only ${stock} left`;
             } else {
-                stockBadge.classList.add('out-of-stock');
-                stockBadge.textContent = 'Out of Stock';
+                badge.classList.add('out-of-stock');
+                badge.textContent = 'Out of Stock';
             }
         }
 
-        // Notification function
-        function showNotification(message, type) {
-            const toastContainer = document.querySelector('.toast-container') || createToastContainer();
-            
-            const toast = document.createElement('div');
-            toast.className = `toast align-items-center text-white ${type === 'success' ? 'bg-success' : 'bg-danger'} border-0`;
-            toast.setAttribute('role', 'alert');
-            toast.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                </div>
-            `;
-            
-            toastContainer.appendChild(toast);
-            const bsToast = new bootstrap.Toast(toast);
-            bsToast.show();
-            
-            toast.addEventListener('hidden.bs.toast', () => {
-                toast.remove();
-            });
-        }
-
-        function createToastContainer() {
-            const container = document.createElement('div');
-            container.className = 'position-fixed bottom-0 end-0 p-3 toast-container';
-            container.style.zIndex = '11';
-            document.body.appendChild(container);
-            return container;
-        }
-
-        // Update cart count
-        function updateCartCount() {
-            fetch('/cart/count')
-                .then(res => res.json())
-                .then(data => {
-                    const badge = document.querySelector('.badge');
-                    if (badge) {
-                        badge.textContent = data.count || 0;
-                    }
-                })
-                .catch(err => console.error('Failed to update cart count:', err));
-        }
-
-        // Add to cart functionality - FIXED VERSION
-        document.getElementById('addToCartBtn').addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            // Get product ID from button's data attribute
-            const productId = '<%= product._id %>';
-
-            // Check if a size is selected
+        // Add to cart
+        document.getElementById('addToCartBtn')?.addEventListener('click', async function() {
             const activeVariant = document.querySelector('.size-option.active');
             if (!activeVariant) {
-                showNotification("Please select a size first.", "error");
-                return;
-            }
-
-            // Get selected variant details
-            const size = parseInt(activeVariant.dataset.size);
-            const price = parseInt(activeVariant.dataset.price);
-            const stock = parseInt(activeVariant.dataset.stock);
-
-            // Get quantity
-            const quantity = parseInt(document.getElementById('quantity').value) || 1;
-
-            // Check stock availability
-            if (stock <= 0) {
-                showNotification("This item is out of stock.", "error");
-                return;
-            }
-
-            if (quantity > stock) {
-                showNotification(`Only ${stock} items available in stock.`, "error");
+                alert('Please select a size');
                 return;
             }
 
@@ -1436,59 +1258,30 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        productId,
-                        size,
-                        price,
-                        quantity
+                        productId: '<%= product._id %>',
+                        size: parseInt(activeVariant.dataset.size),
+                        price: parseInt(activeVariant.dataset.price),
+                        quantity: qty
                     })
                 });
-
-                const data = await res.json();
 
                 if (res.status === 401) {
                     window.location.href = '/login';
                     return;
                 }
 
-                if (res.ok) {
-                    showNotification("✨ Added to cart!", "success");
-                    updateCartCount();
-                } else {
-                    showNotification(data.message || "Failed to add to cart", "error");
-                }
+                const data = await res.json();
+                alert(data.message || 'Added to cart!');
+                if (res.ok) location.reload();
             } catch (err) {
-                console.error('Add to cart error:', err);
-                showNotification("Network error. Please try again.", "error");
+                alert('Failed to add to cart');
             }
         });
 
-        // Wishlist toggle
-        document.querySelector('.btn-wishlist').addEventListener('click', function() {
-            const icon = this.querySelector('i');
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                this.style.backgroundColor = 'var(--primary-color)';
-                this.style.color = 'white';
-            } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                this.style.backgroundColor = 'transparent';
-                this.style.color = 'var(--primary-color)';
-            }
-        });
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            updatePrice();
-            updateStockBadge();
-        });
-    </script>
-
-    <!-- Reviews JS -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Rating stars in modal
+        // ✅ REVIEW FORM SUBMISSION
+        const reviewForm = document.getElementById('reviewForm');
+        if (reviewForm) {
+            // Rating stars interaction
             const ratingStars = document.querySelectorAll('.rating-input-large .fa-star');
             const ratingInput = document.getElementById('reviewRating');
             
@@ -1497,10 +1290,8 @@
                     const rating = this.getAttribute('data-rating');
                     ratingInput.value = rating;
                     
-                    // Update star display
                     ratingStars.forEach(s => {
-                        const starRating = s.getAttribute('data-rating');
-                        if (starRating <= rating) {
+                        if (s.getAttribute('data-rating') <= rating) {
                             s.classList.remove('far');
                             s.classList.add('fas', 'active');
                         } else {
@@ -1509,98 +1300,78 @@
                         }
                     });
                 });
-                
-                // Hover effect
-                star.addEventListener('mouseenter', function() {
-                    const hoverRating = this.getAttribute('data-rating');
-                    ratingStars.forEach(s => {
-                        const starRating = s.getAttribute('data-rating');
-                        if (starRating <= hoverRating) {
-                            s.classList.add('active');
-                        } else {
-                            s.classList.remove('active');
-                        }
-                    });
-                });
-                
-                star.addEventListener('mouseleave', function() {
-                    const currentRating = ratingInput.value;
-                    ratingStars.forEach(s => {
-                        const starRating = s.getAttribute('data-rating');
-                        if (!currentRating || starRating > currentRating) {
-                            s.classList.remove('active');
-                        }
-                    });
-                });
             });
-            
-            // Sort reviews
-            const sortSelect = document.getElementById('sortReviews');
-            if (sortSelect) {
-                sortSelect.addEventListener('change', function() {
-                    const sortBy = this.value;
-                    const reviewItems = document.querySelectorAll('.review-item');
-                    const reviewsArray = Array.from(reviewItems);
-                    
-                    reviewsArray.sort((a, b) => {
-                        if (sortBy === 'newest') {
-                            return parseInt(b.getAttribute('data-date')) - parseInt(a.getAttribute('data-date'));
-                        } else if (sortBy === 'highest') {
-                            return parseInt(b.getAttribute('data-rating')) - parseInt(a.getAttribute('data-rating'));
-                        } else if (sortBy === 'lowest') {
-                            return parseInt(a.getAttribute('data-rating')) - parseInt(b.getAttribute('data-rating'));
-                        }
-                        return 0;
+
+            // Form submission
+            reviewForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const rating = ratingInput.value;
+                const orderId = document.getElementById('orderSelect').value;
+                
+                if (!rating) {
+                    alert('Please select a rating');
+                    return;
+                }
+                
+                if (!orderId) {
+                    alert('Please select your order');
+                    return;
+                }
+                
+                const formData = {
+                    rating: rating,
+                    title: document.getElementById('reviewTitle').value,
+                    comment: document.getElementById('reviewComment').value,
+                    orderId: orderId
+                };
+                
+                try {
+                    const response = await fetch('/products/product/<%= product._id %>/review', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
                     });
                     
-                    // Reorder reviews
-                    const reviewsList = document.querySelector('.reviews-list');
-                    reviewsArray.forEach(item => {
-                        reviewsList.appendChild(item);
-                    });
-                });
-            }
-            
-            // Load more reviews
-            const loadMoreBtn = document.getElementById('loadMoreReviews');
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', function() {
-                    // In a real implementation, this would fetch more reviews from the server
-                    this.textContent = 'All Reviews Loaded';
-                    this.disabled = true;
-                    this.classList.remove('btn-outline-amber');
-                    this.classList.add('btn-secondary');
-                });
-            }
-            
-            // Review form submission
-            const reviewForm = document.getElementById('reviewForm');
-            if (reviewForm) {
-                reviewForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
+                    const data = await response.json();
                     
-                    if (!ratingInput.value) {
-                        alert('Please select a rating');
-                        return;
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        location.reload();
+                    } else {
+                        alert('❌ ' + data.message);
                     }
+                } catch (err) {
+                    console.error('Review error:', err);
+                    alert('Failed to submit review');
+                }
+            });
+        }
+
+        // Sort reviews
+        const sortSelect = document.getElementById('sortReviews');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                const reviewItems = Array.from(document.querySelectorAll('.review-item'));
+                const reviewsList = document.querySelector('.reviews-list');
+                
+                reviewItems.sort((a, b) => {
+                    const ratingA = parseInt(a.getAttribute('data-rating'));
+                    const ratingB = parseInt(b.getAttribute('data-rating'));
+                    const dateA = parseInt(a.getAttribute('data-date'));
+                    const dateB = parseInt(b.getAttribute('data-date'));
                     
-                    // Here you would typically submit the form via AJAX
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
-                    modal.hide();
-                    
-                    // Show success message
-                    alert('Thank you for your review! It will be published after verification.');
-                    
-                    // Reset form
-                    this.reset();
-                    ratingStars.forEach(star => {
-                        star.classList.remove('fas', 'active');
-                        star.classList.add('far');
-                    });
-                    ratingInput.value = '';
+                    switch(this.value) {
+                        case 'newest': return dateB - dateA;
+                        case 'highest': return ratingB - ratingA;
+                        case 'lowest': return ratingA - ratingB;
+                        default: return 0;
+                    }
                 });
-            }
-        });
+                
+                reviewItems.forEach(item => reviewsList.appendChild(item));
+            });
+        }
     </script>
     
 </body>

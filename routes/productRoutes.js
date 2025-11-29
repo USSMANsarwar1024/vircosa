@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 router.get("/product-details/:id", async (req, res) => {
   try {
     const productId = req.params.id;
-    const openReview = req.query.openReview === 'true';
+    const userId = req.user?._id; // Get logged-in user ID
 
     // 1. Get Product Details
     const productDetails = await product.findById(productId);
@@ -37,41 +37,45 @@ router.get("/product-details/:id", async (req, res) => {
     }
 
     // 2. Get Reviews
-    const reviews = await Review.find({ product: productId })
-      .populate("user", "firstname lastname")
-      .sort({ createdAt: -1 });
+    const reviews = await Review.find({ product: productId }).populate("user", "firstname lastname").sort({ createdAt: -1 });
+
 
     // 3. Calculate overall rating
-    const overallRating = reviews.length > 0 
+    const overallRating = reviews.length > 0
       ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
       : 0;
 
-    // 4. Check if user can review (only if logged in)
-    let canReview = false;
-    let hasReviewed = false;
-    
-    if (req.user) {
-      // Check if user has reviewed this product
-      hasReviewed = await Review.findOne({
-        product: productId,
-        user: req.user._id
-      });
-
-      // Check if user has a delivered order with this product
-      const deliveredOrder = await Order.findOne({
-        user: req.user._id,
-        orderStatus: 'delivered',
-        'items.product': productId
-      });
-
-      canReview = deliveredOrder && !hasReviewed;
-    }
-
-    // 5. Featured products
+    // 4. Featured products
     const featuredProducts = await product.find()
       .limit(8)
       .sort({ createdAt: -1 })
       .lean();
+
+    // 5. ✅ CHECK IF USER CAN REVIEW THIS PRODUCT
+    let canReview = false;
+    let deliveredOrders = [];
+    let hasReviewed = false;
+
+    if (userId) {
+
+      // Find all DELIVERED orders containing this product
+      deliveredOrders = await Order
+      .find({
+          user: userId,
+          "items.product": productId,
+          orderStatus: "delivered"
+        })
+        .select('_id orderNumber');
+
+      // Check if user already reviewed this product
+      hasReviewed = await Review.exists({
+        product: productId,
+        user: userId
+      });
+
+      // User can review if they have delivered orders and haven't reviewed yet
+      canReview = deliveredOrders.length > 0 && !hasReviewed;
+    }
 
     // 6. Render Page
     res.render("product-details", {
@@ -79,9 +83,9 @@ router.get("/product-details/:id", async (req, res) => {
       featuredProducts,
       reviews,
       overallRating,
-      canReview,
-      hasReviewed: !!hasReviewed,
-      openReview, // Pass this to auto-open modal
+      canReview,           // ✅ Pass to template
+      deliveredOrders,     // ✅ For dropdown selection
+      hasReviewed          // ✅ To show appropriate message
     });
 
   } catch (err) {
@@ -90,68 +94,82 @@ router.get("/product-details/:id", async (req, res) => {
   }
 });
 
-// POST - Submit Review
-router.post("/product-details/:id/review", isLoggedIn, async (req, res) => {
+// 
+router.post("/product/:id/review", isLoggedIn, async (req, res) => {
   try {
     const productId = req.params.id;
-    const { rating, title, comment } = req.body;
+    const userId = req.user._id;
+    const { rating, title, comment, orderId } = req.body;
 
-    // Validation
-    if (!rating || !comment || comment.length < 10) {
-      return res.json({ 
-        success: false, 
-        message: "Please provide a rating and comment (minimum 10 characters)" 
+    // 1. Validate input
+    if (!rating || !comment || !orderId) {
+      return res.status(400).json({
+        success: false,
+        message: "Rating, comment, and order are required"
       });
     }
 
-    // Check if user already reviewed
+    // 2. ✅ VERIFY ORDER IS DELIVERED
+    const Order = require('../models/order');
+    const order = await Order.find({
+      _id: orderId,
+      user: userId,
+      "items.product": productId,
+      orderStatus: "delivered"
+    });
+
+
+    if (!order) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only review products from delivered orders"
+      });
+    }
+
+    // 3. ✅ CHECK IF ALREADY REVIEWED
     const existingReview = await Review.findOne({
       product: productId,
-      user: req.user._id
+      user: userId
     });
 
     if (existingReview) {
-      return res.json({ 
-        success: false, 
-        message: "You have already reviewed this product" 
+      return res.status(400).json({
+        success: false,
+        message: "You have already reviewed this product"
       });
     }
 
-    // Check if user has delivered order with this product
-    const deliveredOrder = await Order.findOne({
-      user: req.user._id,
-      orderStatus: 'delivered',
-      'items.product': productId
-    });
-
-    if (!deliveredOrder) {
-      return res.json({ 
-        success: false, 
-        message: "You can only review products you've purchased and received" 
-      });
-    }
-
-    // Create review
+    // 4. CREATE REVIEW
     const newReview = new Review({
       product: productId,
-      user: req.user._id,
+      user: userId,
+      order: orderId,
       rating: parseInt(rating),
-      title: title || '',
-      comment: comment
+      title: title?.trim(),
+      comment: comment.trim()
     });
 
     await newReview.save();
 
-    return res.json({ 
-      success: true, 
-      message: "Review submitted successfully!" 
+    // 5. UPDATE PRODUCT RATINGS
+    const allReviews = await Review.find({ product: productId });
+    const avgRating = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
+
+    await product.findByIdAndUpdate(productId, {
+      'ratings.average': avgRating.toFixed(1),
+      'ratings.totalReviews': allReviews.length
+    });
+
+    res.json({
+      success: true,
+      message: "Review submitted successfully!"
     });
 
   } catch (err) {
     console.error("Review submission error:", err);
-    return res.json({ 
-      success: false, 
-      message: "Failed to submit review" 
+    res.status(500).json({
+      success: false,
+      message: "Failed to submit review"
     });
   }
 });
