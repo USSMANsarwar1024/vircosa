@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product"); // Capital P (model)
-const Order = require("../models/order"); // Capital O
+const Product = require("../models/product"); 
+const Order = require("../models/order"); 
 const multer = require("multer");
 const path = require("path");
 
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ============================
-// Admin Dashboard
+// 23e@sKsH Dashboard
 // ============================
 router.get("/", async (req, res) => {
   try {
@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
 
     const totalPages = Math.ceil(totalProducts / perPage);
 
-    res.render("admin", {
+    res.render("23e@sKsH", {
       products,
       stats: {
         totalProducts,
@@ -80,8 +80,8 @@ router.get("/", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Error loading admin panel:", err);
-    if (!res.headersSent) res.status(500).send("Server error loading admin panel");
+    console.error("Error loading 23e@sKsH panel:", err);
+    if (!res.headersSent) res.status(500).send("Server error loading 23e@sKsH panel");
   }
 });
 
@@ -229,7 +229,7 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
 router.post("/delete/:id", async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.redirect("/admin");
+    res.redirect("/23e@sKsH-hajimemashite?msg=deleted");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error deleting product");

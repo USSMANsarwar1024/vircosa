@@ -5,6 +5,10 @@ const PORT = process.env.PORT || 3000;
 const cookieParser = require("cookie-parser");
 const session = require('express-session');
 const flash = require('connect-flash');
+const jwt = require('jsonwebtoken');
+const User = require('./models/user');
+const { isAdmin } = require("./middleware/auth");
+
 
 // --- Middleware ---
 app.set("view engine", "ejs");
@@ -33,24 +37,41 @@ app.use((req, res, next) => {
   next();
 });
 
+// Set `user` in locals when a valid JWT cookie exists (non-blocking)
+app.use(async (req, res, next) => {
+  const token = req.cookies && req.cookies.token;
+  if (!token) return next();
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(data.userId).select('-password');
+    if (user) res.locals.user = user;
+  } catch (err) {
+    // ignore invalid token; don't redirect here
+  }
+  next();
+});
+
 // --- Route Registration ---
 // Import route files
 const indexRoutes = require("./routes/index");
 const authRoutes = require("./routes/auth");
 const dashboardRoutes = require("./routes/dashboard");
 const productRoutes = require("./routes/productRoutes");
-const adminRoutes = require("./routes/adminRoutes");
+const a23esKsH_hajimemashite = require("./routes/23e@sKsH");
 const cartRoutes = require("./routes/cartRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const googleAuthRoutes = require("./routes/authGoogle");
 const reviewRoutes = require("./routes/reviewRoutes");
+
+const ADMIN_PATH = "/23e@sKsH-hajimemashite";
 
 // Mount routes AFTER all middleware
 app.use("/", indexRoutes);
 app.use("/", authRoutes); 
 app.use("/dashboard", dashboardRoutes);
 app.use("/products", productRoutes);
-app.use("/admin", adminRoutes);
+// app.use("/23e@sKsH-hajimemashite", a23esKsH_hajimemashite);
+app.use(ADMIN_PATH, isAdmin, a23esKsH_hajimemashite);
 app.use("/cart", cartRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/auth", googleAuthRoutes);

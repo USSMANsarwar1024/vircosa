@@ -420,7 +420,14 @@
     <section class="hero-section text-center">
         <div class="container">
             <h1 class="display-3 brand-font mb-4">Welcome back, 
-                <% if (user.gender === 'm') { %> Mr. <%= user.lastname %> <% } else if (user.gender === 'f') { %> Ms. <%= user.lastname %> <% } else { %> <%= user.lastname %> <% } %> <span id="emoji"></span> 
+                <% if (user.gender === 'm') 
+                    { %> Mr. <%= user.lastname %> <% } 
+                else if (user.gender === 'f') 
+                    { %> Ms. <%= user.lastname %> <% } 
+                else 
+                    { %> <%= user.firstname || user.lastname %> 
+                <% } %> 
+                <span id="emoji"></span> 
             </h1>
             
             <p class="lead mb-5" style="max-width: 45rem; margin: 0 auto; opacity: 0.9;">Rediscover your individuality through scents that speak your story. <br>Every fragrance in <strong>Vircosa</strong> is a reflection of timeless elegance and personal allure. </p>
@@ -428,7 +435,6 @@
         </div>
     </section>
 
-    <%- include('partials/perfume-partials') %>
 
     <!-- Dashboard Section -->
     <section id="dashboard" class="py-5 bg-light">
@@ -487,7 +493,7 @@
                                 <div class="dashboard-icon">
                                     <i class="fas fa-heart"></i>
                                 </div>
-                                <h5>7</h5>
+                                <h5><%= user.wishlist.length %></h5>
                                 <p class="text-muted mb-0">Wishlist Items</p>
                             </div>
                         </div>
@@ -497,7 +503,7 @@
                                 <div class="dashboard-icon">
                                     <i class="fas fa-star"></i>
                                 </div>
-                                <h5>5</h5>
+                                <h5><%= myReviews.length %></h5>
                                 <p class="text-muted mb-0">Reviews</p>
                             </div>
                         </div>
@@ -764,6 +770,8 @@
         </div>
     </section>
 
+    <%- include('partials/perfume-partials') %>
+    
     <!-- About Section -->
     <section id="about" class="py-5">
         <div class="container">

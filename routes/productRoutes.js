@@ -111,13 +111,12 @@ router.post("/product/:id/review", isLoggedIn, async (req, res) => {
 
     // 2. ✅ VERIFY ORDER IS DELIVERED
     const Order = require('../models/order');
-    const order = await Order.find({
+    const order = await Order.findOne({
       _id: orderId,
       user: userId,
       "items.product": productId,
       orderStatus: "delivered"
     });
-
 
     if (!order) {
       return res.status(403).json({
@@ -156,7 +155,7 @@ router.post("/product/:id/review", isLoggedIn, async (req, res) => {
     const avgRating = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
 
     await product.findByIdAndUpdate(productId, {
-      'ratings.average': avgRating.toFixed(1),
+      'ratings.average': Number(avgRating.toFixed(1)),
       'ratings.totalReviews': allReviews.length
     });
 

@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");// Note: You might need to import your user model and other utils here
-const userModel = require("../models/user"); 
-const bcrypt = require("bcrypt"); 
+const jwt = require("jsonwebtoken");
+const userModel = require("../models/user");
+const bcrypt = require("bcrypt");
 
 function setCookie(user, res, action) {
   const token = jwt.sign(
@@ -58,21 +58,40 @@ async function isLoggedIn(req, res, next) {
 
 
 function redirectIfLoggedIn(req, res, next) {
-    const token = req.cookies.token;
-    if (token) {
-        try {
-            jwt.verify(token, process.env.JWT_SECRET);
-            return res.redirect("/dashboard"); // Redirect if user is authenticated
-        } catch (err) {
-            // Token invalid/expired, continue to next() to show login/signup
-        }
+  const token = req.cookies.token;
+  if (token) {
+    try {
+      jwt.verify(token, process.env.JWT_SECRET);
+      return res.redirect("/dashboard"); // Redirect if user is authenticated
+    } catch (err) {
+      // Token invalid/expired, continue to next() to show login/signup
     }
-    next();
+  }
+  next();
 }
+
+function isAdmin(req, res, next) {
+  const user = req?.user || res.locals?.user;
+
+  // If user is not logged in
+  if (!user) {
+    return res.status(401).send("Unauthorized. Please login first.");
+  }
+
+  // If user exists but is not admin
+  if (user.role !== "23e@sKsH") {
+    // redirect them AWAY from admin
+    return res.redirect('/');
+  }
+
+  // User is admin → allow access
+  next();
+};
 
 
 module.exports = {
-    setCookie,
-    isLoggedIn,
-    redirectIfLoggedIn
+  setCookie,
+  isLoggedIn,
+  redirectIfLoggedIn,
+  isAdmin
 };

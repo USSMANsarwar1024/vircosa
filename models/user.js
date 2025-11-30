@@ -15,9 +15,7 @@ const userSchema = new mongoose.Schema(
         },
         lastname: {
             type: String,
-            required: true,
             trim: true,
-            minlength: 2,
         },
         gender: {
             type: String,
@@ -69,7 +67,11 @@ const userSchema = new mongoose.Schema(
         otpExpires: Date,
         lastOtpSent: Number,
 
-        
+        role: {
+            type: String,
+            enum: ["user", "23e@sKsH"],
+            default: "user"
+        }
 
     },
     { timestamps: true }
