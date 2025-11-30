@@ -9,6 +9,9 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/user');
 const { isAdmin } = require("./middleware/auth");
 
+const adminOrdersRouter = require('./routes/adminOrders');
+const trackOrderRouter = require('./routes/trackOrder');
+
 
 // --- Middleware ---
 app.set("view engine", "ejs");
@@ -76,6 +79,10 @@ app.use("/cart", cartRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/auth", googleAuthRoutes);
 app.use("/reviews", reviewRoutes);
+
+app.use('/admin/orders', adminOrdersRouter);  // Admin order management
+app.use('/track-order', trackOrderRouter);     // Public tracking
+
 
 // --- Server Start ---
 app.listen(PORT, () => {

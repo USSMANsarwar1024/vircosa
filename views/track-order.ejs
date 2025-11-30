@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order | Vircosa</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Playfair Display + Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../stylesheets/navbar-styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
+    <link rel="stylesheet" href="../stylesheets/main-styles.css">
+    <link rel="stylesheet" href="../stylesheets/cta-section-styles.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden; 
+            margin-top: 6rem;  
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tracking-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: -10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding-left: 20px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(139, 90, 43, 0.15);
+        }
+
+        .btn-track {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: none;
+            transition: all 0.3s;
+            width: 100%;
+            height: 50px;
+        }
+
+        .btn-track:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .tracking-result {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-header {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #e0e0e0;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            left: 30px;
+            top: 0;
+            width: 4px;
+            background: var(--primary-color);
+            transition: height 1s ease;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 40px;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: #e0e0e0;
+            color: #999;
+            transition: all 0.3s;
+        }
+
+        .timeline-item.completed .timeline-icon,
+        .timeline-item.active .timeline-icon {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+        }
+
+        .timeline-item.active .timeline-icon {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .timeline-content h4 {
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .timeline-item.completed .timeline-content h4,
+        .timeline-item.active .timeline-content h4 {
+            font-weight: 600;
+        }
+
+        .order-details-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-top: 30px;
+        }
+
+        .detail-row {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            min-width: 150px;
+        }
+
+        .detail-value {
+            color: #555;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .total-section {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .total-row.grand-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            border-top: 2px solid var(--primary-color);
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .tracking-card {
+                padding: 25px;
+            }
+            
+            .timeline::before,
+            .timeline-progress {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                padding-left: 65px;
+            }
+            
+            .timeline-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Track Your Order</h1>
+            <p class="hero-subtitle">Enter your order details to check your shipment status</p>
+        </div>
+    </section>
+
+    <!-- Tracking Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Search Form -->
+                    <div class="tracking-card">
+                        <h2 class="text-center mb-4">Find Your Order</h2>
+                        <form id="trackingForm">
+                            <div class="mb-3">
+                                <label class="form-label">Order Number</label>
+                                <input type="text" class="form-control" id="orderNumber" 
+                                       placeholder="e.g., Vi-1234567890-ABC123" required>
+                                <small class="text-muted">Check your order confirmation email</small>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" 
+                                       placeholder="your@email.com" required>
+                            </div>
+                            <button type="submit" class="btn btn-track">
+                                <i class="fas fa-search me-2"></i> Track Order
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Tracking Results -->
+                    <div class="tracking-result" id="trackingResult">
+                        <!-- Status Header -->
+                        <div class="status-header">
+                            <div class="status-icon" id="statusIcon">📦</div>
+                            <h2 id="statusTitle">Order Status</h2>
+                            <p class="mb-0" id="statusDescription">Your order is being processed</p>
+                        </div>
+
+                        <!-- Timeline -->
+                        <div class="order-details-card">
+                            <h3 class="mb-4">Order Progress</h3>
+                            <div class="timeline">
+                                <div class="timeline-progress" id="timelineProgress"></div>
+                                <div id="timelineContainer"></div>
+                            </div>
+                        </div>
+
+                        <!-- Order Details -->
+                        <div class="order-details-card">
+                            <h3 class="mb-4">Order Details</h3>
+                            <div class="detail-row">
+                                <div class="detail-label">Order Number</div>
+                                <div class="detail-value" id="detailOrderNumber"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Order Date</div>
+                                <div class="detail-value" id="detailOrderDate"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Payment Method</div>
+                                <div class="detail-value" id="detailPayment"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Shipping Address</div>
+                                <div class="detail-value" id="detailAddress"></div>
+                            </div>
+                        </div>
+
+                        <!-- Order Items -->
+                        <div class="order-details-card">
+                            <h3 class="mb-4">Order Items</h3>
+                            <div id="orderItemsContainer"></div>
+                            
+                            <div class="total-section">
+                                <div class="total-row">
+                                    <span>Subtotal:</span>
+                                    <span id="subtotalAmount"></span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Shipping Fee:</span>
+                                    <span id="shippingAmount"></span>
+                                </div>
+                                <div class="total-row grand-total">
+                                    <span>Total:</span>
+                                    <span id="totalAmount"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/cta-section') %>
+    <%- include('partials/newsletter') %>
+    <%- include('partials/footer') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('trackingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const orderNumber = document.getElementById('orderNumber').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            try {
+                const response = await fetch('/track-order/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ orderNumber, email })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayOrderTracking(data.order);
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+
+        function displayOrderTracking(order) {
+            // Show tracking result
+            document.getElementById('trackingResult').style.display = 'block';
+            document.getElementById('trackingResult').scrollIntoView({ behavior: 'smooth' });
+
+            // Status icons and messages
+            const statusConfig = {
+                pending: { icon: '⏳', title: 'Order Received', desc: 'Your order has been received and is awaiting confirmation' },
+                processing: { icon: '📦', title: 'Processing', desc: 'Your order is being prepared by our team' },
+                confirmed: { icon: '✅', title: 'Confirmed', desc: 'Your order has been confirmed and is ready to ship' },
+                shipped: { icon: '🚚', title: 'Shipped', desc: 'Your order is on its way to you!' },
+                delivered: { icon: '🎉', title: 'Delivered', desc: 'Your order has been successfully delivered' },
+                cancelled: { icon: '❌', title: 'Cancelled', desc: 'This order has been cancelled' }
+            };
+
+            const config = statusConfig[order.status];
+            document.getElementById('statusIcon').textContent = config.icon;
+            document.getElementById('statusTitle').textContent = config.title;
+            document.getElementById('statusDescription').textContent = config.desc;
+
+            // Timeline
+            const timelineContainer = document.getElementById('timelineContainer');
+            timelineContainer.innerHTML = order.timeline.map(item => `
+                <div class="timeline-item ${item.state}">
+                    <div class="timeline-icon">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>${item.title}</h4>
+                        <p class="text-muted mb-0">${item.description}</p>
+                        ${item.date ? `<small class="text-muted">${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</small>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            // Animate progress bar
+            setTimeout(() => {
+                document.getElementById('timelineProgress').style.height = order.progress + '%';
+            }, 100);
+
+            // Order details
+            document.getElementById('detailOrderNumber').textContent = order.orderNumber;
+            document.getElementById('detailOrderDate').textContent = new Date(order.orderDate).toLocaleDateString('en-US', { 
+                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+            });
+            document.getElementById('detailPayment').textContent = order.paymentMethod;
+            document.getElementById('detailAddress').innerHTML = `
+                ${order.shipping.address}<br>
+                ${order.shipping.city}, ${order.shipping.zipCode}<br>
+                ${order.shipping.country}
+            `;
+
+            // Order items
+            const itemsContainer = document.getElementById('orderItemsContainer');
+            itemsContainer.innerHTML = order.items.map(item => `
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${item.name}</div>
+                        <div class="text-muted">Size: ${item.size}ml | Quantity: ${item.quantity}</div>
+                        <div class="product-price">PKR ${item.price.toFixed(2)}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Totals
+            document.getElementById('subtotalAmount').textContent = 'PKR ' + order.subtotal.toFixed(2);
+            document.getElementById('shippingAmount').textContent = 'PKR ' + order.shippingFee.toFixed(2);
+            document.getElementById('totalAmount').textContent = 'PKR ' + order.totalAmount.toFixed(2);
+        }
+    </script>
+</body>
+</html>
