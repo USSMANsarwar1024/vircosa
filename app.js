@@ -70,7 +70,7 @@ const ADMIN_PATH = "/23e@sKsH-hajimemashite";
 
 // Mount routes AFTER all middleware
 app.use("/", indexRoutes);
-app.use("/", authRoutes); 
+app.use("/", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/products", productRoutes);
 // app.use("/23e@sKsH-hajimemashite", a23esKsH_hajimemashite);

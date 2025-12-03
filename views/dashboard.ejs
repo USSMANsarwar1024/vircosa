@@ -410,6 +410,212 @@
             }
         }
     </style>
+
+<!-- Recent Orders Styles  -->
+    <style>
+.recent-orders-section {
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* Color Variables */
+:root {
+    --amber: #8B5A2B;
+    --amber-light: #D4AF8E;
+    --amber-lighter: #F8F5F2;
+    --secondary-color: #4A2C2A;
+}
+
+.text-amber { color: var(--amber) !important; }
+.btn-amber { 
+    background-color: var(--amber); 
+    border-color: var(--amber);
+    color: white;
+}
+.btn-amber:hover {
+    background-color: #7a4d24;
+    border-color: #7a4d24;
+    color: white;
+}
+.btn-outline-amber {
+    color: var(--amber);
+    border-color: var(--amber);
+}
+.btn-outline-amber:hover {
+    background-color: var(--amber);
+    color: white;
+}
+
+/* Order Items */
+.order-item {
+    padding: 1rem 0;
+    transition: background-color 0.2s ease;
+}
+
+.order-item:hover {
+    background-color: var(--amber-lighter);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0 -1rem;
+}
+
+/* Image Stack */
+.image-stack {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.stacked-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.stacked-image:nth-child(2) {
+    left: 10px;
+    top: 5px;
+}
+
+.stacked-image:nth-child(3) {
+    left: 20px;
+    top: 10px;
+}
+
+.stacked-count {
+    position: absolute;
+    left: 40px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--amber);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(139, 90, 43, 0.3);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-delivered {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.status-confirmed {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+    border: 1px solid rgba(23, 162, 184, 0.2);
+}
+
+.status-shipped {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #856404;
+    border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.status-cancelled {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+/* Order Stats */
+.orders-stats {
+    background-color: var(--amber-lighter);
+    border-radius: 15px;
+    padding: 1.5rem;
+}
+
+.stat-item {
+    padding: 0.5rem;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Empty State */
+.empty-orders {
+    background: linear-gradient(135deg, var(--amber-lighter) 0%, #ffffff 100%);
+    border-radius: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .order-item .row > div {
+        margin-bottom: 1rem;
+    }
+    
+    .order-details .order-title {
+        font-size: 1rem;
+    }
+    
+    .order-actions {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .orders-stats .col-md-3 {
+        margin-bottom: 1rem;
+    }
+    
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .order-item {
+        padding: 0.75rem;
+        margin: 0 -0.75rem !important;
+    }
+    
+    .order-images .image-stack {
+        transform: scale(0.9);
+        transform-origin: left center;
+    }
+    
+    .order-details {
+        margin-left: -10px;
+    }
+}
+    </style>
 </head>
 
 <body>
@@ -431,7 +637,7 @@
             </h1>
             
             <p class="lead mb-5" style="max-width: 45rem; margin: 0 auto; opacity: 0.9;">Rediscover your individuality through scents that speak your story. <br>Every fragrance in <strong>Vircosa</strong> is a reflection of timeless elegance and personal allure. </p>
-            <a href="/perfumes" class="btn btn-zephyra btn-lg">Explore Collection</a>
+            <a href="/products" class="btn btn-zephyra btn-lg">Explore Collection</a>
         </div>
     </section>
 
@@ -510,89 +716,205 @@
                     </div>
 
                     <!-- Recent Orders -->
-                    <div class="card mb-4">
-                        <div class="card-header bg-white">
-                            <h5 class="mb-0">Recent Orders</h5>
-                        </div>
+                    <div class="recent-orders-section">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white border-0 pb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-box-open text-amber me-2"></i>Recent Orders
+                                    </h5>
+                                    <a href="/dashboard/orders" class="btn btn-link text-amber p-0">
+                                        View All <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
 
-                        <% if (orders && orders.length > 0) { %>
-                            <div class="card-body">
-                                <% orders.slice(0, 5).forEach((order, index) => { %>
-                                    <div class="purchase-history-item <%= index < orders.slice(0, 5).length - 1 ? 'border-bottom pb-3 mb-3' : '' %>">
-                                        <div class="row align-items-center">
-                                            <!-- First Product Image -->
-                                            <div class="col-md-2 col-3">
-                                                <% if (order.items[0].product && order.items[0].product.images && order.items[0].product.images.length > 0) { %>
-                                                    <img src="<%= order.items[0].product.images[0] %>" 
-                                                        alt="<%= order.items[0].name %>" 
-                                                        class="img-fluid rounded"
-                                                        style="max-height: 80px; object-fit: cover;">
-                                                <% } else { %>
-                                                    <img src="/images/placeholder.jpg" 
-                                                        alt="Product" 
-                                                        class="img-fluid rounded"
-                                                        style="max-height: 80px; object-fit: cover;">
-                                                <% } %>
+                            <% if (orders && orders.length > 0) { %>
+                                <div class="card-body pt-0">
+                                    <div class="orders-list">
+                                        <% orders.slice(0, 5).forEach((order, index) => { %>
+                                        <div class="order-item <%= index < orders.slice(0, 5).length - 1 ? 'border-bottom pb-3 mb-3' : '' %>">
+                                            <div class="row align-items-center">
+                                                <!-- Order Summary -->
+                                                <div class="col-md-6">
+                                                    <div class="d-flex">
+                                                        <!-- Product Images -->
+                                                        <div class="order-images me-3">
+                                                            <div class="image-stack">
+                                                                <% order.items.slice(0, 3).forEach((item, imgIndex) => { %>
+                                                                    <div class="stacked-image" style="z-index: <%= 3 - imgIndex %>;">
+                                                                        <% if (item.product && item.product.images && item.product.images.length > 0) { %>
+                                                                            <img src="<%= item.product.images[0] %>" 
+                                                                                alt="<%= item.name %>" 
+                                                                                class="img-fluid rounded"
+                                                                                style="width: 60px; height: 60px; object-fit: cover; border: 2px solid white;">
+                                                                        <% } else { %>
+                                                                            <img src="/images/placeholder-product.jpg" 
+                                                                                alt="Product" 
+                                                                                class="img-fluid rounded"
+                                                                                style="width: 60px; height: 60px; object-fit: cover; border: 2px solid white;">
+                                                                        <% } %>
+                                                                    </div>
+                                                                <% }); %>
+                                                                <% if (order.items.length > 3) { %>
+                                                                    <div class="stacked-count">
+                                                                        <span>+<%= order.items.length - 3 %></span>
+                                                                    </div>
+                                                                <% } %>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Order Details -->
+                                                        <div class="order-details">
+                                                            <h6 class="order-title mb-1">
+                                                                <%= order.items[0].name %>
+                                                                <% if (order.items.length > 1) { %>
+                                                                    <span class="text-muted">+ <%= order.items.length - 1 %> more</span>
+                                                                <% } %>
+                                                            </h6>
+                                                            <p class="order-meta text-muted mb-2">
+                                                                <small>
+                                                                    <i class="far fa-calendar me-1"></i>
+                                                                    <%= new Date(order.createdAt).toLocaleDateString('en-US', { 
+                                                                        month: 'short', 
+                                                                        day: 'numeric', 
+                                                                        year: 'numeric' 
+                                                                    }) %>
+                                                                    • 
+                                                                    <i class="fas fa-hashtag me-1"></i>
+                                                                    <%= order.orderNumber %>
+                                                                </small>
+                                                            </p>
+                                                            <p class="order-total mb-0">
+                                                                <strong class="text-dark">PKR <%= order.totalAmount.toFixed(2) %></strong>
+                                                                <span class="text-muted ms-2">
+                                                                    • <%= order.items.length %> item<%= order.items.length > 1 ? 's' : '' %>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Status & Actions -->
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-between align-items-center h-100">
+                                                        <!-- Status -->
+                                                        <div class="order-status">
+                                                            <%
+                                                                let statusClass = '';
+                                                                let statusIcon = 'fa-clock';
+                                                                
+                                                                if (order.orderStatus === 'delivered') {
+                                                                    statusClass = 'status-delivered';
+                                                                    statusIcon = 'fa-check-circle';
+                                                                } else if (order.orderStatus === 'confirmed') {
+                                                                    statusClass = 'status-confirmed';
+                                                                    statusIcon = 'fa-check';
+                                                                } else if (order.orderStatus === 'shipped') {
+                                                                    statusClass = 'status-shipped';
+                                                                    statusIcon = 'fa-shipping-fast';
+                                                                } else if (order.orderStatus === 'pending') {
+                                                                    statusClass = 'status-pending';
+                                                                    statusIcon = 'fa-hourglass-half';
+                                                                } else if (order.orderStatus === 'cancelled') {
+                                                                    statusClass = 'status-cancelled';
+                                                                    statusIcon = 'fa-times-circle';
+                                                                }
+                                                            %>
+                                                            <div class="status-badge <%= statusClass %>">
+                                                                <i class="fas <%= statusIcon %> me-2"></i>
+                                                                <span class="text-capitalize"><%= order.orderStatus %></span>
+                                                            </div>
+                                                            <small class="text-muted d-block mt-1">
+                                                                <% if (order.estimatedDelivery) { %>
+                                                                    Est. delivery: <%= new Date(order.estimatedDelivery).toLocaleDateString('en-US', { 
+                                                                        month: 'short', 
+                                                                        day: 'numeric' 
+                                                                    }) %>
+                                                                <% } %>
+                                                            </small>
+                                                        </div>
+
+                                                        <!-- Actions -->
+                                                        <div class="order-actions">
+                                                            <a href="/dashboard/orders/<%= order._id %>" 
+                                                            class="btn btn-sm btn-outline-amber">
+                                                                View Details
+                                                            </a>
+                                                            <% if (order.orderStatus === 'delivered') { %>
+                                                                <button class="btn btn-sm btn-outline-secondary ms-2" 
+                                                                        data-bs-toggle="tooltip" 
+                                                                        title="Reorder">
+                                                                    <i class="fas fa-redo"></i>
+                                                                </button>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <% }); %>
+                                    </div>
 
-                                            <!-- Product Name & Order Number -->
-                                            <div class="col-md-4 col-9">
-                                                <h6 class="mb-1">
-                                                    <%= order.items[0].name %>
-                                                    <% if (order.items.length > 1) { %>
-                                                        <span class="badge bg-light text-dark ms-1">+<%= order.items.length - 1 %> more</span>
-                                                    <% } %>
-                                                </h6>
-                                                <small class="text-muted"><%= order.orderNumber %></small>
+                                    <!-- Quick Stats -->
+                                    <div class="orders-stats mt-4 pt-3 border-top">
+                                        <div class="row">
+                                            <div class="col-md-3 col-6">
+                                                <div class="stat-item text-center">
+                                                    <div class="stat-number text-amber fw-bold"><%= orders.length %></div>
+                                                    <div class="stat-label text-muted">Total Orders</div>
+                                                </div>
                                             </div>
-
-                                            <!-- Order Date (Hidden on mobile) -->
-                                            <div class="col-md-2 d-none d-md-block">
-                                                <small><%= new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></small>
+                                            <div class="col-md-3 col-6">
+                                                <div class="stat-item text-center">
+                                                    <div class="stat-number text-success fw-bold">
+                                                        <%= orders.filter(o => o.orderStatus === 'delivered').length %>
+                                                    </div>
+                                                    <div class="stat-label text-muted">Delivered</div>
+                                                </div>
                                             </div>
-
-                                            <!-- Status Badge -->
-                                            <div class="col-md-2 col-6 mt-2 mt-md-0">
-                                                <% 
-                                                    let badgeClass = 'bg-secondary';
-                                                    if (order.orderStatus === 'delivered') badgeClass = 'bg-success';
-                                                    else if (order.orderStatus === 'confirmed') badgeClass = 'bg-info';
-                                                    else if (order.orderStatus === 'shipped') badgeClass = 'bg-primary';
-                                                    else if (order.orderStatus === 'pending') badgeClass = 'bg-warning text-dark';
-                                                    else if (order.orderStatus === 'cancelled') badgeClass = 'bg-danger';
-                                                %>
-                                                <span class="badge <%= badgeClass %> text-capitalize"><%= order.orderStatus %></span>
+                                            <div class="col-md-3 col-6">
+                                                <div class="stat-item text-center">
+                                                    <div class="stat-number text-primary fw-bold">
+                                                        PKR <%= orders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2) %>
+                                                    </div>
+                                                    <div class="stat-label text-muted">Total Spent</div>
+                                                </div>
                                             </div>
-
-                                            <!-- View Button -->
-                                            <div class="col-md-2 col-6 text-end mt-2 mt-md-0">
-                                                <a href="/dashboard/orders" class="btn btn-sm btn-outline-dark">View</a>
+                                            <div class="col-md-3 col-6">
+                                                <div class="stat-item text-center">
+                                                    <div class="stat-number text-info fw-bold">
+                                                        <%= new Set(orders.flatMap(o => o.items.map(i => i.product._id))).size %>
+                                                    </div>
+                                                    <div class="stat-label text-muted">Unique Items</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                <% }); %>
-
-                                <!-- View All Orders Link -->
-                                <% if (orders.length > 5) { %>
-                                    <div class="text-center mt-3 pt-3 border-top">
-                                        <a href="/dashboard/orders" class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-list me-2"></i>View All Orders (<%= orders.length %>)
-                                        </a>
-                                    </div>
-                                <% } %>
-                            </div>
-                        <% } else { %>
-                            <!-- Empty State -->
-                            <div class="card-body">
-                                <div class="cart-empty text-center py-5" id="empty-cart">
-                                    <i class="far fa-heart" style="font-size: 3rem; color: #ccc;"></i>
-                                    <h3 class="mt-3">No Orders Yet</h3>
-                                    <p class="text-muted">Start your fragrance journey by placing your first order.</p>
-                                    <a href="/products" class="btn btn-cart">Discover Scents</a>
                                 </div>
-                            </div>
-                        <% } %>
+                            <% } else { %>
+                                <!-- Empty State -->
+                                <div class="card-body">
+                                    <div class="empty-orders text-center py-5">
+                                        <div class="empty-icon mb-4">
+                                            <i class="fas fa-box-open text-muted" style="font-size: 4rem; opacity: 0.3;"></i>
+                                        </div>
+                                        <h4 class="mb-3">No Orders Yet</h4>
+                                        <p class="text-muted mb-4">Your fragrance journey begins with your first order</p>
+                                        <a href="/products" class="btn btn-amber">
+                                            <i class="fas fa-shopping-bag me-2"></i>Explore Our Collection
+                                        </a>
+                                        <div class="mt-3">
+                                            <small class="text-muted">
+                                                Free shipping on orders over PKR 300 • Easy returns • Secure checkout
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
                     </div>
+
 
                     <!-- My Reviews Section -->
                         <div class="reviews-dashboard-section">
@@ -988,6 +1310,76 @@
             }
         });
     </script>
+
+    <!-- Recent Orders -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Reorder functionality
+    const reorderButtons = document.querySelectorAll('[title="Reorder"]');
+    reorderButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const orderItem = this.closest('.order-item');
+            const orderTitle = orderItem.querySelector('.order-title').textContent;
+            
+            // In a real implementation, this would add items to cart
+            if (confirm(`Reorder "${orderTitle.trim()}"? This will add all items to your cart.`)) {
+                // Show loading state
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                this.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i>';
+                    this.classList.remove('btn-outline-secondary');
+                    this.classList.add('btn-success');
+                    
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'position-fixed bottom-0 end-0 p-3';
+                    toast.innerHTML = `
+                        <div class="toast show" role="alert">
+                            <div class="toast-header bg-success text-white">
+                                <strong class="me-auto">Success!</strong>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                            </div>
+                            <div class="toast-body">
+                                Items added to cart. <a href="/cart" class="text-decoration-none">View cart</a>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    // Remove toast after 3 seconds
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 3000);
+                }, 1500);
+            }
+        });
+    });
+    
+    // Hover effect enhancement
+    const orderItems = document.querySelectorAll('.order-item');
+    orderItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.transition = 'transform 0.2s ease';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+});
+</script>
 </body>
 
 </html>

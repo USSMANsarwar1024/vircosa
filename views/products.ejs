@@ -493,38 +493,38 @@
                     <% products.forEach(product => { %>
                     <div class="product-card" data-categories="<%= product.categories.join(',').toLowerCase() %>" data-badge="<%= product.productBadge ? product.productBadge.toLowerCase() : '' %>">
                         <% if (product.productBadge) { %>
-                        <div class="product-badge"><%= product.productBadge %></div>
-                        <% } %>
-                        <div class="product-img">
-                            <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <% product.images.forEach((img, index) => { %>
-                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                        <a href="/products/product-details/<%= product._id %>">
-                                            <img src="<%= img %>" class="d-block w-100 rounded" alt="Product image">
-                                        </a>
+                            <div class="product-badge"><%= product.productBadge %></div>
+                            <% } %>
+                            <div class="product-img">
+                                <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <% product.images.forEach((img, index) => { %>
+                                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                            <a href="/products/product-details/<%= product._id %>">
+                                                <img src="<%= img %>" class="d-block w-100 rounded" alt="Product image">
+                                            </a>
+                                        </div>
+                                        <% }) %>
                                     </div>
-                                    <% }) %>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                            </div>
+                            <div class="product-body">
+                                <span class="product-category"><%= product.categories.join(', ') %></span>
+                                <h3 class="product-title">
+                                    <a href="/products/product-details/<%= product._id %>"><%= product.name %></a>
+                                </h3>
+                                <h3 class="product-price">PKR <%= product.variants[0].price %></h3>
+                                <a href="#" class="btn btn-product add-to-wishlist-btn" data-product-id="<%= product._id %>">Add to Wishlist</a>
                             </div>
                         </div>
-                        <div class="product-body">
-                            <span class="product-category"><%= product.categories.join(', ') %></span>
-                            <h3 class="product-title">
-                                <a href="/products/product-details/<%= product._id %>"><%= product.name %></a>
-                            </h3>
-                            <h3 class="product-price">PKR <%= product.variants[0].price %></h3>
-                            <a href="#" class="btn btn-product add-to-wishlist-btn" data-product-id="<%= product._id %>">Add to Wishlist</a>
-                        </div>
-                    </div>
                     <% }) %>
                 <% } else { %>
                     <p class="text-center text-muted">No products exist.</p>
