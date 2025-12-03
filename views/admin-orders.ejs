@@ -226,7 +226,7 @@
         <!-- Status Filters -->
         <div class="status-filters">
             <button class="status-filter-btn <%= currentStatus === 'all' ? 'active' : '' %>" 
-                    onclick="window.location.href='/admin/orders?status=all'">
+                    onclick="window.location.href='/23e@sKsH-hajimemashite/orders?status=all'">
                 All Orders <span class="badge"><%= counts.all %></span>
             </button>
             <button class="status-filter-btn <%= currentStatus === 'pending' ? 'active' : '' %>" 
@@ -321,7 +321,7 @@
                     <ul class="pagination justify-content-center">
                         <% for(let i = 1; i <= pagination.totalPages; i++) { %>
                             <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
-                                <a class="page-link" href="/admin/orders?page=<%= i %>&status=<%= currentStatus %>"><%= i %></a>
+                                <a class="page-link" href="/23e@sKsH-hajimemashite/orders?page=<%= i %>&status=<%= currentStatus %>"><%= i %></a>
                             </li>
                         <% } %>
                     </ul>

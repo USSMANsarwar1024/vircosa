@@ -558,7 +558,7 @@
                 <ul class="pagination justify-content-center">
                     <% for(let i = 1; i <= pagination.totalPages; i++) { %>
                         <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
-                            <a class="page-link" href="/23e@sKsH?page=<%= i %>"><%= i %></a>
+                            <a class="page-link" href="/23e@sKsH-hajimemashite?page=<%= i %>"><%= i %></a>
                         </li>
                     <% } %>
                 </ul>
@@ -575,7 +575,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/23e@sKsH/add" method="POST" enctype="multipart/form-data" id="addProductForm">
+                    <form action="/23e@sKsH-hajimemashite/add" method="POST" enctype="multipart/form-data" id="addProductForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="productName" class="form-label">Product Name</label>
@@ -925,7 +925,7 @@
 
                 // Set form action to edit route
                 const editForm = document.getElementById('editProductForm');
-                editForm.action = `/23e@sKsH/edit/${productId}`;
+                editForm.action = `/23e@sKsH-hajimemashite/edit/${productId}`;
 
                 // Populate form fields
                 document.getElementById('editProductId').value = productId;
@@ -995,7 +995,7 @@
                 // Create and submit delete form
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = `/23e@sKsH/delete/${currentDeleteId}`;
+                form.action = `/23e@sKsH-hajimemashite/delete/${currentDeleteId}`;
                 document.body.appendChild(form);
                 form.submit();
             }

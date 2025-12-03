@@ -132,7 +132,7 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
 
     if (images.length === 0) {
       // If no flash middleware, just redirect with query param
-      return res.redirect("/admin?msg=no-image");
+      return res.redirect("/23e@sKsH-hajimemashite?msg=no-image");
     }
 
     const newProduct = new Product({
@@ -151,7 +151,7 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
 
     await newProduct.save();
 
-    res.redirect("/admin?msg=added");
+    res.redirect("/23e@sKsH-hajimemashite?msg=added");
   } catch (err) {
     console.error("Error adding product:", err);
     if (!res.headersSent) res.status(500).send("Server error adding product");
