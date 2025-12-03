@@ -80,7 +80,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
 // --- Login Routes ---
 router.get("/login", redirectIfLoggedIn, (req, res) => {
   res.render("login");

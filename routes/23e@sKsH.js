@@ -78,6 +78,7 @@ router.get("/", async (req, res) => {
         currentPage: page,
         totalPages,
       },
+      req,
     });
   } catch (err) {
     console.error("Error loading 23e@sKsH panel:", err);

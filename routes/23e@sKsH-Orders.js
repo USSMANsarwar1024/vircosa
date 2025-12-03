@@ -51,9 +51,9 @@ router.get("/", async (req, res) => {
             counts,
             currentStatus: status,
             pagination: {
-                currentPage: page,
-                totalPages,
-                totalOrders
+            currentPage: page,
+            totalPages,
+            totalOrders,
             }
         });
     } catch (err) {

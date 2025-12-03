@@ -22,7 +22,9 @@ router.get('/', isLoggedIn, async (req, res) => {
 
         res.render('wishlist', {
             user,
-            wishlistItems
+            wishlistItems,
+            req,
+            
         });
     } catch (err) {
         console.error('Error loading wishlist:', err);

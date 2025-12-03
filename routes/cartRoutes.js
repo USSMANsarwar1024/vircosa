@@ -46,7 +46,8 @@ router.get('/', isLoggedIn, async (req, res) => {
             subtotal,
             shipping,
             total,
-            total_items
+            total_items,
+            req,
         });
 
     } catch (err) {
@@ -324,7 +325,8 @@ router.get("/checkout", isLoggedIn, async (req, res) => {
             cartItems,
             subtotal,
             shipping,
-            total
+            total,
+            req,
         });
 
     } catch (err) {

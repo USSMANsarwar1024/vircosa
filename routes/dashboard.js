@@ -69,6 +69,7 @@ router.get("/", isLoggedIn, async (req, res) => {
       orders,
       totalOrders,
       myReviews,
+      req,
     });
   } catch (error) {
     const user = await userModel.findOne({ email: req.user.email });

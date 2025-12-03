@@ -7,11 +7,55 @@
                 <p class="mb-4">Subscribe for exclusive launches, artisan insights, and 10% off your first
                     purchase.
                 </p>
-                <form class="d-flex justify-content-center">
-                    <input type="email" class="form-control w-50 me-2" placeholder="Your email address" required>
+                <form class="d-flex justify-content-center" action="/newsletter" method="POST">
+                    <input type="email" name="email"  class="form-control w-50 me-2" placeholder="Your email address" required>
+                    <input type="hidden" name="redirectTo" value="<%= req.originalUrl %>">
                     <button type="submit" class="btn btn-hero">Subscribe</button>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("newsletter") === "success") {
+    Swal.fire({
+      icon: "success",
+      title: "Thank you for joining us!",
+      text: "Your support genuinely encourages us. We hope to bring a little joy your way.",
+    });
+
+    // Remove the query parameter so it doesn't show again on refresh
+    params.delete("newsletter");
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, "", cleanUrl);
+  }
+
+  if (params.get("newsletter") === "exists") {
+    Swal.fire({
+      icon: "info",
+      title: "You're already subscribed!",
+      text: "Thanks for staying with us — we appreciate you.",
+    });
+
+    params.delete("newsletter");
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, "", cleanUrl);
+  }
+
+  if (params.get("newsletter") === "error") {
+    Swal.fire({
+      icon: "error",
+      title: "Oops!",
+      text: "Something went wrong. Please try again.",
+    });
+
+    params.delete("newsletter");
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, "", cleanUrl);
+  }
+</script>
+

@@ -7,7 +7,10 @@ const Order = require("../models/order");
 // Track Order Page (Public)
 // ============================
 router.get("/", (req, res) => {
-  res.render("track-order", { order: null });
+  res.render("track-order", { 
+    order: null,
+    req,
+  });
 });
 
 // ============================

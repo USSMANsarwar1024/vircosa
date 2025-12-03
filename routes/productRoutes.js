@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
     products,
     currentPage: page,
     totalPages,
+    req,
   });
 });
 
@@ -83,9 +84,10 @@ router.get("/product-details/:id", async (req, res) => {
       featuredProducts,
       reviews,
       overallRating,
-      canReview,           // ✅ Pass to template
-      deliveredOrders,     // ✅ For dropdown selection
-      hasReviewed          // ✅ To show appropriate message
+      canReview,          
+      deliveredOrders,    
+      hasReviewed,       
+      req,
     });
 
   } catch (err) {
