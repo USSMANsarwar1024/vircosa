@@ -394,7 +394,7 @@
             <ul>
                 <li><a href="/23e@sKsH-hajimemashite" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="/23e@sKsH-hajimemashite"><i class="fas fa-store"></i> Products</a></li>
-                <li><a href="/admin/orders"><i class="fas fa-shopping-bag"></i> Orders</a></li> <!-- NEW -->
+                <li><a href="/23e@sKsH-hajimemashite/orders"><i class="fas fa-shopping-bag"></i> Orders</a></li> <!-- NEW -->
                 <li><a href="#"><i class="fas fa-users"></i> Customers</a></li>
                 <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Back to Store</a></li>
@@ -501,13 +501,13 @@
                                          alt="<%= product.name %>" class="product-img-table">
                                 </td>
                                 <td><%= product.name %></td>
-                                <td><%= product.category %></td>
+                                <td><%= product.categories ? product.categories.join(', ') : '' %></td>
                                 <td>PKR <%= product.variants && product.variants.length > 0 
                                     ? product.variants[0].price 
                                     : product.price 
                                 %>
                                 </td>
-                                <td><%= product.stock || 0 %></td>
+                                <td><%= product.variants && product.variants.length > 0 ? product.variants[0].stock : 0 %></td>
                                 <td>
                                     <% if (product.productBadge) { %>
                                         <span class="badge badge-stock badge-in-stock"><%= product.productBadge %></span>

@@ -46,7 +46,7 @@ router.get("/", async (req, res) => {
             counts[item._id] = item.count;
         });
         
-        res.render("admin-orders", {
+        res.render("23e@sKsH-orders", {
             orders,
             counts,
             currentStatus: status,

@@ -211,7 +211,7 @@
             <ul>
                 <li><a href="/23e@sKsH-hajimemashite" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="/23e@sKsH-hajimemashite"><i class="fas fa-store"></i> Products</a></li>
-                <li><a href="/admin/orders"><i class="fas fa-shopping-bag"></i> Orders</a></li> <!-- NEW -->
+                <li><a href="/23e@sKsH-hajimemashite/orders"><i class="fas fa-shopping-bag"></i> Orders</a></li> <!-- NEW -->
                 <li><a href="#"><i class="fas fa-users"></i> Customers</a></li>
                 <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Back to Store</a></li>
@@ -230,23 +230,23 @@
                 All Orders <span class="badge"><%= counts.all %></span>
             </button>
             <button class="status-filter-btn <%= currentStatus === 'pending' ? 'active' : '' %>" 
-                    onclick="window.location.href='/admin/orders?status=pending'">
+                    onclick="window.location.href='/23e@sKsH-hajimemashite/orders?status=pending'">
                 Pending <span class="badge"><%= counts.pending %></span>
             </button>
             <button class="status-filter-btn <%= currentStatus === 'processing' ? 'active' : '' %>" 
-                    onclick="window.location.href='/admin/orders?status=processing'">
+                    onclick="window.location.href='/23e@sKsH-hajimemashite/orders?status=processing'">
                 Processing <span class="badge"><%= counts.processing %></span>
             </button>
             <button class="status-filter-btn <%= currentStatus === 'confirmed' ? 'active' : '' %>" 
-                    onclick="window.location.href='/admin/orders?status=confirmed'">
+                    onclick="window.location.href='/23e@sKsH-hajimemashite/orders?status=confirmed'">
                 Confirmed <span class="badge"><%= counts.confirmed %></span>
             </button>
             <button class="status-filter-btn <%= currentStatus === 'shipped' ? 'active' : '' %>" 
-                    onclick="window.location.href='/admin/orders?status=shipped'">
+                    onclick="window.location.href='/23e@sKsH-hajimemashite/orders?status=shipped'">
                 Shipped <span class="badge"><%= counts.shipped %></span>
             </button>
             <button class="status-filter-btn <%= currentStatus === 'delivered' ? 'active' : '' %>" 
-                    onclick="window.location.href='/admin/orders?status=delivered'">
+                    onclick="window.location.href='/23e@sKsH-hajimemashite/orders?status=delivered'">
                 Delivered <span class="badge"><%= counts.delivered %></span>
             </button>
         </div>
@@ -409,7 +409,7 @@
             const status = selectedStatus.value;
 
             try {
-                const response = await fetch(`/admin/orders/update-status/${currentOrderId}`, {
+                const response = await fetch(`/23e@sKsH-hajimemashite/orders/update-status/${currentOrderId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

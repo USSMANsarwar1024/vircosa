@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/user');
 const { isAdmin } = require("./middleware/auth");
 
-const adminOrdersRouter = require('./routes/adminOrders');
+const adminOrdersRouter = require('./routes/23e@sKsH-Orders');
 const trackOrderRouter = require('./routes/trackOrder');
 
 
@@ -80,7 +80,7 @@ app.use("/wishlist", wishlistRoutes);
 app.use("/auth", googleAuthRoutes);
 app.use("/reviews", reviewRoutes);
 
-app.use('/admin/orders', adminOrdersRouter);  // Admin order management
+app.use('/23e@sKsH-hajimemashite/orders', adminOrdersRouter);  // Admin order management
 app.use('/track-order', trackOrderRouter);     // Public tracking
 
 

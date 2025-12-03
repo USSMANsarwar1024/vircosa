@@ -216,7 +216,7 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
     }
 
     await Product.findByIdAndUpdate(req.params.id, updateData);
-    res.redirect("/admin?msg=updated");
+    res.redirect("/23e@sKsH-hajimemashite?msg=updated");
   } catch (err) {
     console.error("Error editing product:", err);
     res.status(500).send("Server error updating product");
