@@ -168,23 +168,44 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
       name,
       categories,
       description,
-      price,
+      // price, // REMOVED: Handled by variants
       productBadge,
       shippingFee = 0,
-      stock = 0,
+      // stock = 0, // REMOVED: Handled by variants
       sku,
       lasting,
       concentration,
-      sizes
+      // sizes // REMOVED: Handled by variants
     } = req.body;
+
+    // Variant handling
+    let sizes = req.body.sizes || [];
+    let prices = req.body.prices || [];
+    let variantStock = req.body.variantStock || [];
+
+    if (!Array.isArray(sizes)) sizes = [sizes];
+    if (!Array.isArray(prices)) prices = [prices];
+    if (!Array.isArray(variantStock)) variantStock = [variantStock];
+
+    const variants = sizes.map((s, i) => ({
+      size: Number(s),
+      price: Number(prices[i] || 0),
+      stock: Number(variantStock[i] || 0),
+    }));
+
+    // Calculate total stock for legacy fields/display (optional, but good practice)
+    const totalStock = variants.reduce((sum, variant) => sum + variant.stock, 0);
 
     const updateData = {
       name,
       description,
-      price: Number(price || 0),
+      // The single price/stock fields are now removed, but we can set the 'stock'
+      // field on the model for compatibility or summary purposes.
+      // We will remove 'price' and 'sizes' from the update payload entirely.
+      stock: totalStock, // Setting the combined stock
+      variants: variants, // This is the main update
       productBadge: productBadge || undefined,
       shippingFee: Number(shippingFee || 0),
-      stock: Number(stock || 0),
       sku: sku || undefined,
       lasting: lasting || "8-10 Hours",
       concentration: Number(concentration || 40),
@@ -199,16 +220,6 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
       updateData.categories = [];
     }
 
-    // Handle sizes array
-    if (sizes) {
-      // Convert to numbers and handle single/multiple values
-      const sizesArray = Array.isArray(sizes) ? sizes : [sizes];
-      updateData.sizes = sizesArray.map(s => Number(s));
-    } else {
-      // If no sizes selected, set empty array
-      updateData.sizes = [];
-    }
-
     // If new images uploaded, replace existing images
     if (req.files && req.files.length > 0) {
       updateData.images = req.files.map(
@@ -216,13 +227,14 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
       );
     }
 
-    await Product.findByIdAndUpdate(req.params.id, updateData);
+    await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.redirect("/23e@sKsH-hajimemashite?msg=updated");
   } catch (err) {
     console.error("Error editing product:", err);
     res.status(500).send("Server error updating product");
   }
 });
+
 
 // ============================
 // Delete Product
