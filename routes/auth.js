@@ -216,8 +216,6 @@ router.post("/resend-otp", async (req, res) => {
   }
 });
 
-
-
 router.get("/forget-password", (req, res) => {
   res.send("Please contact us at: +92-3081036864 <b> WhatsApp Only!");
 });
