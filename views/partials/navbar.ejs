@@ -26,12 +26,539 @@
                 </li>
             </ul>
             <div class="ms-3 d-flex align-items-center">
-                <a href="#" class="btn btn-outline-perfume me-2"><i class="fas fa-search"></i></a>
+                <a href="#" class="btn btn-outline-perfume me-2" id="searchToggleBtn">
+                    <i class="fas fa-search"></i>
+                </a>
                 <a href="/cart" class="btn btn-outline-perfume position-relative">
                     <i class="fas fa-shopping-bag"></i>
-                    <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">1</span> -->
                 </a>
             </div>
         </div>
     </div>
 </nav>
+
+<div class="search-container" id="searchContainer">
+    <div class="search-wrapper">
+        <button class="search-close-btn" id="searchCloseBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <form class="search-box" id="searchForm" action="/products/search" method="GET">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                name="q"
+                placeholder="Search for fragrances..."
+                autocomplete="off"
+            >
+            <button type="submit" class="search-submit-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
+        <div class="search-hint">
+            <i class="fas fa-lightbulb"></i> Try searching "Fleur", "Whim", or any fragrance name
+        </div>
+
+        <!-- Search Results Dropdown -->
+        <div class="search-results" id="searchResults">
+            <div class="search-loading" id="searchLoading">
+                <div class="spinner"></div>
+                <p>Searching...</p>
+            </div>
+            <div id="searchResultsContent"></div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    h1,
+h2,
+h3,
+h4,
+.navbar-brand {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  background-color: rgba(243, 221, 221, 0.98);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+  padding: 15px 0;
+  transition: all 0.3s ease;
+
+  border-radius: 2.5rem;
+  margin: 0.5rem;
+}
+
+.navbar.scrolled {
+  background-color: rgba(252, 231, 231, 0.95);
+  padding: 10px 0;
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  color: var(--secondary-color);
+  letter-spacing: 1px;
+}
+
+.navbar-brand span {
+  color: var(--primary-color);
+}
+
+.nav-link {
+  color: var(--dark-color);
+  font-weight: 500;
+  margin: 0 8px;
+  padding: 8px 15px;
+  position: relative;
+}
+
+.nav-link:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover:before,
+.nav-link.active:before {
+  width: 100%;
+}
+
+.btn-outline-perfume {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-perfume:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.navbar-toggler {
+  border-radius: 1rem;
+  padding: 7.5px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.navbar-toggler:hover {
+  border-color:rgb(233, 191, 187);
+  transform: scale(1.1);
+  border: 1px solid;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+</style>
+
+<!-- Search Container Styles  -->
+<style>
+    .search-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(42, 33, 24, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .search-container.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .search-wrapper {
+        width: 90%;
+        max-width: 800px;
+        position: relative;
+        transform: translateY(-30px);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .search-container.active .search-wrapper {
+        transform: translateY(0);
+    }
+
+    .search-box {
+        position: relative;
+        width: 100%;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 25px 70px 25px 30px;
+        font-size: 1.5rem;
+        border: 3px solid rgba(139, 90, 43, 0.3);
+        border-radius: 60px;
+        background: rgba(255, 255, 255, 0.95);
+        color: #2a2118;
+        outline: none;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 0.5px;
+    }
+
+    .search-input::placeholder {
+        color: rgba(42, 33, 24, 0.5);
+        font-weight: 300;
+    }
+
+    .search-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 40px rgba(139, 90, 43, 0.3);
+        background: white;
+    }
+
+    .search-submit-btn {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), #A67C52);
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-submit-btn:hover {
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 5px 20px rgba(139, 90, 43, 0.4);
+    }
+
+    .search-close-btn {
+        position: absolute;
+        top: -60px;
+        right: 0;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2.5rem;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .search-close-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: rotate(90deg);
+    }
+
+    .search-hint {
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        font-weight: 300;
+    }
+
+    /* Search Results Dropdown */
+    .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 20px;
+        margin-top: 15px;
+        max-height: 400px;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+    }
+
+    .search-results.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(139, 90, 43, 0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .search-result-item:last-child {
+        border-bottom: none;
+    }
+
+    .search-result-item:hover {
+        background: rgba(139, 90, 43, 0.05);
+        padding-left: 25px;
+    }
+
+    .search-result-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-right: 15px;
+        border: 2px solid rgba(139, 90, 43, 0.1);
+    }
+
+    .search-result-info {
+        flex: 1;
+    }
+
+    .search-result-name {
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+    }
+
+    .search-result-category {
+        font-size: 0.85rem;
+        color: var(--primary-color);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .search-result-price {
+        font-weight: 600;
+        color: var(--primary-color);
+        font-size: 1.1rem;
+    }
+
+    .no-results {
+        padding: 40px 20px;
+        text-align: center;
+        color: #666;
+    }
+
+    .no-results i {
+        font-size: 3rem;
+        color: rgba(139, 90, 43, 0.3);
+        margin-bottom: 15px;
+    }
+
+    /* Loading Spinner */
+    .search-loading {
+        display: none;
+        text-align: center;
+        padding: 30px;
+        color: #666;
+    }
+
+    .search-loading.show {
+        display: block;
+    }
+
+    .spinner {
+        border: 3px solid rgba(139, 90, 43, 0.1);
+        border-top: 3px solid var(--primary-color);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Scrollbar Styling */
+    .search-results::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .search-results::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .search-results::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 10px;
+    }
+
+    .search-results::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .search-input {
+            font-size: 1.2rem;
+            padding: 20px 60px 20px 25px;
+        }
+
+        .search-submit-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 1rem;
+        }
+
+        .search-close-btn {
+            top: -50px;
+            font-size: 2rem;
+        }
+
+        .search-result-img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+</style>
+
+<script>
+    // Search functionality
+    const searchToggleBtn = document.getElementById('searchToggleBtn');
+    const searchContainer = document.getElementById('searchContainer');
+    const searchCloseBtn = document.getElementById('searchCloseBtn');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchResultsContent = document.getElementById('searchResultsContent');
+    const searchLoading = document.getElementById('searchLoading');
+    const searchForm = document.getElementById('searchForm');
+
+    let searchTimeout;
+
+    // Open search
+    searchToggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        searchContainer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => searchInput.focus(), 400);
+    });
+
+    // Close search
+    function closeSearch() {
+        searchContainer.classList.remove('active');
+        document.body.style.overflow = '';
+        searchInput.value = '';
+        searchResults.classList.remove('show');
+        searchResultsContent.innerHTML = '';
+    }
+
+    searchCloseBtn.addEventListener('click', closeSearch);
+
+    // Close on background click
+    searchContainer.addEventListener('click', (e) => {
+        if (e.target === searchContainer) {
+            closeSearch();
+        }
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchContainer.classList.contains('active')) {
+            closeSearch();
+        }
+    });
+
+    // Live search functionality
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+
+        clearTimeout(searchTimeout);
+
+        if (query.length < 2) {
+            searchResults.classList.remove('show');
+            return;
+        }
+
+        // Show loading
+        searchLoading.classList.add('show');
+        searchResults.classList.add('show');
+        searchResultsContent.innerHTML = '';
+
+        // Debounce search
+        searchTimeout = setTimeout(async () => {
+            try {
+                const response = await fetch(`/api/products/search?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                searchLoading.classList.remove('show');
+
+                if (data.products && data.products.length > 0) {
+                    displaySearchResults(data.products);
+                } else {
+                    displayNoResults(query);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                searchLoading.classList.remove('show');
+                displayNoResults(query);
+            }
+        }, 300);
+    });
+
+    // Display search results
+    function displaySearchResults(products) {
+        searchResultsContent.innerHTML = products.map(product => `
+            <a href="/products/product-details/${product._id}" class="search-result-item">
+                <img src="${product.images[0]}" alt="${product.name}" class="search-result-img">
+                <div class="search-result-info">
+                    <div class="search-result-name">${product.name}</div>
+                    <div class="search-result-category">${product.categories.join(', ')}</div>
+                </div>
+                <div class="search-result-price">PKR ${product.variants[0].price}</div>
+            </a>
+        `).join('');
+    }
+
+    // Display no results
+    function displayNoResults(query) {
+        searchResultsContent.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <p>No fragrances found for "<strong>${query}</strong>"</p>
+                <p style="font-size: 0.9rem; color: #999; margin-top: 10px;">
+                    Try different keywords or browse all products
+                </p>
+            </div>
+        `;
+    }
+
+    // Prevent form submission if clicking on result
+    searchResultsContent.addEventListener('click', (e) => {
+        if (e.target.closest('.search-result-item')) {
+            // Let the link navigate naturally
+            closeSearch();
+        }
+    });
+</script>

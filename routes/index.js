@@ -152,6 +152,24 @@ router.post("/newsletter", async (req, res) => {
   }
 });
 
+router.get("/api/products/search", async (req, res) => {
+  try {
+    const query = req.query.q;
+    
+    if (!query || query.length < 2) {
+      return res.json({ products: [] });
+    }
+
+    const products = await product.find({
+      name: { $regex: query, $options: 'i' }
+    }).limit(5);
+
+    res.json({ products });
+  } catch (error) {
+    console.error('Search error:', error);
+    res.status(500).json({ error: 'Search failed' });
+  }
+});
 
 
 module.exports = router;

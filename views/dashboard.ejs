@@ -884,7 +884,7 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="stat-item text-center">
                                                     <div class="stat-number text-info fw-bold">
-                                                        <%= new Set(orders.flatMap(o => o.items.map(i => i.product._id))).size %>
+                                                        <%= new Set(orders.flatMap(o => o.items.filter(i => i.product).map(i => i.product._id))).size %>
                                                     </div>
                                                     <div class="stat-label text-muted">Unique Items</div>
                                                 </div>
