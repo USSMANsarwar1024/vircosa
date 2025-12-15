@@ -631,12 +631,15 @@
                                 <label class="form-label">Sizes & Prices</label>
 
                                 <div id="variant-container">
-
-                                    <div class="variant-row mb-3 d-flex gap-3">
+                                    <div class="variant-row mb-3 d-flex gap-3 align-items-center">
                                         <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" required>
                                         <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" required>
                                         <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" required>
+                                        <button type="button" class="btn btn-sm btn-danger remove-variant">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
+
                                 </div>
 
                                 <button type="button" class="btn btn-sm btn-primary mt-2" id="add-variant">
@@ -751,10 +754,6 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="editProductShipping" class="form-label">Shipping Fee (PKR)</label>
-                                <input type="number" name="shippingFee" class="form-control" id="editProductShipping">
-                            </div>
-                            <div class="col-md-6 mb-3">
                                 <label for="editProductSku" class="form-label">SKU (Stock Keeping Unit)</label>
                                 <input type="text" name="sku" class="form-control" id="editProductSku" placeholder="Vi-12345">
                             </div>
@@ -773,20 +772,20 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Sizes & Prices (Variants)</label>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Sizes & Prices (Variants)</label>
 
-                                <div id="edit-variant-container">
-                                    </div>
+                                <div id="edit-variant-container"></div>
 
                                 <button type="button" class="btn btn-sm btn-primary mt-2" id="add-edit-variant">
-                                    Add New Variant
+                                Add New Variant
                                 </button>
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <label for="editProductShipping" class="form-label">Shipping Fee (PKR)</label>
-                                <input type="number" 
-                                name="shippingFee" class="form-control" id="editProductShipping">
+                                <input type="number" name="shippingFee" class="form-control" id="editProductShipping">
                             </div>
                         </div>
 
@@ -846,245 +845,120 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Toggle sidebar on mobile
-        document.getElementById('menuToggle')?.addEventListener('click', function () {
-            document.getElementById('sidebar').classList.toggle('show');
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function (event) {
-            const sidebar = document.getElementById('sidebar');
-            const menuToggle = document.getElementById('menuToggle');
-
-            if (window.innerWidth <= 768 &&
-                !sidebar.contains(event.target) &&
-                event.target !== menuToggle &&
-                !menuToggle.contains(event.target)) {
-                sidebar.classList.remove('show');
-            }
-        });
-
-        // Image preview for add product
-        document.getElementById('productImage')?.addEventListener('change', function (e) {
-            const previewContainer = document.getElementById('addImagePreview');
-            previewContainer.innerHTML = '';
-
-            Array.from(e.target.files).forEach(file => {
-                if (file.type.match('image.*')) {
-                    const reader = new FileReader();
-                    reader.onload = function (event) {
-                        const img = document.createElement('img');
-                        img.src = event.target.result;
-                        previewContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
-
-        // Image preview for edit product
-        document.getElementById('editProductImage')?.addEventListener('change', function (e) {
-            const previewContainer = document.getElementById('editImagePreview');
-            previewContainer.innerHTML = '';
-
-            Array.from(e.target.files).forEach(file => {
-                if (file.type.match('image.*')) {
-                    const reader = new FileReader();
-                    reader.onload = function (event) {
-                        const img = document.createElement('img');
-                        img.src = event.target.result;
-                        previewContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
-
-        // Updated script for edit button functionality
+        /* =========================================================
+        SHARED: Variant Row Generator
+        ========================================================= */
         const generateVariantRow = (size = '', price = '', stock = '') => `
-            <div class="variant-row mb-3 d-flex gap-3 align-items-center">
-                <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" value="${size}" required>
-                <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" value="${price}" required>
-                <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" value="${stock}" required>
-                <button type="button" class="btn btn-sm btn-danger remove-variant" style="flex-shrink: 0;"><i class="fas fa-times"></i></button>
-            </div>
+        <div class="variant-row mb-3 d-flex gap-3 align-items-center">
+            <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" value="${size}" required>
+            <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" value="${price}" required>
+            <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" value="${stock}" required>
+            <button type="button" class="btn btn-sm btn-danger remove-variant">
+            <i class="fas fa-times"></i>
+            </button>
+        </div>
         `;
 
-        // Updated script for edit button functionality
+        /* =========================================================
+        ADD PRODUCT MODAL
+        ========================================================= */
+        const addVariantBtn = document.getElementById('add-variant');
+        const addVariantContainer = document.getElementById('variant-container');
+
+        addVariantBtn?.addEventListener('click', () => {
+        addVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
+        });
+
+        addVariantContainer?.addEventListener('click', e => {
+        if (e.target.closest('.remove-variant')) {
+            e.target.closest('.variant-row').remove();
+        }
+        });
+
+        /* =========================================================
+        EDIT PRODUCT MODAL
+        ========================================================= */
+        const editVariantContainer = document.getElementById('edit-variant-container');
+        const addEditVariantBtn = document.getElementById('add-edit-variant');
+
+        /* Remove variant (ONE listener, no leaks) */
+        editVariantContainer?.addEventListener('click', e => {
+        if (e.target.closest('.remove-variant')) {
+            e.target.closest('.variant-row').remove();
+        }
+        });
+
+        /* Add new variant row */
+        addEditVariantBtn?.addEventListener('click', () => {
+        editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
+        });
+
+        /* Populate edit modal */
         document.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const productId = this.getAttribute('data-id');
-                const productName = this.getAttribute('data-name');
-                const productCategories = this.getAttribute('data-categories');
-                const productDescription = this.getAttribute('data-description');
-                // REMOVED: const productPrice = this.getAttribute('data-price');
-                // REMOVED: const productStock = this.getAttribute('data-stock');
-                const productBadge = this.getAttribute('data-badge');
-                const productShipping = this.getAttribute('data-shipping');
-                const productSku = this.getAttribute('data-sku');
-                const productLasting = this.getAttribute('data-lasting');
-                const productConcentration = this.getAttribute('data-concentration');
-                // REMOVED: const productSizes = this.getAttribute('data-sizes');
-                const productVariantsJson = this.getAttribute('data-variants'); // NEW
-                const productImage = this.getAttribute('data-image');
+        btn.addEventListener('click', function () {
 
-                // Set form action to edit route
-                const editForm = document.getElementById('editProductForm');
-                editForm.action = `/23e@sKsH-hajimemashite/edit/${productId}`; // [cite: 441]
+            const productId = this.dataset.id;
+            const variantsJson = this.dataset.variants || '[]';
 
-                // Populate form fields
-                document.getElementById('editProductId').value = productId; // [cite: 442]
-                document.getElementById('editProductName').value = productName;
-                document.getElementById('editProductDescription').value = productDescription;
-                // REMOVED: document.getElementById('editProductPrice').value = productPrice;
-                // REMOVED: document.getElementById('editProductStock').value = productStock || 0;
-                document.getElementById('editProductBadge').value = productBadge || ''; // [cite: 443]
-                document.getElementById('editProductShipping').value = productShipping || 0;
-                document.getElementById('editProductSku').value = productSku || '';
-                document.getElementById('editProductLasting').value = productLasting || '8-10 Hours';
-                document.getElementById('editProductConcentration').value = productConcentration || 40; // [cite: 444]
+            /* Form action */
+            const editForm = document.getElementById('editProductForm');
+            editForm.action = `/23e@sKsH-hajimemashite/edit/${productId}`;
 
+            /* Basic fields */
+            document.getElementById('editProductId').value = productId;
+            document.getElementById('editProductName').value = this.dataset.name || '';
+            document.getElementById('editProductDescription').value = this.dataset.description || '';
+            document.getElementById('editProductSku').value = this.dataset.sku || '';
+            document.getElementById('editProductBadge').value = this.dataset.badge || '';
+            document.getElementById('editProductShipping').value = this.dataset.shipping || 0;
+            document.getElementById('editProductLasting').value = this.dataset.lasting || '8-10 Hours';
+            document.getElementById('editProductConcentration').value = this.dataset.concentration || 40;
 
-                // Handle categories checkboxes
-                document.querySelectorAll('#editProductModal input[name="categories"]').forEach(cb => cb.checked = false); // [cite: 445]
-                if (productCategories) {
-                    const categoriesArray = productCategories.split(',').map(c => c.trim()); // [cite: 446]
-                    categoriesArray.forEach(category => {
-                        const checkbox = document.querySelector(`#editProductModal input[name="categories"][value="${category}"]`);
-                        if (checkbox) checkbox.checked = true;
-                    });
-                } // [cite: 447]
-
-                // ============================================
-                // NEW: Handle Variants
-                // ============================================
-                const variantContainer = document.getElementById('edit-variant-container');
-                variantContainer.innerHTML = ''; // Clear previous
-
-                try {
-                    const variants = JSON.parse(productVariantsJson);
-                    if (variants.length > 0) {
-                        variants.forEach(variant => {
-                            // Append each existing variant
-                            variantContainer.insertAdjacentHTML('beforeend', generateVariantRow(variant.size, variant.price, variant.stock));
-                        });
-                    } else {
-                        // If no variants exist, add a default empty row for the user to start
-                        variantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
-                    }
-                } catch (e) {
-                    console.error("Error parsing variants JSON:", e);
-                    // Fallback to one empty row on parse error
-                    variantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
-                }
-
-                // Add event listener for removing variants in the edit modal
-                document.getElementById('edit-variant-container').addEventListener('click', function(e) {
-                    if (e.target.classList.contains('remove-variant') || e.target.closest('.remove-variant')) {
-                        const row = e.target.closest('.variant-row');
-                        if (row) row.remove();
-                    }
-                });
-                // ============================================
-
-
-                // REMOVED: Handle sizes checkboxes (no longer needed)
-
-                // Set image preview
-                const imgPreview = document.getElementById('editPreviewImage'); // [cite: 451]
-                if (productImage) {
-                    imgPreview.src = productImage; // [cite: 452]
-                    imgPreview.style.display = 'block';
-                } else {
-                    imgPreview.style.display = 'none'; // [cite: 453]
-                }
-
-                // Clear new image preview
-                document.getElementById('editImagePreview').innerHTML = ''; // [cite: 454]
+            /* Categories */
+            document.querySelectorAll('#editProductModal input[name="categories"]').forEach(cb => cb.checked = false);
+            if (this.dataset.categories) {
+            this.dataset.categories.split(',').forEach(cat => {
+                const checkbox = document.querySelector(
+                `#editProductModal input[name="categories"][value="${cat.trim()}"]`
+                );
+                if (checkbox) checkbox.checked = true;
             });
-        });
-
-        // NEW: for edit products: add new variant row
-        document.getElementById('add-edit-variant')?.addEventListener('click', () => {
-            const container = document.getElementById('edit-variant-container');
-            container.insertAdjacentHTML('beforeend', generateVariantRow());
-        });
-
-        // for add products: size associated with price (keep existing logic)
-        document.getElementById('add-variant')?.addEventListener('click', () => {
-            const container = document.getElementById('variant-container');
-            container.insertAdjacentHTML('beforeend', `
-                <div class="variant-row mb-3 d-flex gap-3">
-                    <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" required>
-                    <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" required>
-                    <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" required>
-                </div>
-            `); // [cite: 461, 462]
-        });
-
-        // NEW: for add products: Remove variant row functionality
-        document.getElementById('variant-container')?.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-variant') || e.target.closest('.remove-variant')) {
-                const row = e.target.closest('.variant-row');
-                if (row) row.remove();
             }
-        });
 
-        // Update the generateVariantRow in the add product modal (just add the button)
-        // Note: The add product variant creation is slightly different, let's keep it clean
-        // The add-variant logic (lines 461-462) will be updated to include the remove button.
-        // I will update the logic for the existing add-variant handler to use the generateVariantRow helper and include a remove button:
+            /* Variants */
+            editVariantContainer.innerHTML = '';
+            let variants = [];
+            try {
+            variants = JSON.parse(variantsJson);
+            } catch {
+            variants = [];
+            }
 
-        document.getElementById('add-variant').addEventListener('click', () => { // [cite: 460]
-            const container = document.getElementById('variant-container');
-            container.insertAdjacentHTML('beforeend', generateVariantRow()); // Use the helper
-        });
-
-        // Setup delete buttons
-        let currentDeleteId = null;
-        
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                currentDeleteId = this.getAttribute('data-id');
-                const productName = this.getAttribute('data-name');
-                document.getElementById('deleteProductName').textContent = `"${productName}"`;
+            if (variants.length) {
+            variants.forEach(v => {
+                editVariantContainer.insertAdjacentHTML(
+                'beforeend',
+                generateVariantRow(v.size, v.price, v.stock)
+                );
             });
-        });
-
-        document.getElementById('confirmDeleteBtn')?.addEventListener('click', function () {
-            if (currentDeleteId) {
-                // Create and submit delete form
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = `/23e@sKsH-hajimemashite/delete/${currentDeleteId}`;
-                document.body.appendChild(form);
-                form.submit();
+            } else {
+            editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
             }
-        });
 
-        // Form validation for add product
-        document.getElementById('addProductForm')?.addEventListener('submit', function (e) {
-            const fileInput = document.getElementById('productImage');
-            if (!fileInput.files || fileInput.files.length === 0) {
-                e.preventDefault();
-                alert('Please upload at least one product image.');
-                return false;
+            /* Image preview */
+            const previewImg = document.getElementById('editPreviewImage');
+            if (this.dataset.image) {
+            previewImg.src = this.dataset.image;
+            previewImg.style.display = 'block';
+            } else {
+            previewImg.style.display = 'none';
             }
-        });
 
-        // for add products: size associated with price
-        document.getElementById('add-variant').addEventListener('click', () => {
-            const container = document.getElementById('variant-container');
-            container.insertAdjacentHTML('beforeend', `
-                <div class="variant-row mb-3 d-flex gap-3">
-                    <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" required>
-                    <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" required>
-                    <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" required>
-                </div>
-            `);
+            document.getElementById('editImagePreview').innerHTML = '';
         });
-
+        });
     </script>
+
 </body>
 
 </html>
