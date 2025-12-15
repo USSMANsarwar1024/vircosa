@@ -849,113 +849,308 @@
         SHARED: Variant Row Generator
         ========================================================= */
         const generateVariantRow = (size = '', price = '', stock = '') => `
-        <div class="variant-row mb-3 d-flex gap-3 align-items-center">
-            <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" value="${size}" required>
-            <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" value="${price}" required>
-            <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" value="${stock}" required>
-            <button type="button" class="btn btn-sm btn-danger remove-variant">
-            <i class="fas fa-times"></i>
-            </button>
-        </div>
+            <div class="variant-row mb-3 d-flex gap-3 align-items-center">
+                <input type="number" name="sizes[]" class="form-control" placeholder="Size (ml)" value="${size}" required>
+                <input type="number" name="prices[]" class="form-control" placeholder="Price (PKR)" value="${price}" required>
+                <input type="number" name="variantStock[]" class="form-control" placeholder="Stock" value="${stock}" required>
+                <button type="button" class="btn btn-sm btn-danger remove-variant" style="flex-shrink: 0;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         `;
 
         /* =========================================================
-        ADD PRODUCT MODAL
+        ADD PRODUCT MODAL - Variant Management
         ========================================================= */
         const addVariantBtn = document.getElementById('add-variant');
         const addVariantContainer = document.getElementById('variant-container');
 
-        addVariantBtn?.addEventListener('click', () => {
-        addVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
-        });
-
-        addVariantContainer?.addEventListener('click', e => {
-        if (e.target.closest('.remove-variant')) {
-            e.target.closest('.variant-row').remove();
+        // Add new variant row
+        if (addVariantBtn) {
+            addVariantBtn.addEventListener('click', () => {
+                addVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
+            });
         }
-        });
+
+        // Remove variant row (delegated event)
+        if (addVariantContainer) {
+            addVariantContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.remove-variant')) {
+                    const variantRow = e.target.closest('.variant-row');
+                    // Only allow removal if there's more than one variant
+                    const totalVariants = addVariantContainer.querySelectorAll('.variant-row').length;
+                    if (totalVariants > 1) {
+                        variantRow.remove();
+                    } else {
+                        alert('At least one variant is required!');
+                    }
+                }
+            });
+        }
 
         /* =========================================================
-        EDIT PRODUCT MODAL
+        EDIT PRODUCT MODAL - Variant Management
         ========================================================= */
         const editVariantContainer = document.getElementById('edit-variant-container');
         const addEditVariantBtn = document.getElementById('add-edit-variant');
 
-        /* Remove variant (ONE listener, no leaks) */
-        editVariantContainer?.addEventListener('click', e => {
-        if (e.target.closest('.remove-variant')) {
-            e.target.closest('.variant-row').remove();
+        // Add new variant row in edit modal
+        if (addEditVariantBtn) {
+            addEditVariantBtn.addEventListener('click', () => {
+                editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
+            });
         }
-        });
 
-        /* Add new variant row */
-        addEditVariantBtn?.addEventListener('click', () => {
-        editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
-        });
+        // Remove variant row in edit modal (delegated event)
+        if (editVariantContainer) {
+            editVariantContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.remove-variant')) {
+                    const variantRow = e.target.closest('.variant-row');
+                    // Only allow removal if there's more than one variant
+                    const totalVariants = editVariantContainer.querySelectorAll('.variant-row').length;
+                    if (totalVariants > 1) {
+                        variantRow.remove();
+                    } else {
+                        alert('At least one variant is required!');
+                    }
+                }
+            });
+        }
 
-        /* Populate edit modal */
+        /* =========================================================
+        EDIT PRODUCT MODAL - Populate Form
+        ========================================================= */
         document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
+                try {
+                    // Get all data attributes
+                    const productId = this.dataset.id;
+                    const productName = this.dataset.name || '';
+                    const productCategories = this.dataset.categories || '';
+                    const productDescription = this.dataset.description || '';
+                    const productSku = this.dataset.sku || '';
+                    const productBadge = this.dataset.badge || '';
+                    const productShipping = this.dataset.shipping || 0;
+                    const productLasting = this.dataset.lasting || '8-10 Hours';
+                    const productConcentration = this.dataset.concentration || 40;
+                    const variantsJson = this.dataset.variants || '[]';
+                    const productImage = this.dataset.image || '';
 
-            const productId = this.dataset.id;
-            const variantsJson = this.dataset.variants || '[]';
+                    // Set form action
+                    const editForm = document.getElementById('editProductForm');
+                    if (editForm) {
+                        editForm.action = `/23e@sKsH-hajimemashite/edit/${productId}`;
+                    }
 
-            /* Form action */
-            const editForm = document.getElementById('editProductForm');
-            editForm.action = `/23e@sKsH-hajimemashite/edit/${productId}`;
+                    // Populate basic fields
+                    const fields = {
+                        'editProductId': productId,
+                        'editProductName': productName,
+                        'editProductDescription': productDescription,
+                        'editProductSku': productSku,
+                        'editProductBadge': productBadge,
+                        'editProductShipping': productShipping,
+                        'editProductLasting': productLasting,
+                        'editProductConcentration': productConcentration
+                    };
 
-            /* Basic fields */
-            document.getElementById('editProductId').value = productId;
-            document.getElementById('editProductName').value = this.dataset.name || '';
-            document.getElementById('editProductDescription').value = this.dataset.description || '';
-            document.getElementById('editProductSku').value = this.dataset.sku || '';
-            document.getElementById('editProductBadge').value = this.dataset.badge || '';
-            document.getElementById('editProductShipping').value = this.dataset.shipping || 0;
-            document.getElementById('editProductLasting').value = this.dataset.lasting || '8-10 Hours';
-            document.getElementById('editProductConcentration').value = this.dataset.concentration || 40;
+                    Object.keys(fields).forEach(fieldId => {
+                        const element = document.getElementById(fieldId);
+                        if (element) {
+                            element.value = fields[fieldId];
+                        }
+                    });
 
-            /* Categories */
-            document.querySelectorAll('#editProductModal input[name="categories"]').forEach(cb => cb.checked = false);
-            if (this.dataset.categories) {
-            this.dataset.categories.split(',').forEach(cat => {
-                const checkbox = document.querySelector(
-                `#editProductModal input[name="categories"][value="${cat.trim()}"]`
-                );
-                if (checkbox) checkbox.checked = true;
+                    // Handle categories
+                    document.querySelectorAll('#editProductModal input[name="categories"]').forEach(cb => {
+                        cb.checked = false;
+                    });
+
+                    if (productCategories) {
+                        const categoriesArray = productCategories.split(',').map(c => c.trim());
+                        categoriesArray.forEach(category => {
+                            const checkbox = document.querySelector(
+                                `#editProductModal input[name="categories"][value="${category}"]`
+                            );
+                            if (checkbox) {
+                                checkbox.checked = true;
+                            }
+                        });
+                    }
+
+                    // Handle variants
+                    if (editVariantContainer) {
+                        editVariantContainer.innerHTML = '';
+                        
+                        try {
+                            const variants = JSON.parse(variantsJson);
+                            
+                            if (variants && variants.length > 0) {
+                                variants.forEach(variant => {
+                                    editVariantContainer.insertAdjacentHTML(
+                                        'beforeend',
+                                        generateVariantRow(variant.size || '', variant.price || '', variant.stock || '')
+                                    );
+                                });
+                            } else {
+                                // Add one empty variant row
+                                editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
+                            }
+                        } catch (parseError) {
+                            console.error('Error parsing variants:', parseError);
+                            // Add one empty variant row on error
+                            editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
+                        }
+                    }
+
+                    // Handle image preview
+                    const previewImg = document.getElementById('editPreviewImage');
+                    if (previewImg) {
+                        if (productImage) {
+                            previewImg.src = productImage;
+                            previewImg.style.display = 'block';
+                        } else {
+                            previewImg.style.display = 'none';
+                        }
+                    }
+
+                    // Clear new image preview
+                    const editImagePreview = document.getElementById('editImagePreview');
+                    if (editImagePreview) {
+                        editImagePreview.innerHTML = '';
+                    }
+
+                } catch (error) {
+                    console.error('Error populating edit form:', error);
+                    alert('Error loading product data. Please try again.');
+                }
             });
-            }
-
-            /* Variants */
-            editVariantContainer.innerHTML = '';
-            let variants = [];
-            try {
-            variants = JSON.parse(variantsJson);
-            } catch {
-            variants = [];
-            }
-
-            if (variants.length) {
-            variants.forEach(v => {
-                editVariantContainer.insertAdjacentHTML(
-                'beforeend',
-                generateVariantRow(v.size, v.price, v.stock)
-                );
-            });
-            } else {
-            editVariantContainer.insertAdjacentHTML('beforeend', generateVariantRow());
-            }
-
-            /* Image preview */
-            const previewImg = document.getElementById('editPreviewImage');
-            if (this.dataset.image) {
-            previewImg.src = this.dataset.image;
-            previewImg.style.display = 'block';
-            } else {
-            previewImg.style.display = 'none';
-            }
-
-            document.getElementById('editImagePreview').innerHTML = '';
         });
+
+        /* =========================================================
+        IMAGE PREVIEW HANDLERS
+        ========================================================= */
+        // Add product image preview
+        const addProductImage = document.getElementById('productImage');
+        if (addProductImage) {
+            addProductImage.addEventListener('change', function(e) {
+                const previewContainer = document.getElementById('addImagePreview');
+                if (!previewContainer) return;
+                
+                previewContainer.innerHTML = '';
+                
+                Array.from(e.target.files).forEach(file => {
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            previewContainer.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+        }
+
+        // Edit product image preview
+        const editProductImage = document.getElementById('editProductImage');
+        if (editProductImage) {
+            editProductImage.addEventListener('change', function(e) {
+                const previewContainer = document.getElementById('editImagePreview');
+                if (!previewContainer) return;
+                
+                previewContainer.innerHTML = '';
+                
+                Array.from(e.target.files).forEach(file => {
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            previewContainer.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+        }
+
+        /* =========================================================
+        DELETE PRODUCT MODAL
+        ========================================================= */
+        let currentDeleteId = null;
+
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentDeleteId = this.dataset.id;
+                const productName = this.dataset.name;
+                const deleteNameElement = document.getElementById('deleteProductName');
+                if (deleteNameElement) {
+                    deleteNameElement.textContent = `"${productName}"`;
+                }
+            });
+        });
+
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        if (confirmDeleteBtn) {
+            confirmDeleteBtn.addEventListener('click', function() {
+                if (currentDeleteId) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/23e@sKsH-hajimemashite/delete/${currentDeleteId}`;
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
+
+        /* =========================================================
+        FORM VALIDATION
+        ========================================================= */
+        const addProductForm = document.getElementById('addProductForm');
+        if (addProductForm) {
+            addProductForm.addEventListener('submit', function(e) {
+                const fileInput = document.getElementById('productImage');
+                if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                    e.preventDefault();
+                    alert('Please upload at least one product image.');
+                    return false;
+                }
+
+                // Validate that at least one variant exists
+                const variants = addVariantContainer.querySelectorAll('.variant-row');
+                if (variants.length === 0) {
+                    e.preventDefault();
+                    alert('Please add at least one product variant (size, price, stock).');
+                    return false;
+                }
+            });
+        }
+
+        /* =========================================================
+        SIDEBAR TOGGLE (Mobile)
+        ========================================================= */
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                if (sidebar) {
+                    sidebar.classList.toggle('show');
+                }
+            });
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth <= 768 && sidebar && menuToggle) {
+                if (!sidebar.contains(event.target) && 
+                    event.target !== menuToggle && 
+                    !menuToggle.contains(event.target)) {
+                    sidebar.classList.remove('show');
+                }
+            }
         });
     </script>
 
