@@ -10,6 +10,14 @@ const path = require('path');
 const fs = require('fs');
 const sendEmail = require("../utils/sendEmail");
 const Review = require('../models/review');
+const BASE_SHIPPING = 300;
+
+function calculateShipping(paymentMethod) {
+  if (paymentMethod === 'bankTransfer') {
+    return BASE_SHIPPING / 2; // 50% discount for bank transfer
+  }
+  return BASE_SHIPPING; // COD
+}
 
 // Create uploads directory if it doesn't exist
 const uploadDir = path.join(__dirname, '../public/uploads/vouchers');
@@ -54,9 +62,7 @@ router.get("/", isLoggedIn, async (req, res) => {
 
     
 
-    const orders = await Order.find({ user: user._id })
-      .populate('items.product')
-      .sort({ createdAt: -1 });
+    const orders = await Order.find({ user: user._id }).sort({ createdAt: -1 }).lean();
 
     const myReviews = await Review.find({ user: req.user._id }).populate("product", "name images");
 
@@ -90,8 +96,12 @@ router.get("/checkout", isLoggedIn, async (req, res) => {
       return res.redirect("/cart");
     }
 
-    const subtotal = user.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    const shipping = 0;
+    const subtotal = user.cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+
+    const shipping = BASE_SHIPPING;
     const total = subtotal + shipping;
 
     res.render("checkout", {
@@ -99,13 +109,16 @@ router.get("/checkout", isLoggedIn, async (req, res) => {
       cartItems: user.cart,
       subtotal,
       shipping,
-      total
+      total,
+      req
     });
+
   } catch (error) {
     console.error("Error loading checkout:", error);
     res.redirect("/cart");
   }
 });
+
 
 // Orders Route - View all orders
 router.get("/orders", isLoggedIn, async (req, res) => {
@@ -125,24 +138,53 @@ router.get("/orders", isLoggedIn, async (req, res) => {
 // Create Order Route
 router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res) => {
   try {
-    const user = await userModel.findById(req.user._id).populate("cart.product");
+    const user = await userModel
+      .findById(req.user._id)
+      .populate("cart.product");
 
     if (!user.cart || user.cart.length === 0) {
       return res.json({ success: false, message: "Your cart is empty." });
     }
 
-    const shipping = JSON.parse(req.body.shipping);
-    const paymentMethod = req.body.paymentMethod;
+    const { paymentMethod } = req.body;
 
-    if (paymentMethod === 'bankTransfer' && !req.file) {
-      return res.json({ success: false, message: "Payment screenshot is required for bank transfer." });
+    if (!['bankTransfer', 'cod'].includes(paymentMethod)) {
+      return res.json({ success: false, message: "Invalid payment method." });
     }
 
-    const screenshotPath = req.file ? `/uploads/vouchers/${req.file.filename}` : null;
+    if (paymentMethod === 'bankTransfer' && !req.file) {
+      return res.json({
+        success: false,
+        message: "Payment screenshot is required for bank transfer."
+      });
+    }
 
-    const subtotal = user.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    const shippingFee = paymentMethod === 'cod' ? 300 : 0;
+    // 🔒 Recalculate subtotal + validate stock again
+    let subtotal = 0;
+
+    for (const item of user.cart) {
+      const variant = item.product.variants.find(
+        v => v.size === item.size
+      );
+
+      if (!variant || variant.stock < item.quantity) {
+        return res.json({
+          success: false,
+          message: `Stock issue with ${item.product.name} (${item.size}ml)`
+        });
+      }
+
+      subtotal += item.price * item.quantity;
+    }
+
+    const shippingFee = calculateShipping(paymentMethod);
     const totalAmount = subtotal + shippingFee;
+
+    const screenshotPath = req.file
+      ? `/uploads/vouchers/${req.file.filename}`
+      : null;
+
+    const shipping = JSON.parse(req.body.shipping);
 
     const newOrder = new Order({
       user: user._id,
@@ -153,25 +195,29 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
         price: item.price,
         quantity: item.quantity
       })),
-      shipping: {
-        firstName: shipping.firstName,
-        lastName: shipping.lastName,
-        email: shipping.email,
-        phone: shipping.phone,
-        address: shipping.address,
-        city: shipping.city,
-        zipCode: shipping.zipCode,
-        country: shipping.country
-      },
-      paymentMethod: paymentMethod,
+      shipping,
+      paymentMethod,
       screenshot: screenshotPath,
-      subtotal: subtotal,
-      shippingFee: shippingFee,
-      totalAmount: totalAmount,
+      subtotal,
+      shippingFee,
+      totalAmount,
       orderStatus: "pending"
     });
 
     await newOrder.save();
+
+     // 🔻 Reduce stock
+    for (const item of user.cart) {
+      const product = await Product.findById(item.product._id);
+      const variant = product.variants.find(v => v.size === item.size);
+      variant.stock -= item.quantity;
+      await product.save();
+    }
+
+    // 🧹 Clear cart
+    user.cart = [];
+    await user.save();
+
 
     // Send emails
     try {
@@ -228,6 +274,13 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
           </div>
         `
       });
+
+        return res.json({
+        success: true,
+        orderNumber: newOrder.orderNumber,
+        message: "Order placed successfully!"
+      });
+
     } catch (emailErr) {
       console.error("Failed to send emails:", emailErr);
     }
@@ -249,8 +302,6 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
     });
   }
 });
-
-
 
 // Cancel Order Route
 router.post('/orders/:orderId/cancel', isLoggedIn, async (req, res) => {

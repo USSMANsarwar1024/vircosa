@@ -270,6 +270,7 @@
             background-color: var(--secondary-color);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: white;
         }
 
         /* Responsive adjustments */
@@ -390,16 +391,17 @@
                     <h3 class="checkout-card-title">Payment Method</h3>
                     <div class="payment-options">
                         <div class="payment-method" onclick="selectPaymentMethod('bankTransfer')">
-                            <input type="radio" name="paymentMethod" id="bankTransfer" checked>
+                            <input type="radio" name="paymentMethod" id="bankTransfer">
                             <i class="fas fa-university payment-icon"></i>
                             <div>
                                 <h6>Bank Transfer</h6>
                                 <p class="small text-muted">Send payment via any Banking app HBL/ Easypaisa/ JazzCash or any, and upload the voucher screenshot</p>
+                                <p class="text-muted small">You'll get a 50% discount on shipping for bank transfer payments. 🎉</p>
                             </div>
                         </div>
 
                         <div class="payment-method" onclick="selectPaymentMethod('cod')">
-                            <input type="radio" name="paymentMethod" id="cod">
+                            <input type="radio" name="paymentMethod" id="cod" checked>
                             <i class="fas fa-money-bill-wave payment-icon"></i>
                             <div>
                                 <h6>Cash on Delivery</h6>
@@ -409,13 +411,13 @@
                     </div>
 
                     <!-- Bank Transfer Details -->
-                    <div class="payment-details active" id="bankTransferDetails">
+                    <div class="payment-details" id="bankTransferDetails">
                         <div class="alert alert-info">
                             <strong>Our Bank Details:</strong><br>
                             <b>Bank:</b> HBL (Habib Bank Limited)<br>
                             <b>Account Title:</b> Usman IAA<br>
                             <b>Account Number:</b> 50607914640903<br>
-                            <b>IBAN:</b> PK00HABB0000000000000
+                            <b>IBAN:</b> PK92HABB0050607914640903
                         </div>
 
                         <label class="form-label">Upload Payment Screenshot</label>
@@ -427,7 +429,7 @@
                             <span id="fileUploadStatus" class="text-muted small">No file selected</span>
                         </div>
                         <div id="imagePreview" class="mt-3" style="display: none;">
-                            <img id="previewImg" src="" alt="Payment Screenshot" style="max-width: 200px; border-radius: 8px; border: 2px solid #ddd;">
+                            <img id="previewImg" src="" alt="Payment Screenshot" style="max-width: 200px; border-radius: 8px; border: 2px solid #dddddd;">
                             <button type="button" class="btn btn-sm btn-danger ms-2" onclick="removeUpload()">
                                 <i class="fas fa-times"></i> Remove
                             </button>
@@ -435,7 +437,7 @@
                     </div>
 
                     <!-- Cash on Delivery Details -->
-                    <div class="payment-details" id="codDetails">
+                    <div class="payment-details active" id="codDetails">
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i>
                             You'll pay in cash when your order is delivered. Extra PKR <%= shipping %> processing applies.
@@ -481,12 +483,16 @@
 
                                 <div class="order-total-row">
                                     <span class="order-total-label">Shipping</span>
-                                    <span class="order-total-amount">PKR <%= shipping %></span>
+                                    <span class="order-total-amount" id="shippingAmount">
+                                        PKR <%= shipping %>
+                                    </span>
                                 </div>
 
                                 <div class="order-total-row order-grand-total">
                                     <span class="order-total-label">Total</span>
-                                    <span class="order-total-amount">PKR <%= total.toFixed(2) %></span>
+                                    <span class="order-total-amount" id="grandTotal">
+                                        PKR <%= total.toFixed(2) %>
+                                    </span>
                                 </div>
 
                             </div>
@@ -497,7 +503,7 @@
 
                             <div class="mt-3 small text-muted text-center">
                                 <i class="fas fa-shield-alt me-2"></i>
-                                Your transaction is secure and encrypted
+                                Your transaction is secure and encrypted with SSL certificates.
                             </div>
                 </div>
             </div>
@@ -513,6 +519,9 @@
 
     <!-- Custom JS -->
     <script>
+        const BASE_SHIPPING = <%= shipping %>;
+        const SUBTOTAL = <%= subtotal %>;
+
         // Navbar scroll effect
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
@@ -525,20 +534,28 @@
 
         // Payment method selection
         function selectPaymentMethod(method) {
-            // Hide all payment detail sections
-            const sections = ['bankTransferDetails', 'codDetails'];
-            sections.forEach(sec => {
-                const el = document.getElementById(sec);
-                if (el) el.classList.remove('active');
+            // Toggle payment sections
+            ['bankTransferDetails', 'codDetails'].forEach(id => {
+                document.getElementById(id)?.classList.remove('active');
             });
 
-            // Show the one user selected
-            const activeSection = document.getElementById(method + 'Details');
-            if (activeSection) activeSection.classList.add('active');
-
-            // Update radio button
+            document.getElementById(method + 'Details')?.classList.add('active');
             document.getElementById(method).checked = true;
+
+            // === SHIPPING LOGIC ===
+            let shippingFee = BASE_SHIPPING;
+
+            if (method === 'bankTransfer') {
+                shippingFee = BASE_SHIPPING / 2; // 50% discount
+            }
+
+            const total = SUBTOTAL + shippingFee;
+
+            // Update UI
+            document.getElementById('shippingAmount').textContent = `PKR ${shippingFee}`;
+            document.getElementById('grandTotal').textContent = `PKR ${total.toFixed(2)}`;
         }
+
 
 
         let uploadedFile = null;

@@ -97,7 +97,6 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
     const {
       name,
       description,
-      // price,
       productBadge,
       shippingFee = 0,
       sku,
@@ -201,11 +200,8 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
     const updateData = {
       name,
       description,
-      // The single price/stock fields are now removed, but we can set the 'stock'
-      // field on the model for compatibility or summary purposes.
-      // We will remove 'price' and 'sizes' from the update payload entirely.
       stock: totalStock, // Setting the combined stock
-      variants: variants, // This is the main update
+      variants: variants,
       productBadge: productBadge || undefined,
       shippingFee: Number(shippingFee || 0),
       sku: sku || undefined,

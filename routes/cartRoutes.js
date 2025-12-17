@@ -304,7 +304,7 @@ router.get("/checkout", isLoggedIn, async (req, res) => {
 
         if (!user) return res.redirect("/login");
 
-        const cartItems = user.cart.filter(item => item.product); // Remove deleted products
+        const cartItems = user.cart.filter(item => item.product);
 
         // If cart is empty → redirect back
         if (cartItems.length === 0) {
@@ -334,6 +334,65 @@ router.get("/checkout", isLoggedIn, async (req, res) => {
         res.status(500).send("Server error");
     }
 });
+
+router.post("/checkout", isLoggedIn, async (req, res) => {
+    try {
+        const user = await userModel.findById(req.user._id);
+
+        if (!user || user.cart.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Cart is empty"
+            });
+        }
+
+        const { paymentMethod } = req.body;
+
+        if (!['bankTransfer', 'cod'].includes(paymentMethod)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid payment method"
+            });
+        }
+
+        // Recalculate subtotal securely
+        let subtotal = 0;
+        user.cart.forEach(item => {
+            subtotal += item.price * item.quantity;
+        });
+
+        // Shipping logic
+        let shippingFee = 300;
+        if (paymentMethod === 'bankTransfer') {
+            shippingFee = 150;
+        }
+
+        const total = subtotal + shippingFee;
+
+        // TODO: Save order to Order collection
+        // TODO: Reduce product stock accordingly
+        
+        // Clear user's cart
+        user.cart = [];
+
+        await user.save();
+
+        res.json({
+            success: true,
+            subtotal,
+            shipping: shippingFee,
+            total
+        });
+
+    } catch (err) {
+        console.error("CHECKOUT ERROR:", err);
+        res.status(500).json({
+            success: false,
+            message: "Server error during checkout"
+        });
+    }
+});
+
 
 
 
