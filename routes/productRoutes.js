@@ -5,6 +5,8 @@ const product = require("../models/product");
 const Review = require('../models/review');
 const Order = require('../models/order');
 const { isLoggedIn } = require("../middleware/auth");
+const mongoose = require("mongoose");
+
 
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -27,7 +29,7 @@ router.get("/", async (req, res) => {
 
 router.get("/product-details/:id", async (req, res) => {
   try {
-    const productId = req.params.id;
+    const productId = new mongoose.Types.ObjectId(req.params.id);
     const userId = req.user?._id; // Get logged-in user ID
 
     // 1. Get Product Details
@@ -43,8 +45,13 @@ router.get("/product-details/:id", async (req, res) => {
 
     // 3. Calculate overall rating
     const overallRating = reviews.length > 0
-      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+      ? Number(
+          (
+            reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+          ).toFixed(1)
+        )
       : 0;
+
 
     // 4. Featured products
     const featuredProducts = await product.find()
@@ -60,13 +67,12 @@ router.get("/product-details/:id", async (req, res) => {
     if (userId) {
 
       // Find all DELIVERED orders containing this product
-      deliveredOrders = await Order
-      .find({
-          user: userId,
-          "items.product": productId,
-          orderStatus: "delivered"
-        })
-        .select('_id orderNumber');
+      deliveredOrders = await Order.find({
+        user: userId,
+        "items.product": productId,
+        orderStatus: "delivered"
+      }).select("_id orderNumber");
+
 
       // Check if user already reviewed this product
       hasReviewed = await Review.exists({
@@ -78,6 +84,15 @@ router.get("/product-details/:id", async (req, res) => {
       canReview = deliveredOrders.length > 0 && !hasReviewed;
     }
 
+    console.log("USER:", userId);
+    console.log("PRODUCT:", productId);
+    console.log("DELIVERED ORDERS:", deliveredOrders.length);
+    console.log("HAS REVIEWED:", hasReviewed);
+    console.log("CAN REVIEW:", canReview);
+    console.log("DELIVERED ORDERS DETAILS:", deliveredOrders);
+    console.log("USER ID TYPE:", typeof userId);
+    console.log("PRODUCT ID TYPE:", typeof productId);
+
     // 6. Render Page
     res.render("product-details", {
       product: productDetails,
@@ -88,6 +103,7 @@ router.get("/product-details/:id", async (req, res) => {
       deliveredOrders,    
       hasReviewed,       
       req,
+      
     });
 
   } catch (err) {
@@ -96,10 +112,10 @@ router.get("/product-details/:id", async (req, res) => {
   }
 });
 
-// 
-router.post("/product/:id/review", isLoggedIn, async (req, res) => {
+// add reviews
+router.post("/product-details/:id/review", isLoggedIn, async (req, res) => {
   try {
-    const productId = req.params.id;
+    const productId = new mongoose.Types.ObjectId(req.params.id);
     const userId = req.user._id;
     const { rating, title, comment, orderId } = req.body;
 

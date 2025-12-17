@@ -709,7 +709,6 @@
     <%- include('partials/navbar') %>
 
     <!-- Product Details -->
-    <!-- Product Details -->
     <section class="product-details-section">
         <div class="container">
             <div class="row">
@@ -1327,7 +1326,7 @@
                 };
                 
                 try {
-                    const response = await fetch('/products/product/<%= product._id %>/review', {
+                    const response = await fetch('/products/product-details/<%= product._id %>/review', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)

@@ -42,17 +42,24 @@ app.use((req, res, next) => {
 
 // Set `user` in locals when a valid JWT cookie exists (non-blocking)
 app.use(async (req, res, next) => {
-  const token = req.cookies && req.cookies.token;
+  const token = req.cookies?.token;
   if (!token) return next();
+
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(data.userId).select('-password');
-    if (user) res.locals.user = user;
+
+    if (user) {
+      req.user = user;           // ✅ BACKEND
+      res.locals.user = user;    // ✅ FRONTEND
+    }
   } catch (err) {
-    // ignore invalid token; don't redirect here
+    // silently ignore invalid token
   }
+
   next();
 });
+
 
 // --- Route Registration ---
 // Import route files

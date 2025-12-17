@@ -201,7 +201,7 @@ router.post("/update-status/:orderId", async (req, res) => {
               ` : ''}
 
               <div style="text-align: center; margin-top: 30px;">
-                <a href="${process.env.BASE_URL || 'http://localhost:3000'}/track-order" 
+                <a href="${process.env.BASE_URL || 'vircosa.com'}/track-order" 
                    style="display: inline-block; padding: 12px 30px; background: #8B5A2B; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
                   Track Order
                 </a>
