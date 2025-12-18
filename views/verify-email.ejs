@@ -336,6 +336,8 @@
     <!-- Navigation -->
     <%- include('partials/navbar') %>
 
+    <div id="ajaxNotifications" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Verification Section -->
     <section class="verification-section">
         <div class="container">
@@ -417,6 +419,46 @@
 
 
     <script>
+        // Simple AJAX notification helper using existing notification styles
+        function showNotification(type, message) {
+            const container = document.getElementById('ajaxNotifications') || document.body;
+
+            const note = document.createElement('div');
+            note.classList.add('notification');
+
+            if (type === 'success') {
+                note.classList.add('success');
+            } else if (type === 'danger' || type === 'error') {
+                note.classList.add('error');
+            } else if (type === 'warning') {
+                note.classList.add('notification-warning');
+            } else {
+                note.classList.add('info');
+            }
+
+            const messageSpan = document.createElement('span');
+            messageSpan.textContent = message;
+            note.appendChild(messageSpan);
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'notification-close';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.onclick = () => {
+                note.classList.remove('show');
+                setTimeout(() => note.remove(), 200);
+            };
+            note.appendChild(closeBtn);
+
+            container.appendChild(note);
+
+            requestAnimationFrame(() => note.classList.add('show'));
+
+            setTimeout(() => {
+                note.classList.remove('show');
+                setTimeout(() => note.remove(), 200);
+            }, 3500);
+        }
+
         document.getElementById("verification-form").addEventListener("submit", function (e) {
             let otp = "";
             for (let i = 1; i <= 6; i++) {
@@ -471,7 +513,7 @@
             resendLink.style.opacity = '0.5';
             
             // Show success message
-            alert('A new verification code has been sent to your email.');
+            showNotification('success', 'A new verification code has been sent to your email.');
             
             // In a real application, you would make an API call here to resend the OTP
         });
@@ -545,10 +587,10 @@
             const result = await response.json();
 
             if (response.ok) {
-                alert("New OTP sent to your email.");
+                showNotification('success', 'New OTP sent to your email.');
                 resetCountdown(); // Restart timer
             } else {
-                alert(result.message);
+                showNotification('danger', result.message || 'Unable to send OTP.');
             }
         });
         function resetCountdown() {

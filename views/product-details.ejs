@@ -505,6 +505,62 @@
             opacity: 0.7;
         }
 
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-left: 4px solid #2E7D32;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            border-left: 4px solid #b71c1c;
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            border-left: 4px solid #0D47A1;
+        }
+
+        .notification-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            border-left: 4px solid #e65100;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
         /* ===== Responsive Adjustments ===== */
         @media (max-width: 992px) {
             .product-info {
@@ -1192,7 +1248,6 @@
 
     <!-- Related Products -->
     <%- include('partials/perfume-partials') %>
-
     <%- include('partials/newsletter', { req: req }) %>
     <%- include('partials/footer') %>
 
@@ -1244,39 +1299,6 @@
             }
         }
 
-        // Add to cart
-        document.getElementById('addToCartBtn')?.addEventListener('click', async function() {
-            const activeVariant = document.querySelector('.size-option.active');
-            if (!activeVariant) {
-                alert('Please select a size');
-                return;
-            }
-
-            try {
-                const res = await fetch('/cart/add', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        productId: '<%= product._id %>',
-                        size: parseInt(activeVariant.dataset.size),
-                        price: parseInt(activeVariant.dataset.price),
-                        quantity: qty
-                    })
-                });
-
-                if (res.status === 401) {
-                    window.location.href = '/login';
-                    return;
-                }
-
-                const data = await res.json();
-                alert(data.message || 'Added to cart!');
-                if (res.ok) location.reload();
-            } catch (err) {
-                alert('Failed to add to cart');
-            }
-        });
-
         // ✅ REVIEW FORM SUBMISSION
         const reviewForm = document.getElementById('reviewForm');
         if (reviewForm) {
@@ -1309,12 +1331,12 @@
                 const orderId = document.getElementById('orderSelect').value;
                 
                 if (!rating) {
-                    alert('Please select a rating');
+                    showNotification('Please select a rating', 'warning');
                     return;
                 }
                 
                 if (!orderId) {
-                    alert('Please select your order');
+                    showNotification('Please select your order', 'warning');
                     return;
                 }
                 
@@ -1335,14 +1357,14 @@
                     const data = await response.json();
                     
                     if (data.success) {
-                        alert('✅ ' + data.message);
-                        location.reload();
+                        showNotification('✅ ' + data.message, 'success');
+                        setTimeout(() => location.reload(), 800);
                     } else {
-                        alert('❌ ' + data.message);
+                        showNotification('❌ ' + data.message, 'error');
                     }
                 } catch (err) {
                     console.error('Review error:', err);
-                    alert('Failed to submit review');
+                    showNotification('Failed to submit review', 'error');
                 }
             });
         }
@@ -1371,8 +1393,83 @@
                 reviewItems.forEach(item => reviewsList.appendChild(item));
             });
         }
+
+        // Add to cart functionality
+        document.getElementById('addToCartBtn')?.addEventListener('click', async function() {
+            const activeVariant = document.querySelector('.size-option.active');
+
+                try {
+                    const res = await fetch('/cart/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                         body: JSON.stringify({
+                            productId: '<%= product._id %>',
+                            size: parseInt(activeVariant.dataset.size),
+                            price: parseInt(activeVariant.dataset.price),
+                            quantity: qty
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (res.status === 401) {
+                        window.location.href = '/login';
+                        return;
+                    }
+
+                    if (res.ok) {
+                        showNotification('💖 Added to Cart!', 'success');
+                    } else {
+                        showNotification(data.message || 'Error adding to wishlist', 'error');
+                    }
+                } catch (error) {
+                    showNotification('Network error occurred', 'error');
+                }
+            });
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notif => notif.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                ${message}
+                <button class="notification-close">&times;</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // Check for flash messages on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const successMessage = '<%= typeof success !== "undefined" && success.length > 0 ? success[0] : "" %>';
+            const errorMessage = '<%= typeof error !== "undefined" && error.length > 0 ? error[0] : "" %>';
+            
+            if (successMessage) {
+                showNotification(successMessage, 'success');
+            }
+            if (errorMessage) {
+                showNotification(errorMessage, 'error');
+            }
+        });
+
     </script>
     
 </body>
-
 </html>

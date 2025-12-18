@@ -332,6 +332,7 @@
 
 <body>
     <%- include('partials/navbar') %>
+    <div id="ajaxNotifications" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Order Section -->
     <section class="order-section">
@@ -451,6 +452,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Simple AJAX notification helper using existing notification styles
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('ajaxNotifications') || document.body;
+
+            const note = document.createElement('div');
+            note.classList.add('notification');
+
+            if (type === 'success') {
+                note.classList.add('success');
+            } else if (type === 'danger' || type === 'error') {
+                note.classList.add('error');
+            } else if (type === 'warning') {
+                note.classList.add('notification-warning');
+            } else {
+                note.classList.add('info');
+            }
+
+            const messageSpan = document.createElement('span');
+            messageSpan.textContent = message;
+            note.appendChild(messageSpan);
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'notification-close';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.onclick = () => {
+                note.classList.remove('show');
+                setTimeout(() => note.remove(), 200);
+            };
+            note.appendChild(closeBtn);
+
+            container.appendChild(note);
+
+            requestAnimationFrame(() => note.classList.add('show'));
+
+            setTimeout(() => {
+                note.classList.remove('show');
+                setTimeout(() => note.remove(), 200);
+            }, 3500);
+        }
+
         // Navbar scroll effect
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
@@ -477,15 +518,15 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            alert('Order cancelled successfully');
-                            window.location.reload();
+                            showNotification('Order cancelled successfully', 'success');
+                            setTimeout(() => window.location.reload(), 800);
                         } else {
-                            alert(data.message || 'Failed to cancel order');
+                            showNotification(data.message || 'Failed to cancel order', 'error');
                         }
                     })
                     .catch(err => {
                         console.error('Error:', err);
-                        alert('Failed to cancel order');
+                        showNotification('Failed to cancel order', 'error');
                     });
                 }
             });

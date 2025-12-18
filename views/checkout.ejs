@@ -273,6 +273,62 @@
             color: white;
         }
 
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-left: 4px solid #2E7D32;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            border-left: 4px solid #b71c1c;
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            border-left: 4px solid #0D47A1;
+        }
+
+        .notification-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            border-left: 4px solid #e65100;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .checkout-header {
@@ -306,6 +362,7 @@
 </head>
 
 <body>
+    <div id="ajaxNotifications" aria-live="polite" aria-atomic="true"></div>
     <!-- Navigation Bar -->
     <%- include('partials/navbar') %>
 
@@ -522,6 +579,46 @@
         const BASE_SHIPPING = <%= shipping %>;
         const SUBTOTAL = <%= subtotal %>;
 
+        // Simple AJAX notification helper using existing notification styles
+        function showNotification(type, message) {
+            const container = document.getElementById('ajaxNotifications') || document.body;
+
+            const note = document.createElement('div');
+            note.classList.add('notification');
+
+            if (type === 'success') {
+                note.classList.add('success');
+            } else if (type === 'danger' || type === 'error') {
+                note.classList.add('error');
+            } else if (type === 'warning') {
+                note.classList.add('notification-warning');
+            } else {
+                note.classList.add('info');
+            }
+
+            const messageSpan = document.createElement('span');
+            messageSpan.textContent = message;
+            note.appendChild(messageSpan);
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'notification-close';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.onclick = () => {
+                note.classList.remove('show');
+                setTimeout(() => note.remove(), 200);
+            };
+            note.appendChild(closeBtn);
+
+            container.appendChild(note);
+
+            requestAnimationFrame(() => note.classList.add('show'));
+
+            setTimeout(() => {
+                note.classList.remove('show');
+                setTimeout(() => note.remove(), 200);
+            }, 3500);
+        }
+
         // Navbar scroll effect
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
@@ -606,7 +703,7 @@
             });
 
             if (!isValid) {
-                alert('Please fill in all required fields.');
+                showNotification('warning', 'Please fill in all required fields.');
                 return;
             }
 
@@ -616,7 +713,7 @@
             // Screenshot validation for bank transfer
             if (paymentMethod === "bankTransfer") {
                 if (!uploadedFile) {
-                    alert("Please upload your bank transfer payment screenshot.");
+                    showNotification('warning', 'Please upload your bank transfer payment screenshot.');
                     return;
                 }
             }
@@ -651,22 +748,23 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    alert('Order placed successfully!');
-                    window.location.href = "/dashboard/orders";
+                    showNotification('success', 'Order placed successfully! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = "/dashboard/orders";
+                    }, 800);
                 } else {
-                    alert(data.message || "Something went wrong.");
+                    showNotification('danger', data.message || 'Something went wrong.');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fas fa-lock me-2"></i>Complete Order';
                 }
             })
             .catch(err => {
                 console.error(err);
-                alert("Server error while placing order.");
+                showNotification('danger', 'Server error while placing order.');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-lock me-2"></i>Complete Order';
             });
         }
     </script>
 </body>
-
 </html>

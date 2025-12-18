@@ -84,15 +84,6 @@ router.get("/product-details/:id", async (req, res) => {
       canReview = deliveredOrders.length > 0 && !hasReviewed;
     }
 
-    console.log("USER:", userId);
-    console.log("PRODUCT:", productId);
-    console.log("DELIVERED ORDERS:", deliveredOrders.length);
-    console.log("HAS REVIEWED:", hasReviewed);
-    console.log("CAN REVIEW:", canReview);
-    console.log("DELIVERED ORDERS DETAILS:", deliveredOrders);
-    console.log("USER ID TYPE:", typeof userId);
-    console.log("PRODUCT ID TYPE:", typeof productId);
-
     // 6. Render Page
     res.render("product-details", {
       product: productDetails,
