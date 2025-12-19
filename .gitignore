@@ -1,1 +1,1 @@
-nodemodules/.envvircosa.keyvircosa.csr
+# env files.env.env.*# dependenciesnode_modules/# runtime uploadspublic/uploads/# ssl*.key*.csr# pm2ecosystem.config.js# scriptsscript.sh
