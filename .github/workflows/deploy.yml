@@ -23,4 +23,8 @@ jobs:
           cd ${{ secrets.SERVER_PATH }}
           git pull origin main
           npm install --production
-          pm2 restart all
+          cd ..
+          cd ..
+          cd var/www/vircosa/
+          pm2 restart vircosa
+          sudo systemctl restart nginx

@@ -5,6 +5,8 @@ const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
 
 const { setCookie, redirectIfLoggedIn } = require("../middleware/auth");
+const transporter = require("../config/mailer");
+
 
 // --- Signup Routes ---
 router.get("/signup", redirectIfLoggedIn, (req, res) => {
@@ -65,11 +67,12 @@ router.post("/signup", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: "Vircosa <no-reply@vircosa.com>",
+      from: process.env.MAIL_FROM,
       to: newUser.email,
       subject: "Verify Your Email - OTP Code",
       text: `Your OTP is: ${otp}. It expires in 5 minutes.`
     });
+
 
     // Redirect to verification page
     return res.redirect(`/verify-email?email=${email}`);
@@ -202,11 +205,12 @@ router.post("/resend-otp", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: "Vircosa <no-reply@vircosa.com>",
+      from: process.env.MAIL_FROM,
       to: email,
       subject: "Your New Verification Code",
       text: `Your new OTP is: ${otp}. It expires in 5 minutes.`
     });
+
 
     return res.json({ message: "OTP resent successfully" });
 
