@@ -279,6 +279,63 @@
             opacity: 0.7;
         }
 
+        .timer span {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Paste OTP Button */
+        .btn-paste {
+            background: linear-gradient(135deg, #c89b6d, #8b5a2b);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(139, 90, 43, 0.25);
+        }
+
+        .btn-paste:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 90, 43, 0.35);
+            background: linear-gradient(135deg, #d4a373, #9c6232);
+        }
+
+        .btn-paste:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+        }
+
+        .btn-paste i {
+            font-size: 1rem;
+        }
+
+        /* Pulse animation */
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(139, 90, 43, 0.45);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(139, 90, 43, 0);
+                transform: scale(1.03);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(139, 90, 43, 0);
+                transform: scale(1);
+            }
+        }
+
+        .btn-paste.pulse {
+            animation: softPulse 1.8s ease-in-out infinite;
+        }
+
+
         /* ===== Responsive Adjustments ===== */
         @media (max-width: 768px) {
             .navbar-brand {
@@ -382,9 +439,25 @@
                                     </div>
                                 </div>
 
-                                <div class="timer">
-                                    Code expires in: <span id="countdown">05:00</span>
+                                
+                                
+                                <div class="row align-items-center mb-4">
+                                    <!-- LEFT: TIMER -->
+                                    <div class="col-6 text-start">
+                                        <div class="timer m-0">
+                                            Code expires in:<br>
+                                            <span id="countdown" style="font-size:1.1rem;">05:00</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- RIGHT: PASTE BUTTON -->
+                                    <div class="col-6 text-end">
+                                        <button type="button" class="btn-paste" id="paste-otp">
+                                            <i class="fas fa-paste me-2"></i> Paste Code
+                                        </button>
+                                    </div>
                                 </div>
+
 
                                 <button type="submit" class="btn btn-verify" id="verify-button">
                                     <i class="fas fa-shield-check me-2"></i> Verify Email
@@ -610,6 +683,57 @@
             }, 1000);
         }
         resetCountdown();
+
+        document.getElementById("paste-otp").addEventListener("click", async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+
+            if (!/^\d{6}$/.test(text)) {
+            showNotification("warning", "Clipboard does not contain a valid 6-digit code");
+            return;
+            }
+
+            const digits = text.split("");
+            digits.forEach((digit, index) => {
+            const input = document.getElementById(`otp-input-${index + 1}`);
+            if (input) {
+                input.value = digit;
+                input.classList.add("filled");
+            }
+            });
+
+            document.getElementById("hidden-otp").value = text;
+            document.getElementById("paste-otp").classList.remove("pulse");
+            showNotification("success", "Verification code pasted");
+
+        } catch (err) {
+            showNotification("error", "Clipboard access denied");
+        }
+        });
+
+        navigator.clipboard.readText().then(text => {
+            if (/^\d{6}$/.test(text)) {
+                document.getElementById("paste-otp").classList.add("pulse");
+            }
+        });
+
+        async function checkClipboardForOtp() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const pasteBtn = document.getElementById("paste-otp");
+
+                if (/^\d{6}$/.test(text)) {
+                    pasteBtn.classList.add("pulse");
+                } else {
+                    pasteBtn.classList.remove("pulse");
+                }
+            } catch {
+                // Silent fail – clipboard permissions vary
+            }
+        }
+
+        // Check once on load
+        checkClipboardForOtp();
 
 
     </script>

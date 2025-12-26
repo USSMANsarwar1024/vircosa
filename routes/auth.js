@@ -55,23 +55,69 @@ router.post("/signup", async (req, res) => {
       otpExpires: Date.now() + 5 * 60 * 1000 // 5 minutes
     });
 
-    // ===== Send OTP Email =====
-    const nodemailer = require("nodemailer");
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-      }
-    });
-
     await transporter.sendMail({
-      from: process.env.MAIL_FROM,
-      to: newUser.email,
-      subject: "Verify Your Email - OTP Code",
-      text: `Your OTP is: ${otp}. It expires in 5 minutes.`
-    });
+  from: process.env.MAIL_FROM,
+  to: newUser.email,
+  subject: "Verify Your Email — Vircosa",
+  html: `
+  <!DOCTYPE html>
+  <html>
+  <body style="margin:0;padding:0;background:#F5F2EF;font-family:Montserrat,Arial,sans-serif;">
+    <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:12px;overflow:hidden;">
+      
+      <!-- Header -->
+      <div style="background:#8B5A2B;color:#fff;padding:30px;text-align:center;">
+        <h1 style="margin:0;font-weight:600;">Verify Your Email</h1>
+        <p style="margin:8px 0 0;font-size:14px;opacity:.9;">Welcome to Vircosa</p>
+      </div>
+
+      <!-- Body -->
+      <div style="padding:30px;color:#333;">
+        <p>Hello <strong>${newUser.firstname}</strong>,</p>
+        <p>Use the verification code below to complete your signup.</p>
+
+        <!-- OTP BOX -->
+        <div style="
+          margin:30px auto;
+          text-align:center;
+          font-size:32px;
+          letter-spacing:10px;
+          font-weight:600;
+          background:#FFF8F0;
+          padding:18px 10px;
+          border-radius:10px;
+          border:1px dashed #8B5A2B;
+          user-select:all;
+        ">
+          ${otp}
+        </div>
+
+        <p style="text-align:center;font-size:14px;color:#666;">
+          Tip: Double-click the code to copy it
+        </p>
+
+        <p style="margin-top:25px;">
+          This code expires in <strong>5 minutes</strong>.
+          For security reasons, never share it with anyone.
+        </p>
+
+        <p style="margin-top:30px;">
+          —<br>
+          <strong>Vircosa Support Team</strong>
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div style="background:#F8F5F2;padding:15px;text-align:center;font-size:12px;color:#777;">
+        © ${new Date().getFullYear()} Vircosa. All rights reserved.
+      </div>
+
+    </div>
+  </body>
+  </html>
+  `
+});
+
 
 
     // Redirect to verification page
@@ -195,15 +241,6 @@ router.post("/resend-otp", async (req, res) => {
     await user.save();
 
     // Send email again
-    const nodemailer = require("nodemailer");
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-      }
-    });
-
     await transporter.sendMail({
       from: process.env.MAIL_FROM,
       to: email,

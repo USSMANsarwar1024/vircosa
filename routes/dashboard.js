@@ -8,9 +8,9 @@ const Order = require("../models/order");
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const sendEmail = require("../utils/sendEmail");
 const Review = require('../models/review');
 const BASE_SHIPPING = 300;
+const transporter = require("../config/mailer");
 
 function calculateShipping(paymentMethod) {
   if (paymentMethod === 'bankTransfer') {
@@ -221,8 +221,9 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
 
     // Send emails
     try {
-      await sendEmail({
-        to: "usmansarwar4028@gmail.com",
+      await transporter.sendMail({
+        to: `${process.env.MAIL_USER}`,
+        bcc: "ceo@vircosa.com",
         subject: `New Order Received - ${newOrder.orderNumber}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -251,7 +252,7 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
         `
       });
 
-      await sendEmail({
+      await transporter.sendMail({
         to: shipping.email,
         subject: "Your Vircosa Order Confirmation",
         html: `
@@ -327,7 +328,7 @@ router.post('/orders/:orderId/cancel', isLoggedIn, async (req, res) => {
 
     // Send cancellation email to user
     try {
-      await sendEmail({
+      await transporter.sendMail({
         to: order.shipping.email,
         subject: "Order Cancellation Confirmation",
         html: `

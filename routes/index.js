@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const product = require("../models/product");
 const Contact = require("../models/contactMessage");
-const nodemailer = require("nodemailer");
 const newsletterModel = require("../models/newsletter");
+const transporter = require("../config/mailer");
 
 router.get("/", async (req, res) => {
   const products = await product.find();
@@ -22,6 +22,10 @@ router.post("/contact-us", async (req, res) => {
   try {
     const { firstName, lastName, email, phone, topic, message } = req.body;
 
+    if (!firstName || !email || !message) {
+      return res.status(400).json({ message: "Required fields missing" });
+    }
+
     // Save to DB
     await Contact.create({
       firstName,
@@ -32,26 +36,19 @@ router.post("/contact-us", async (req, res) => {
       message
     });
 
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-      }
-    });
-
     // Email 1: Send notification to admin
     await transporter.sendMail({
-      from: `"Vircosa Contact" <${process.env.MAIL_USER}>`,
-      to: process.env.MAIL_USER,
-      subject: `New Contact Inquiry | ${topic || 'General'}`,
+      from: `"Vircosa" <${process.env.MAIL_USER}>`,
+      to: "support@vircosa.com",
+      bcc: "ceo@vircosa.com",
+      replyTo: email,
+      subject: `New Contact Inquiry | ${topic || "General"}`,
       html: `
         <div style="font-family: 'Montserrat', Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #8B5A2B;">New Contact Message</h2>
           <div style="background-color: #F8F5F2; padding: 20px; border-radius: 10px;">
             <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+            <p><strong>Email:</strong> ${email}</p>
             <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
             <p><strong>Topic:</strong> ${topic || "Not specified"}</p>
             <p><strong>Message:</strong><br>${message}</p>
@@ -59,6 +56,7 @@ router.post("/contact-us", async (req, res) => {
         </div>
       `
     });
+
 
     // Email 2: Send confirmation to user
     await transporter.sendMail({
