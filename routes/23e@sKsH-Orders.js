@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/order");
-const sendEmail = require("../utils/sendEmail");
+const transporter = require("../config/mailer");
 
 // ============================
 // View All Orders (Admin Panel)
