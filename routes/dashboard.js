@@ -222,6 +222,7 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
     // Send emails
     try {
       await transporter.sendMail({
+        from: process.env.MAIL_FROM,
         to: `${process.env.MAIL_USER}`,
         bcc: "ceo@vircosa.com",
         subject: `New Order Received - ${newOrder.orderNumber}`,
@@ -253,6 +254,7 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
       });
 
       await transporter.sendMail({
+        from: process.env.MAIL_FROM,
         to: shipping.email,
         subject: "Your Vircosa Order Confirmation",
         html: `
@@ -329,6 +331,7 @@ router.post('/orders/:orderId/cancel', isLoggedIn, async (req, res) => {
     // Send cancellation email to user
     try {
       await transporter.sendMail({
+        from: process.env.MAIL_FROM,
         to: order.shipping.email,
         subject: "Order Cancellation Confirmation",
         html: `
