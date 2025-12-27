@@ -1,11 +1,25 @@
 const express = require("express");
 const router = express.Router();
-
+const multer = require("multer");
 const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
 
 const { setCookie, redirectIfLoggedIn } = require("../middleware/auth");
 const transporter = require("../config/mailer");
+
+// ============================
+// Multer storage configuration
+// ============================
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads/userPictures");
+  },
+  filename: function (req, file, cb) {
+    const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, unique + "-" + file.originalname.replace(/\s+/g, "_"));
+  },
+});
+const upload = multer({ storage });
 
 
 // --- Signup Routes ---
@@ -13,7 +27,7 @@ router.get("/signup", redirectIfLoggedIn, (req, res) => {
   res.render("signup");
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", upload.single("profilePicture"), async (req, res) => {
   try {
     const { firstname, lastname, gender, email, password, phone, address } = req.body;
 
@@ -52,71 +66,75 @@ router.post("/signup", async (req, res) => {
       address,
       isVerified: false,
       otp,
-      otpExpires: Date.now() + 5 * 60 * 1000 // 5 minutes
+      otpExpires: Date.now() + 5 * 60 * 1000, // 5 minutes
+      profilePicture: req.file ? `/uploads/userPictures/${req.file.filename}` : undefined,
     });
 
+    // console.log("FILE:", req.file);
+
+    // Send verification email
     await transporter.sendMail({
-  from: process.env.MAIL_FROM,
-  to: newUser.email,
-  subject: "Verify Your Email — Vircosa",
-  html: `
-  <!DOCTYPE html>
-  <html>
-  <body style="margin:0;padding:0;background:#F5F2EF;font-family:Montserrat,Arial,sans-serif;">
-    <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:12px;overflow:hidden;">
-      
-      <!-- Header -->
-      <div style="background:#8B5A2B;color:#fff;padding:30px;text-align:center;">
-        <h1 style="margin:0;font-weight:600;">Verify Your Email</h1>
-        <p style="margin:8px 0 0;font-size:14px;opacity:.9;">Welcome to Vircosa</p>
-      </div>
+      from: process.env.MAIL_FROM,
+      to: newUser.email,
+      subject: "Verify Your Email — Vircosa",
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <body style="margin:0;padding:0;background:#F5F2EF;font-family:Montserrat,Arial,sans-serif;">
+          <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:12px;overflow:hidden;">
+            
+            <!-- Header -->
+            <div style="background:#8B5A2B;color:#fff;padding:30px;text-align:center;">
+              <h1 style="margin:0;font-weight:600;">Verify Your Email</h1>
+              <p style="margin:8px 0 0;font-size:14px;opacity:.9;">Welcome to Vircosa</p>
+            </div>
 
-      <!-- Body -->
-      <div style="padding:30px;color:#333;">
-        <p>Hello <strong>${newUser.firstname}</strong>,</p>
-        <p>Use the verification code below to complete your signup.</p>
+            <!-- Body -->
+            <div style="padding:30px;color:#333;">
+              <p>Hello <strong>${newUser.firstname}</strong>,</p>
+              <p>Use the verification code below to complete your signup.</p>
 
-        <!-- OTP BOX -->
-        <div style="
-          margin:30px auto;
-          text-align:center;
-          font-size:32px;
-          letter-spacing:10px;
-          font-weight:600;
-          background:#FFF8F0;
-          padding:18px 10px;
-          border-radius:10px;
-          border:1px dashed #8B5A2B;
-          user-select:all;
-        ">
-          ${otp}
-        </div>
+              <!-- OTP BOX -->
+              <div style="
+                margin:30px auto;
+                text-align:center;
+                font-size:32px;
+                letter-spacing:10px;
+                font-weight:600;
+                background:#FFF8F0;
+                padding:18px 10px;
+                border-radius:10px;
+                border:1px dashed #8B5A2B;
+                user-select:all;
+              ">
+                ${otp}
+              </div>
 
-        <p style="text-align:center;font-size:14px;color:#666;">
-          Tip: Double-click the code to copy it
-        </p>
+              <p style="text-align:center;font-size:14px;color:#666;">
+                Tip: Double-click the code to copy it
+              </p>
 
-        <p style="margin-top:25px;">
-          This code expires in <strong>5 minutes</strong>.
-          For security reasons, never share it with anyone.
-        </p>
+              <p style="margin-top:25px;">
+                This code expires in <strong>5 minutes</strong>.
+                For security reasons, never share it with anyone.
+              </p>
 
-        <p style="margin-top:30px;">
-          —<br>
-          <strong>Vircosa Support Team</strong>
-        </p>
-      </div>
+              <p style="margin-top:30px;">
+                —<br>
+                <strong>Vircosa Support Team</strong>
+              </p>
+            </div>
 
-      <!-- Footer -->
-      <div style="background:#F8F5F2;padding:15px;text-align:center;font-size:12px;color:#777;">
-        © ${new Date().getFullYear()} Vircosa. All rights reserved.
-      </div>
+            <!-- Footer -->
+            <div style="background:#F8F5F2;padding:15px;text-align:center;font-size:12px;color:#777;">
+              © ${new Date().getFullYear()} Vircosa. All rights reserved.
+            </div>
 
-    </div>
-  </body>
-  </html>
-  `
-});
+          </div>
+        </body>
+        </html>
+        `
+      });
 
 
 
@@ -157,8 +175,8 @@ router.post("/login", async (req, res) => {
             <h1>Invalid Credentials, Redirecting...</h1>
           </body>
         </html>
-`);
-  }
+      `);
+    }
 
   try {
     const compare = await bcrypt.compare(password, existingUser.password);
@@ -202,10 +220,10 @@ router.post("/verify-email", async (req, res) => {
   if (!user) return res.send("User not found");
 
   if (user.lastOtpSent && Date.now() - user.lastOtpSent < 30 * 1000) {
-  return res.status(429).json({ message: "Try again after 30 seconds" });
-}
+    return res.status(429).json({ message: "Try again after 30 seconds" });
+  }
 
-user.lastOtpSent = Date.now();
+  user.lastOtpSent = Date.now();
 
   if (user.isVerified) return res.redirect("/dashboard");
 
@@ -258,7 +276,8 @@ router.post("/resend-otp", async (req, res) => {
 });
 
 router.get("/forget-password", (req, res) => {
-  res.send("Please contact us at: +92-3081036864 <b> WhatsApp Only!");
+  // res.send("Please contact us at: support@vircosa.com <b> for password assistance.</b>");
+  res.render("forget-password");
 });
 
 router.get("/logout", (req, res) => {

@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true,
             // default image 
-            default: '../images/user-default-img.svg',
+            default: '/images/user-default-img.svg',
         },
 
         isVerified: {
