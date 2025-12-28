@@ -1425,7 +1425,7 @@
 
                 if (res.status === 401) {
                     showNotification('❌ Please log in to add items to cart', 'error');
-                    setTimeout(() => window.location.href = '/login', 1500);
+                    // setTimeout(() => window.location.href = '/login', 1500);
                     return;
                 }
 
@@ -1465,7 +1465,7 @@
                         if (!contentType || !contentType.includes('application/json')) {
                             if (res.status === 401 || res.redirected) {
                                 showNotification('❌ Please log in to add items to wishlist', 'error');
-                                setTimeout(() => window.location.href = '/login', 1500);
+                                // setTimeout(() => window.location.href = '/login', 1500);
                                 return;
                             }
                             throw new Error('Invalid response from server');

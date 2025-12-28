@@ -412,10 +412,30 @@
                             </div>
                         </div>
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" value="<%= user.email %>" required>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            value="<%= user.email %>" 
+                            required
+                            pattern="^\S+@\S+\.\S+$"
+                            title="Please enter a valid email address"
+                            placeholder="<%= user.email %>"
+                            >
+                        <div id="emailFeedback" class="invalid-feedback">Please enter a valid email address</div>
 
                         <label for="phone" class="form-label">Phone Number</label>
-                        <input type="tel" class="form-control" id="phone" value="<%= user.phone %>" required>
+                        <input
+                            type="tel"
+                            class="form-control"
+                            id="phone"
+                            value="<%= user.phone %>"
+                            required
+                            pattern="^(\+92|92|0)?3\d{9}$"
+                            title="Please enter a valid Pakistani phone number"
+                            placeholder="e.g. 03XXXXXXXXX"
+                        >
+                        <div id="phoneFeedback" class="invalid-feedback">Please enter a valid Pakistani phone number</div>
 
                         <label for="address" class="form-label">Street Address</label>
                         <input type="text" class="form-control" id="address" value="<%= user.address %>" required>
@@ -705,6 +725,30 @@
             if (!isValid) {
                 showNotification('warning', 'Please fill in all required fields.');
                 return;
+            }
+
+            // Validate email address
+            const emailInput = document.getElementById('email');
+            const emailValue = (emailInput.value || '').trim();
+            const emailRegex = /^\S+@\S+\.\S+$/;
+            if (!emailRegex.test(emailValue)) {
+                emailInput.classList.add('is-invalid');
+                showNotification('warning', 'Please enter a valid email address');
+                return;
+            } else {
+                emailInput.classList.remove('is-invalid');
+            }
+
+            // Validate Pakistani phone number
+            const phoneInput = document.getElementById('phone');
+            const phoneValue = (phoneInput.value || '').trim();
+            const pkPhoneRegex = /^(\+92|92|0)?3\d{9}$/;
+            if (!pkPhoneRegex.test(phoneValue)) {
+                phoneInput.classList.add('is-invalid');
+                showNotification('warning', 'Please enter a valid Pakistani phone number');
+                return;
+            } else {
+                phoneInput.classList.remove('is-invalid');
             }
 
             // Get payment method
