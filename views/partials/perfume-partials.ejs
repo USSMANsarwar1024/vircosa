@@ -16,7 +16,7 @@
                   <%= product.productBadge.toUpperCase() %>
                 </span>
                 <% } %>
-                  <a href="/products/product-details/<%= product._id %>">
+                  <a href="/products/product-details/<%= product.slug %>">
                     <img src="<%= product.images[0] %>" class="card-img-top" alt="<%= product.name %>" loading="lazy" />
                   </a>
                   <div class="card-body">
@@ -52,7 +52,7 @@
                       <%= product.productBadge.toUpperCase() %>
                     </span>
                     <% } %>
-                      <a href="/products/product-details/<%= product._id %>">
+                      <a href="/products/product-details/<%= product.slug %>">
                         <img src="<%= product.images[0] %>" class="card-img-top" alt="<%= product.name %>"
                           loading="lazy" />
                       </a>

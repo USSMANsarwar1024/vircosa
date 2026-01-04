@@ -123,8 +123,6 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
         stock: Number(variantStock[i] || 0)
     }));
 
-
-
     const images = [];
     if (req.files && req.files.length > 0) {
       for (const f of req.files) {
@@ -137,8 +135,29 @@ router.post("/add", upload.array("images[]"), async (req, res) => {
       return res.redirect("/23e@sKsH-hajimemashite?msg=no-image");
     }
 
+    // ============================
+    // Slug configuration
+    // ============================
+    const slugify = require("slugify");
+
+    const baseSlug = slugify(name, {
+      lower: true,
+      strict: true, // removes special chars
+      trim: true
+    });
+
+    // ensure uniqueness
+    let slug = baseSlug;
+    let counter = 1;
+
+    while (await Product.exists({ slug })) {
+      slug = `${baseSlug}-${counter++}`;
+    }
+
+
     const newProduct = new Product({
       name,
+      slug,
       description,
       images,
       productBadge,
@@ -169,14 +188,11 @@ router.post("/edit/:id", upload.array("images[]"), async (req, res) => {
       name,
       categories,
       description,
-      // price, // REMOVED: Handled by variants
       productBadge,
       shippingFee = 0,
-      // stock = 0, // REMOVED: Handled by variants
       sku,
       lasting,
       concentration,
-      // sizes // REMOVED: Handled by variants
     } = req.body;
 
     // Variant handling

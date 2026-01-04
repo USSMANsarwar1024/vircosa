@@ -502,7 +502,7 @@
                                     <div class="carousel-inner">
                                         <% product.images.forEach((img, index) => { %>
                                         <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                            <a href="/products/product-details/<%= product._id %>">
+                                            <a href="/products/product-details/<%= product.slug %>">
                                                 <img src="<%= img %>" class="d-block w-100 rounded" alt="Product image">
                                             </a>
                                         </div>
@@ -521,7 +521,7 @@
                             <div class="product-body">
                                 <span class="product-category"><%= product.categories.join(', ') %></span>
                                 <h3 class="product-title">
-                                    <a href="/products/product-details/<%= product._id %>"><%= product.name %></a>
+                                    <a href="/products/product-details/<%= product.slug %>"><%= product.name %></a>
                                 </h3>
                                 <h3 class="product-price">PKR <%= product.variants[0].price %></h3>
                                 <a href="#" class="btn btn-product add-to-wishlist-btn" data-product-id="<%= product._id %>">Add to Wishlist</a>

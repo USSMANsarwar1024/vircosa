@@ -27,17 +27,16 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.get("/product-details/:id", async (req, res) => {
+router.get("/product-details/:slug", async (req, res) => {
   try {
-    const productId = new mongoose.Types.ObjectId(req.params.id);
-    const userId = req.user?._id; // Get logged-in user ID
-
-    // 1. Get Product Details
-    const productDetails = await product.findById(productId);
+    const productDetails = await product.findOne({ slug: req.params.slug });
 
     if (!productDetails) {
       return res.status(404).render("404", { message: "Product not found" });
     }
+
+    const productId = productDetails._id;
+    const userId = req.user?._id;
 
     // 2. Get Reviews
     const reviews = await Review.find({ product: productId }).populate("user", "firstname lastname").sort({ createdAt: -1 });
