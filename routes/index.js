@@ -11,8 +11,13 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/sitemap.xml", async (req, res) => {
-  const products = await product.find({}, "slug");
-  res.type("xml");
+  const products = await product.find(
+    { slug: { $exists: true, $ne: "" } },
+    "slug"
+  );
+
+  res.header("Content-Type", "application/xml");
+
   res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${products.map(p => `
