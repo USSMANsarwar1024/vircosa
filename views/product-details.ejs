@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= product.name %> | Vircosa</title>
+    <title><%= product.name %> Perfume | Long Lasting Fragrance – Vircosa</title>
+    <meta name="description" content="<%= product.description.replace(/\n/g, ' ').slice(0, 155) %>">
+    <link rel="canonical" href="https://vircosa.com/products/product-details/<%= product.slug %>">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -1545,5 +1547,29 @@
 
     </script>
     
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "<%= product.name %>",
+        "image": [
+            "https://vircosa.com<%= product.images[0] %>"
+        ],
+        "description": "<%= product.description %>",
+        "sku": "<%= product.sku %>",
+        "brand": {
+            "@type": "Brand",
+            "name": "Vircosa"
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": "https://vircosa.com/products/product-details/<%= product.slug %>",
+            "priceCurrency": "PKR",
+            "price": "<%= product.variants[0].price %>",
+            "availability": "https://schema.org/InStock"
+        }
+        }
+    </script>
+
 </body>
 </html>
