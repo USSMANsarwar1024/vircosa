@@ -113,35 +113,267 @@
         .navbar-toggler:focus {
             box-shadow: none;
         }
-
-        /* ===== Product Details Section ===== */
+        
+        /* ===== Product Image Container - FIXED ===== */
         .product-details-section {
-            margin-top: 3rem;
-            padding: 50px 0 80px;
+            padding: 130px 0 0 0;
         }
 
         .product-image-container {
             position: relative;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            max-width: 40em;
-            height: 40em;
+            height: 500px;
             margin: 0 auto;
+            background-color: #f8f9fa;
+            
+        }
+
+        /* CRITICAL FIX: Proper Bootstrap Carousel Styling */
+        .carousel {
+            height: 100%;
         }
 
         .carousel-inner {
             height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
         }
 
+        /* Bootstrap default classes - CRITICAL */
         .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: 0;
         }
 
+        /* Active slide should be visible */
+        .carousel-item.active {
+            position: relative;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        /* For slide transitions */
+        .carousel-item-next,
+        .carousel-item-prev {
+            display: block;
+        }
+
+        .carousel-item-next:not(.carousel-item-start),
+        .carousel-item-prev:not(.carousel-item-end) {
+            transform: translateX(0);
+        }
+
+        /* Image styling - CRITICAL FIX */
         .carousel-item img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            object-position: center;
+            /* padding: 20px; */
+            background-color: white;
+            display: block;
+        }
+
+        /* Remove any conflicting transforms */
+        .carousel-item {
+            transform: none !important;
+        }
+
+        /* Ensure proper stacking order */
+        .carousel-item.active ~ .carousel-item {
+            z-index: 0;
+            opacity: 0;
+        }
+
+        /* Carousel controls styling */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 45px;
+            height: 45px;
+            background-color: rgba(139, 90, 43, 0.9);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .product-image-container:hover .carousel-control-prev,
+        .product-image-container:hover .carousel-control-next {
+            opacity: 1;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .carousel-control-prev {
+            left: 15px;
+        }
+
+        .carousel-control-next {
+            right: 15px;
+        }
+
+        /* Carousel indicators */
+        .carousel-indicators {
+            bottom: 20px;
+            margin-bottom: 0;
+            z-index: 10;
+        }
+
+        .carousel-indicators button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(139, 90, 43, 0.3);
+            border: none;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicators button.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* Thumbnail navigation */
+        .product-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .product-thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .product-thumbnail.active {
+            border-color: var(--primary-color);
+        }
+
+        .product-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-thumbnail:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Bootstrap slide animation classes - CRITICAL */
+        .carousel-item-next:not(.carousel-item-start),
+        .active.carousel-item-end {
+            transform: translateX(100%);
+        }
+
+        .carousel-item-prev:not(.carousel-item-end),
+        .active.carousel-item-start {
+            transform: translateX(-100%);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .product-image-container {
+                height: 400px;
+                margin-bottom: 30px;
+            }
+            
+            .carousel-item img {
+                padding: 15px;
+            }
+            
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+            }
+            
+            .carousel-control-prev {
+                left: 10px;
+            }
+            
+            .carousel-control-next {
+                right: 10px;
+            }
+            
+            .product-thumbnail {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-image-container {
+                height: 350px;
+            }
+            
+            .carousel-item img {
+                padding: 10px;
+            }
+            
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .product-thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-image-container {
+                height: 300px;
+                border-radius: 15px;
+            }
+            
+            .carousel-item img {
+                padding: 8px;
+            }
+            
+            .carousel-indicators {
+                bottom: 10px;
+            }
+            
+            .carousel-indicators button {
+                width: 8px;
+                height: 8px;
+                margin: 0 3px;
+            }
+            
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 30px;
+                height: 30px;
+            }
         }
 
         .product-info {
@@ -773,22 +1005,51 @@
                 <!-- Product Images -->
                 <div class="col-lg-6">
                     <div class="product-image-container">
-                        <div id="carousel-<%= product._id %>" class="carousel slide" data-bs-ride="carousel">
+                        <!-- Change: Use a unique ID without special characters -->
+                        <div id="productCarousel" class="carousel slide" data-bs-ride="false">
+                            <!-- Indicators -->
+                            <div class="carousel-indicators">
+                                <% product.images.forEach((img, index) => { %>
+                                <button type="button" data-bs-target="#productCarousel" 
+                                        data-bs-slide-to="<%= index %>" 
+                                        class="<%= index === 0 ? 'active' : '' %>" 
+                                        aria-label="Slide <%= index + 1 %>"></button>
+                                <% }) %>
+                            </div>
+                            
+                            <!-- Carousel Items -->
                             <div class="carousel-inner">
                                 <% product.images.forEach((img, index) => { %>
-                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                    <img src="<%= img %>" class="d-block w-100 rounded" alt="<%= product.name %>">
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>">
+                                    <img src="<%= img %>" class="d-block w-100" alt="<%= product.name %> - Image <%= index + 1 %>">
                                 </div>
                                 <% }) %>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
+                            
+                            <!-- Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= product._id %>" data-bs-slide="next">
-                                <span class="carousel-control-next-icon"></span>
+                            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
                             </button>
-                        </div>    
+                        </div>
                     </div>
+                    
+                    <!-- Optional: Thumbnail Navigation -->
+                    <% if (product.images.length > 1) { %>
+                    <div class="product-thumbnails mt-3">
+                        <% product.images.forEach((img, index) => { %>
+                        <div class="product-thumbnail <%= index === 0 ? 'active' : '' %>" 
+                            data-bs-target="#productCarousel" 
+                            data-bs-slide-to="<%= index %>">
+                            <img src="<%= img %>" alt="<%= product.name %> Thumbnail <%= index + 1 %>">
+                        </div>
+                        <% }) %>
+                    </div>
+                    <% } %>
                 </div>
 
                 <!-- Product Info -->
@@ -1253,201 +1514,280 @@
     <%- include('partials/newsletter', { req: req }) %>
     <%- include('partials/footer') %>
 
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom JS -->
     <script>
-        // Product functionality
-        const variants = <%- JSON.stringify(product.variants) %>;
-        let selectedVariant = variants[0];
-        let qty = 1;
-
-        // Size selector
-        document.querySelectorAll('.size-option').forEach((option, index) => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('active'));
-                this.classList.add('active');
-                selectedVariant = variants[index];
-                updatePrice();
-                updateStockBadge();
-            });
-        });
-
-        function changeQty(change) {
-            qty = Math.max(1, Math.min(qty + change, selectedVariant.stock));
-            document.getElementById('quantity').value = qty;
-            updatePrice();
-        }
-
-        function updatePrice() {
-            document.getElementById('price').textContent = (selectedVariant.price * qty).toLocaleString();
-        }
-
-        function updateStockBadge() {
-            const badge = document.getElementById('stock-badge');
-            const stock = selectedVariant.stock;
-            badge.className = 'stock-badge';
+        // Initialize carousel FIRST - this is critical
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Loaded - Initializing carousel...');
             
-            if (stock > 10) {
-                badge.classList.add('in-stock');
-                badge.textContent = 'In Stock';
-            } else if (stock > 0) {
-                badge.classList.add('low-stock');
-                badge.textContent = `Only ${stock} left`;
-            } else {
-                badge.classList.add('out-of-stock');
-                badge.textContent = 'Out of Stock';
-            }
-        }
-
-        // ✅ REVIEW FORM SUBMISSION
-        const reviewForm = document.getElementById('reviewForm');
-        if (reviewForm) {
-            // Rating stars interaction
-            const ratingStars = document.querySelectorAll('.rating-input-large .fa-star');
-            const ratingInput = document.getElementById('reviewRating');
+            // CAROUSEL INITIALIZATION
+            const carouselElement = document.getElementById('productCarousel');
             
-            ratingStars.forEach(star => {
-                star.addEventListener('click', function() {
-                    const rating = this.getAttribute('data-rating');
-                    ratingInput.value = rating;
-                    
-                    ratingStars.forEach(s => {
-                        if (s.getAttribute('data-rating') <= rating) {
-                            s.classList.remove('far');
-                            s.classList.add('fas', 'active');
-                        } else {
-                            s.classList.remove('fas', 'active');
-                            s.classList.add('far');
-                        }
-                    });
+            if (carouselElement) {
+                console.log('Carousel element found:', carouselElement.id);
+                console.log('Items found:', carouselElement.querySelectorAll('.carousel-item').length);
+                
+                // Initialize Bootstrap Carousel
+                const carousel = new bootstrap.Carousel(carouselElement, {
+                    interval: 9000, // 9 seconds auto-play
+                    wrap: true, // Loop back to start
+                    touch: true, // Enable touch swiping
+                    keyboard: true // Enable keyboard navigation
                 });
-            });
-
-            // Form submission
-            reviewForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
                 
-                const rating = ratingInput.value;
-                const orderId = document.getElementById('orderSelect').value;
+                console.log('Bootstrap Carousel initialized successfully!');
                 
-                if (!rating) {
-                    showNotification('Please select a rating', 'warning');
-                    return;
+                // Set up thumbnail navigation
+                const thumbnails = document.querySelectorAll('.product-thumbnail');
+                if (thumbnails.length > 0) {
+                    thumbnails.forEach((thumb, index) => {
+                        thumb.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            // Update thumbnails
+                            thumbnails.forEach(t => t.classList.remove('active'));
+                            this.classList.add('active');
+                            // Go to slide
+                            carousel.to(index);
+                        });
+                    });
+                    
+                    // Update thumbnails on slide change
+                    carouselElement.addEventListener('slid.bs.carousel', function(event) {
+                        const activeIndex = event.to;
+                        thumbnails.forEach((thumb, index) => {
+                            if (index === activeIndex) {
+                                thumb.classList.add('active');
+                            } else {
+                                thumb.classList.remove('active');
+                            }
+                        });
+                    });
                 }
                 
-                if (!orderId) {
-                    showNotification('Please select your order', 'warning');
-                    return;
+                // Manual control button listeners (just in case)
+                const nextBtn = carouselElement.querySelector('.carousel-control-next');
+                const prevBtn = carouselElement.querySelector('.carousel-control-prev');
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', function() {
+                        console.log('Next button clicked');
+                        carousel.next();
+                    });
                 }
                 
-                const formData = {
-                    rating: rating,
-                    title: document.getElementById('reviewTitle').value,
-                    comment: document.getElementById('reviewComment').value,
-                    orderId: orderId
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', function() {
+                        console.log('Prev button clicked');
+                        carousel.prev();
+                    });
+                }
+                
+                // Debug function
+                window.debugCarousel = function() {
+                    console.log('=== CAROUSEL DEBUG ===');
+                    console.log('Current active slide:', 
+                        carouselElement.querySelector('.carousel-item.active').getAttribute('data-index'));
+                    console.log('Total slides:', carouselElement.querySelectorAll('.carousel-item').length);
+                    console.log('Bootstrap instance:', carousel ? 'Found' : 'Not found');
+                    console.log('=== END DEBUG ===');
                 };
                 
-                try {
-                    const response = await fetch('/products/product-details/<%= product._id %>/review', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        showNotification('✅ ' + data.message, 'success');
-                        setTimeout(() => location.reload(), 800);
-                    } else {
-                        showNotification('❌ ' + data.message, 'error');
-                    }
-                } catch (err) {
-                    console.error('Review error:', err);
-                    showNotification('Failed to submit review', 'error');
-                }
-            });
-        }
+            } else {
+                console.error('ERROR: Carousel element with ID "productCarousel" not found!');
+                console.error('Check the HTML for the carousel element');
+            }
+            
+            // Rest of your product functionality... (keep your existing code below)
+            // Product functionality
+            const variants = <%- JSON.stringify(product.variants) %>;
+            let selectedVariant = variants[0];
+            let qty = 1;
 
-        // Sort reviews
-        const sortSelect = document.getElementById('sortReviews');
-        if (sortSelect) {
-            sortSelect.addEventListener('change', function() {
-                const reviewItems = Array.from(document.querySelectorAll('.review-item'));
-                const reviewsList = document.querySelector('.reviews-list');
-                
-                reviewItems.sort((a, b) => {
-                    const ratingA = parseInt(a.getAttribute('data-rating'));
-                    const ratingB = parseInt(b.getAttribute('data-rating'));
-                    const dateA = parseInt(a.getAttribute('data-date'));
-                    const dateB = parseInt(b.getAttribute('data-date'));
-                    
-                    switch(this.value) {
-                        case 'newest': return dateB - dateA;
-                        case 'highest': return ratingB - ratingA;
-                        case 'lowest': return ratingA - ratingB;
-                        default: return 0;
-                    }
+            // Size selector
+            document.querySelectorAll('.size-option').forEach((option, index) => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.size-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedVariant = variants[index];
+                    updatePrice();
+                    updateStockBadge();
                 });
-                
-                reviewItems.forEach(item => reviewsList.appendChild(item));
             });
-        }
 
-        // Add to cart functionality
-        document.getElementById('addToCartBtn')?.addEventListener('click', async function() {
-            const activeVariant = document.querySelector('.size-option.active');
+            function changeQty(change) {
+                qty = Math.max(1, Math.min(qty + change, selectedVariant.stock));
+                document.getElementById('quantity').value = qty;
+                updatePrice();
+            }
 
-            try {
-                const res = await fetch('/cart/add', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        productId: '<%= product._id %>',
-                        size: parseInt(activeVariant.dataset.size),
-                        price: parseInt(activeVariant.dataset.price),
-                        quantity: qty
-                    })
-                });
+            function updatePrice() {
+                document.getElementById('price').textContent = (selectedVariant.price * qty).toLocaleString();
+            }
 
-                // Handle non-JSON responses (redirects)
-                const contentType = res.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    if (res.status === 401 || res.redirected) {
-                        showNotification('❌ Please log in to add items to cart', 'error');
-                        // setTimeout(() => window.location.href = '/login', 1500);
-                        return;
-                    }
-                    throw new Error('Invalid response from server');
-                }
-
-                const data = await res.json();
-
-                if (res.status === 401) {
-                    showNotification('❌ Please log in to add items to cart', 'error');
-                    // setTimeout(() => window.location.href = '/login', 1500);
-                    return;
-                }
-
-                if (res.ok) {
-                    showNotification('🛒 Added to Cart!', 'success');
+            function updateStockBadge() {
+                const badge = document.getElementById('stock-badge');
+                const stock = selectedVariant.stock;
+                badge.className = 'stock-badge';
+                
+                if (stock > 10) {
+                    badge.classList.add('in-stock');
+                    badge.textContent = 'In Stock';
+                } else if (stock > 0) {
+                    badge.classList.add('low-stock');
+                    badge.textContent = `Only ${stock} left`;
                 } else {
-                    showNotification('❌ ' + (data.message || 'Error adding to cart'), 'error');
-                }
-            } catch (error) {
-                console.error('Cart error:', error);
-                // Check if user is actually logged in
-                const isLoggedIn = '<%= typeof user !== "undefined" && user ? "true" : "false" %>';
-                if (isLoggedIn === 'false') {
-                    showNotification('❌ Please log in to add items to cart', 'error');
-                    setTimeout(() => window.location.href = '/login', 1500);
-                } else {
-                    showNotification('❌ Network error occurred. Please try again.', 'error');
+                    badge.classList.add('out-of-stock');
+                    badge.textContent = 'Out of Stock';
                 }
             }
-        });
+
+            // ✅ REVIEW FORM SUBMISSION
+            const reviewForm = document.getElementById('reviewForm');
+            if (reviewForm) {
+                // Rating stars interaction
+                const ratingStars = document.querySelectorAll('.rating-input-large .fa-star');
+                const ratingInput = document.getElementById('reviewRating');
+                
+                ratingStars.forEach(star => {
+                    star.addEventListener('click', function() {
+                        const rating = this.getAttribute('data-rating');
+                        ratingInput.value = rating;
+                        
+                        ratingStars.forEach(s => {
+                            if (s.getAttribute('data-rating') <= rating) {
+                                s.classList.remove('far');
+                                s.classList.add('fas', 'active');
+                            } else {
+                                s.classList.remove('fas', 'active');
+                                s.classList.add('far');
+                            }
+                        });
+                    });
+                });
+
+                // Form submission
+                reviewForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const rating = ratingInput.value;
+                    const orderId = document.getElementById('orderSelect').value;
+                    
+                    if (!rating) {
+                        showNotification('Please select a rating', 'warning');
+                        return;
+                    }
+                    
+                    if (!orderId) {
+                        showNotification('Please select your order', 'warning');
+                        return;
+                    }
+                    
+                    const formData = {
+                        rating: rating,
+                        title: document.getElementById('reviewTitle').value,
+                        comment: document.getElementById('reviewComment').value,
+                        orderId: orderId
+                    };
+                    
+                    try {
+                        const response = await fetch('/products/product-details/<%= product._id %>/review', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showNotification('✅ ' + data.message, 'success');
+                            setTimeout(() => location.reload(), 800);
+                        } else {
+                            showNotification('❌ ' + data.message, 'error');
+                        }
+                    } catch (err) {
+                        console.error('Review error:', err);
+                        showNotification('Failed to submit review', 'error');
+                    }
+                });
+            }
+
+            // Sort reviews
+            const sortSelect = document.getElementById('sortReviews');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    const reviewItems = Array.from(document.querySelectorAll('.review-item'));
+                    const reviewsList = document.querySelector('.reviews-list');
+                    
+                    reviewItems.sort((a, b) => {
+                        const ratingA = parseInt(a.getAttribute('data-rating'));
+                        const ratingB = parseInt(b.getAttribute('data-rating'));
+                        const dateA = parseInt(a.getAttribute('data-date'));
+                        const dateB = parseInt(b.getAttribute('data-date'));
+                        
+                        switch(this.value) {
+                            case 'newest': return dateB - dateA;
+                            case 'highest': return ratingB - ratingA;
+                            case 'lowest': return ratingA - ratingB;
+                            default: return 0;
+                        }
+                    });
+                    
+                    reviewItems.forEach(item => reviewsList.appendChild(item));
+                });
+            }
+
+            // Add to cart functionality
+            document.getElementById('addToCartBtn')?.addEventListener('click', async function() {
+                const activeVariant = document.querySelector('.size-option.active');
+
+                try {
+                    const res = await fetch('/cart/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            productId: '<%= product._id %>',
+                            size: parseInt(activeVariant.dataset.size),
+                            price: parseInt(activeVariant.dataset.price),
+                            quantity: qty
+                        })
+                    });
+
+                    const contentType = res.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        if (res.status === 401 || res.redirected) {
+                            showNotification('❌ Please log in to add items to cart', 'error');
+                            return;
+                        }
+                        throw new Error('Invalid response from server');
+                    }
+
+                    const data = await res.json();
+
+                    if (res.status === 401) {
+                        showNotification('❌ Please log in to add items to cart', 'error');
+                        return;
+                    }
+
+                    if (res.ok) {
+                        showNotification('🛒 Added to Cart!', 'success');
+                    } else {
+                        showNotification('❌ ' + (data.message || 'Error adding to cart'), 'error');
+                    }
+                } catch (error) {
+                    console.error('Cart error:', error);
+                    const isLoggedIn = '<%= typeof user !== "undefined" && user ? "true" : "false" %>';
+                    if (isLoggedIn === 'false') {
+                        showNotification('❌ Please log in to add items to cart', 'error');
+                        setTimeout(() => window.location.href = '/login', 1500);
+                    } else {
+                        showNotification('❌ Network error occurred. Please try again.', 'error');
+                    }
+                }
+            });
 
             // Add to wishlist functionality
             document.querySelectorAll('.add-to-wishlist-btn').forEach(btn => {
@@ -1462,12 +1802,10 @@
                             body: JSON.stringify({ productId })
                         });
 
-                        // Handle non-JSON responses (redirects)
                         const contentType = res.headers.get('content-type');
                         if (!contentType || !contentType.includes('application/json')) {
                             if (res.status === 401 || res.redirected) {
                                 showNotification('❌ Please log in to add items to wishlist', 'error');
-                                // setTimeout(() => window.location.href = '/login', 1500);
                                 return;
                             }
                             throw new Error('Invalid response from server');
@@ -1483,7 +1821,6 @@
 
                         if (res.ok) {
                             showNotification('💖 Added to Wishlist!', 'success');
-                            // Optional: Update heart icon
                             btn.querySelector('i').classList.remove('far');
                             btn.querySelector('i').classList.add('fas');
                         } else {
@@ -1491,11 +1828,9 @@
                         }
                     } catch (error) {
                         console.error('Wishlist error:', error);
-                        // Check if user is actually logged in
                         const isLoggedIn = '<%= typeof user !== "undefined" && user ? "true" : "false" %>';
                         if (isLoggedIn === 'false') {
                             showNotification('❌ Please log in to add items to wishlist', 'error');
-                            // setTimeout(() => window.location.href = '/login', 1500);
                         } else {
                             showNotification('❌ Network error occurred. Please try again.', 'error');
                         }
@@ -1503,37 +1838,36 @@
                 });
             });
 
-        // Notification system
-        function showNotification(message, type = 'info') {
-            const existingNotifications = document.querySelectorAll('.notification');
-            existingNotifications.forEach(notif => notif.remove());
+            // Notification system
+            function showNotification(message, type = 'info') {
+                const existingNotifications = document.querySelectorAll('.notification');
+                existingNotifications.forEach(notif => notif.remove());
 
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                ${message}
-                <button class="notification-close">&times;</button>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => notification.classList.add('show'), 100);
-            
-            notification.querySelector('.notification-close').addEventListener('click', () => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            });
-            
-            setTimeout(() => {
-                if (notification.parentNode) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    ${message}
+                    <button class="notification-close">&times;</button>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => notification.classList.add('show'), 100);
+                
+                notification.querySelector('.notification-close').addEventListener('click', () => {
                     notification.classList.remove('show');
                     setTimeout(() => notification.remove(), 300);
-                }
-            }, 5000);
-        }
+                });
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.classList.remove('show');
+                        setTimeout(() => notification.remove(), 300);
+                    }
+                }, 5000);
+            }
 
-        // Check for flash messages on page load
-        document.addEventListener('DOMContentLoaded', function() {
+            // Check for flash messages
             const successMessage = '<%= typeof success !== "undefined" && success.length > 0 ? success[0] : "" %>';
             const errorMessage = '<%= typeof error !== "undefined" && error.length > 0 ? error[0] : "" %>';
             
@@ -1544,8 +1878,8 @@
                 showNotification(errorMessage, 'error');
             }
         });
-
     </script>
+    
     
     <script type="application/ld+json">
         {

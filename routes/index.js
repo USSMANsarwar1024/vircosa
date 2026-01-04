@@ -27,7 +27,6 @@ ${products.map(p => `
 </urlset>`);
 });
 
-
 router.get("/about-us", (req, res) => {
   res.render("about-us", { req });
 });
