@@ -19,7 +19,9 @@ const orderSchema = new mongoose.Schema(
             name: String,
             size: Number,
             price: Number,
-            quantity: Number
+            quantity: Number,
+            includeBox: Boolean,
+            boxPrice: Number,
         }
     ],
 

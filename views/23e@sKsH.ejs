@@ -530,6 +530,7 @@
                                         data-sku="<%= product.sku || '' %>"
                                         data-badge="<%= product.productBadge || '' %>"
                                         data-shipping="<%= product.shippingFee || 0 %>"
+                                        data-box-price="<%= product.boxPrice || 700 %>"
                                         data-lasting="<%= product.lasting || '8-10 Hours' %>"
                                         data-concentration="<%= product.concentration || 40 %>"
                                         data-variants='<%= JSON.stringify(product.variants || []) %>'
@@ -650,6 +651,12 @@
                             <div class="col-md-6 mb-3">
                                 <label for="productShipping" class="form-label">Shipping Fee (PKR)</label>
                                 <input type="number" name="shippingFee" class="form-control" id="productShipping">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="productBoxPrice" class="form-label">Premium Gift Box Price (PKR)</label>
+                                <input type="number" name="boxPrice" class="form-control" id="productBoxPrice" value="700" placeholder="700">
+                                <small class="text-muted">Price for optional premium gift box</small>
                             </div>
                         </div>
 
@@ -786,6 +793,12 @@
                             <div class="col-md-6 mb-3">
                                 <label for="editProductShipping" class="form-label">Shipping Fee (PKR)</label>
                                 <input type="number" name="shippingFee" class="form-control" id="editProductShipping">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="editProductBoxPrice" class="form-label">Premium Gift Box Price (PKR)</label>
+                                <input type="number" name="boxPrice" class="form-control" id="editProductBoxPrice" placeholder="700">
+                                <small class="text-muted">Price for optional premium gift box</small>
                             </div>
                         </div>
 
@@ -931,6 +944,7 @@
                     const productSku = this.dataset.sku || '';
                     const productBadge = this.dataset.badge || '';
                     const productShipping = this.dataset.shipping || 0;
+                    const productBoxPrice = this.dataset.boxPrice || 700;
                     const productLasting = this.dataset.lasting || '8-10 Hours';
                     const productConcentration = this.dataset.concentration || 40;
                     const variantsJson = this.dataset.variants || '[]';
@@ -950,6 +964,7 @@
                         'editProductSku': productSku,
                         'editProductBadge': productBadge,
                         'editProductShipping': productShipping,
+                        'editProductBoxPrice': productBoxPrice,
                         'editProductLasting': productLasting,
                         'editProductConcentration': productConcentration
                     };

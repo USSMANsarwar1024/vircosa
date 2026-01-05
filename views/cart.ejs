@@ -399,8 +399,10 @@
                             </div>
                             <% cartItems.forEach(item => { %>
                                 <div class="cart-item" 
-                                     data-product-id="<%= item.product._id %>" 
-                                     data-size="<%= item.size %>">
+                                data-product-id="<%= item.product._id %>" 
+                                     data-size="<%= item.size %>"
+                                     data-include-box="<%= item.includeBox %>"
+                                     data-box-price="<%= item.includeBox && item.product ? (item.product.boxPrice || 700) : 0 %>">
                                     <div class="cart-item-img">
                                         <img src="<%= item.product.images[0] %>" alt="<%= item.product.name %>">
                                     </div>
@@ -410,6 +412,11 @@
                                         <p class="cart-item-desc">
                                             <strong><%= item.size %>ml</strong> – PKR <%= item.price %>
                                         </p>
+                                        <% if (item.includeBox) { %>
+                                            <p class="text-muted small">
+                                                🎁 Premium Gift Box — PKR <%= item.product ? (item.product.boxPrice || 700) : item.boxPrice %>
+                                            </p>
+                                        <% } %>
                                     </div>
                                     
                                     <!-- Quantity Controls -->
@@ -419,6 +426,7 @@
                                             data-id="<%= item.product._id %>" 
                                             data-size="<%= item.size %>"
                                             data-price="<%= item.price %>"
+                                            data-box-price="<%= item.includeBox && item.product ? (item.product.boxPrice || 700) : 0 %>"
                                         >
                                             <i class="fas fa-minus"></i>
                                         </button>
@@ -437,6 +445,7 @@
                                             data-id="<%= item.product._id %>" 
                                             data-size="<%= item.size %>"
                                             data-price="<%= item.price %>"
+                                            data-box-price="<%= item.includeBox && item.product ? (item.product.boxPrice || 700) : 0 %>"
                                         >
                                             <i class="fas fa-plus"></i>
                                         </button>
@@ -449,7 +458,7 @@
                                             data-id="<%= item.product._id %>" 
                                             data-size="<%= item.size %>"
                                         >
-                                            PKR <%= (item.price * item.quantity).toFixed(2) %>
+                                            PKR <%= ((item.price * item.quantity) + (item.includeBox && item.product ? (item.product.boxPrice || 700) * item.quantity : 0)).toFixed(2) %>
                                         </span>
                                     </div>
 
@@ -465,6 +474,7 @@
                                     </div>
 
                                 </div>
+
                             <% }) %>
                         <% } else { %>
                             <div class="cart-empty" id="empty-cart">
@@ -592,15 +602,10 @@
                     const priceAttr = qtyBtn?.getAttribute('data-price');
                     const price = parseFloat(priceAttr) || 0;
 
-                    // console.log('Cart Item Debug:', { 
-                    //     productId, 
-                    //     size, 
-                    //     quantity, 
-                    //     priceAttr,
-                    //     price 
-                    // });
+                    // Get box price from data attribute
+                    const boxPrice = parseFloat(item.getAttribute('data-box-price')) || 0;
 
-                    const itemTotal = price * quantity;
+                    const itemTotal = (price * quantity) + (boxPrice * quantity);
 
                     // Update individual item total
                     const priceSpan = item.querySelector('.item-total-price');

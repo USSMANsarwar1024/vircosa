@@ -541,8 +541,14 @@
                                 </div>
                                 <div class="small text-muted">
                                     <%= item.size %>ml
+                                    <% if (item.includeBox) { %>
+                                        <br>🎁 Premium Gift Box (+PKR <%= item.product ? (item.product.boxPrice || 700) : item.boxPrice %>)
+                                    <% } %>
                                 </div>
                                 <div class="order-item-price">PKR <%= item.price.toFixed(2) %>
+                                    <% if (item.includeBox) { %>
+                                        + <%= (item.product ? (item.product.boxPrice || 700) : item.boxPrice).toFixed(2) %>
+                                    <% } %>
                                 </div>
                             </div>
 

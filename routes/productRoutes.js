@@ -93,7 +93,7 @@ router.get("/product-details/:slug", async (req, res) => {
       deliveredOrders,    
       hasReviewed,       
       req,
-      
+      boxPrice: productDetails.boxPrice || 700
     });
 
   } catch (err) {
