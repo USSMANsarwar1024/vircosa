@@ -193,7 +193,10 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
         name: item.product.name,
         size: item.size,
         price: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        includeBox: item.includeBox,
+        boxPrice: item.boxPrice
+
       })),
       shipping,
       paymentMethod,

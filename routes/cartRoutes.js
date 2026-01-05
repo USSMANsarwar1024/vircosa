@@ -31,7 +31,9 @@ router.get('/', isLoggedIn, async (req, res) => {
         // Calculate subtotal
         let subtotal = 0;
         validCartItems.forEach(item => {
-            subtotal += item.price * item.quantity;
+            // Use current product's boxPrice instead of stored value
+            const currentBoxPrice = item.includeBox && item.product ? item.product.boxPrice || 700 : 0;
+            subtotal += (item.price * item.quantity) + (currentBoxPrice * item.quantity);
         });
 
         // Total items
@@ -59,7 +61,7 @@ router.get('/', isLoggedIn, async (req, res) => {
 // Add to cart
 router.post('/add', isLoggedIn, async (req, res) => {
     try {
-        const { productId, size, price, quantity } = req.body;
+        const { productId, size, price, quantity, includeBox, boxPrice } = req.body;
 
         // Validate required fields
         if (!productId || !size || !price) {
@@ -136,7 +138,10 @@ router.post('/add', isLoggedIn, async (req, res) => {
                 product: productId,
                 size: Number(size),
                 price: Number(price),
-                quantity: qty
+                quantity: qty,
+                includeBox: Boolean(includeBox),
+                boxPrice: includeBox ? Number(boxPrice) : 0,
+
             });
         }
 
@@ -221,7 +226,10 @@ router.post('/update', isLoggedIn, async (req, res) => {
         let total_items = 0;
 
         user.cart.forEach(ci => {
-            subtotal += ci.price * ci.quantity;
+            // Use current product's boxPrice instead of stored value
+            const product = ci.product;
+            const currentBoxPrice = ci.includeBox && product ? product.boxPrice || 700 : 0;
+            subtotal += (ci.price * ci.quantity) + (currentBoxPrice * ci.quantity);
             total_items += ci.quantity;
         });
 
@@ -314,7 +322,9 @@ router.get("/checkout", isLoggedIn, async (req, res) => {
         // Calculate totals (same logic as cart.ejs)
         let subtotal = 0;
         cartItems.forEach(item => {
-            subtotal += item.price * item.quantity;
+            // Use current product's boxPrice instead of stored value
+            const currentBoxPrice = item.includeBox && item.product ? item.product.boxPrice || 700 : 0;
+            subtotal += (item.price * item.quantity) + (currentBoxPrice * item.quantity);
         });
 
         const shipping = 300;
@@ -357,9 +367,12 @@ router.post("/checkout", isLoggedIn, async (req, res) => {
 
         // Recalculate subtotal securely
         let subtotal = 0;
-        user.cart.forEach(item => {
-            subtotal += item.price * item.quantity;
-        });
+        for (let item of user.cart) {
+            // Use current product's boxPrice instead of stored value
+            const product = await Product.findById(item.product);
+            const currentBoxPrice = item.includeBox && product ? product.boxPrice || 700 : 0;
+            subtotal += (item.price * item.quantity) + (currentBoxPrice * item.quantity);
+        }
 
         // Shipping logic
         let shippingFee = 300;

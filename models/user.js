@@ -48,6 +48,8 @@ const userSchema = new mongoose.Schema(
             quantity: { type: Number, default: 1, min: 1 },
             size: { type: Number, required: true },
             price: { type: Number, required: true },
+            includeBox: { type: Boolean, default: false },
+            boxPrice: { type: Number, default: 0 },
         }],
 
         profilePicture: {

@@ -1091,6 +1091,16 @@
                             </div>
                         </div>
 
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="includeBox" data-box-price="<%= boxPrice %>">
+                                <label class="form-check-label" for="includeBox">
+                                Add Premium Gift Box (+PKR <%= boxPrice %>)
+                                </label>
+                            </div>
+                        </div>
+
+
                         <!-- Quantity Selector -->
                         <div class="d-flex align-items-center gap-2 mb-4">
                             <h5 class="me-3 mb-0">Quantity:</h5>
@@ -1522,15 +1532,11 @@
     <script>
         // Initialize carousel FIRST - this is critical
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Loaded - Initializing carousel...');
             
             // CAROUSEL INITIALIZATION
             const carouselElement = document.getElementById('productCarousel');
             
-            if (carouselElement) {
-                console.log('Carousel element found:', carouselElement.id);
-                console.log('Items found:', carouselElement.querySelectorAll('.carousel-item').length);
-                
+            if (carouselElement) {                
                 // Initialize Bootstrap Carousel
                 const carousel = new bootstrap.Carousel(carouselElement, {
                     interval: 9000, // 9 seconds auto-play
@@ -1539,7 +1545,6 @@
                     keyboard: true // Enable keyboard navigation
                 });
                 
-                console.log('Bootstrap Carousel initialized successfully!');
                 
                 // Set up thumbnail navigation
                 const thumbnails = document.querySelectorAll('.product-thumbnail');
@@ -1574,14 +1579,12 @@
                 
                 if (nextBtn) {
                     nextBtn.addEventListener('click', function() {
-                        console.log('Next button clicked');
                         carousel.next();
                     });
                 }
                 
                 if (prevBtn) {
                     prevBtn.addEventListener('click', function() {
-                        console.log('Prev button clicked');
                         carousel.prev();
                     });
                 }
@@ -1745,6 +1748,10 @@
                 const activeVariant = document.querySelector('.size-option.active');
 
                 try {
+                    const includeBoxCheckbox = document.getElementById('includeBox');
+                    const includeBox = includeBoxCheckbox ? includeBoxCheckbox.checked : false;
+                    const boxPrice = includeBox ? parseInt(includeBoxCheckbox.dataset.boxPrice) : 0;
+
                     const res = await fetch('/cart/add', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1752,7 +1759,9 @@
                             productId: '<%= product._id %>',
                             size: parseInt(activeVariant.dataset.size),
                             price: parseInt(activeVariant.dataset.price),
-                            quantity: qty
+                            quantity: qty,
+                            includeBox: includeBox,
+                            boxPrice: boxPrice
                         })
                     });
 
