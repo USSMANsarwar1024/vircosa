@@ -1,56 +1,824 @@
-<head>
-    <link rel="stylesheet" href="../stylesheets/footer-styles.css">
-</head>
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="newsletter-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-<!-- Footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 mb-5 mb-lg-0">
-                            <h3 class="footer-title">Vir<span>cosa</span></h3>
-                            <p>Where nature's rarest aromas meet artisanal craftsmanship.</p>
-                            <div class="social-icons mt-4">
-                                <a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
-                                <a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a>
-                                <a href="http://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a>
-                                <a href="http://www.youtube.com"><i class="fab fa-youtube"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                            <div class="footer-links">
-                                <h4>Shop</h4>
-                                <ul>
-                                    <li><a href="product.html">Women</a></li>
-                                    <li><a href="product.html">Men</a></li>
-                                    <li><a href="product.html">Gift Sets</a></li>
-                                    <li><a href="product.html">Travel Sizes</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                            <div class="footer-links">
-                                <h4>About</h4>
-                                <ul>
-                                    <li><a href="index.html#about">Our Story</a></li>
-                                    <li><a href="#">Ingredients</a></li>
-                                    <li><a href="#">Sustainability</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="footer-links">
-                                <h4>Contact</h4>
-                                <ul>
-                                    <li><i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan</li>
-                                    <li><i class="fas fa-phone me-2"></i> +92 300 1234567</li>
-                                    <li><i class="fas fa-envelope me-2"></i> hello@vircosa.com</li>
-                                </ul>
-                            </div>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="newsletter-content">
+                    <div class="newsletter-icon">
+                        <i class="fas fa-envelope-open-text"></i>
                     </div>
-                    <div class="copyright">
-                        <p>&copy; 2025 Vircosa. All rights reserved.</p>
+                    <h3>Join Our Fragrance Journey</h3>
+                    <p class="subtitle">Subscribe for exclusive launches, artisan insights, and special offers</p>
+                    <p class="highlight">✨ Get 10% off your first purchase</p>
+
+                    <form action="/newsletter" method="POST" class="newsletter-form">
+                        <div class="input-group-custom">
+                            <input type="email" name="email" placeholder="Enter your email address" required>
+                            <input type="hidden" name="redirectTo" id="currentPageUrl">
+                            <button type="submit" class="btn-subscribe">SUBSCRIBE</button>
+                        </div>
+                    </form>
+
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-gift"></i>
+                            <span>Exclusive Offers</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-star"></i>
+                            <span>Early Access</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Expert Tips</span>
+                        </div>
                     </div>
                 </div>
-            </footer>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5 mb-lg-0 fade-in-up">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-vir">Vir</span><span class="logo-cosa">cosa</span>
+                    </div>
+                    <p class="footer-tagline">Where nature's rarest aromas meet artisanal craftsmanship</p>
+                    <div class="social-links">
+                        <a href="http://www.instagram.com/vircosa.official" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@vircosa.official" class="social-link" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@vircosa.official" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/usman-sarwar-a69b70332" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 mb-4 mb-md-0 fade-in-up">
+                <div class="footer-section">
+                    <h4 class="footer-title">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="/products?category=women">Women's Fragrances</a></li>
+                        <li><a href="/products?category=men">Men's Fragrances</a></li>
+                        <li><a href="/products?category=gift-sets">Luxury Gift Sets</a></li>
+                        <li><a href="/products?category=testers">Discovery Testers</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 mb-4 mb-md-0 fade-in-up">
+                <div class="footer-section">
+                    <h4 class="footer-title">Discover</h4>
+                    <ul class="footer-links">
+                        <li><a href="/about-us">Our Story</a></li>
+                        <li><a href="#">Premium Quality</a></li>
+                        <li><a href="#">Long-Lasting Scents</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 fade-in-up">
+                <div class="footer-section">
+                    <h4 class="footer-title">Get in Touch</h4>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Lahore, Pakistan</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+92 308 1036864</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@vircosa.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Vircosa. All rights reserved. Crafted with passion.</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    :root {
+        --primary-color: #8B5A2B;
+        --secondary-color: #4a372a;
+        --accent-gold: #d4a574;
+        --dark-bg: #1a1512;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ===== OPTIMIZED NEWSLETTER SECTION ===== */
+    .newsletter-section {
+        background: linear-gradient(135deg, #2a2118 0%, #1a1512 100%);
+        position: relative;
+        padding: 100px 0;
+        overflow: hidden;
+    }
+
+    .newsletter-section::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background:
+            radial-gradient(circle at 20% 30%, rgba(139, 90, 43, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(212, 165, 116, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 40% 80%, rgba(139, 90, 43, 0.08) 0%, transparent 35%);
+        animation: particleFloat 25s ease-in-out infinite;
+    }
+
+    @keyframes particleFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.05); }
+        66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+
+    .newsletter-particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--accent-gold);
+        border-radius: 50%;
+        opacity: 0;
+        animation: particleRise 15s infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 35%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 50%; animation-delay: 1s; }
+    .particle:nth-child(5) { left: 65%; animation-delay: 3s; }
+    .particle:nth-child(6) { left: 80%; animation-delay: 5s; }
+    .particle:nth-child(7) { left: 90%; animation-delay: 2.5s; }
+
+    @keyframes particleRise {
+        0% {
+            bottom: 0;
+            opacity: 0;
+            transform: translateY(0) scale(0.5);
+        }
+        10% { opacity: 0.6; }
+        90% { opacity: 0.3; }
+        100% {
+            bottom: 100%;
+            opacity: 0;
+            transform: translateY(-20px) scale(1);
+        }
+    }
+
+    .newsletter-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .newsletter-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 30px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-gold));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        box-shadow: 0 15px 40px rgba(139, 90, 43, 0.3);
+        animation: iconPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 15px 40px rgba(139, 90, 43, 0.3);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(139, 90, 43, 0.5);
+        }
+    }
+
+    .newsletter-section h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+        line-height: 1.2;
+        text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .newsletter-section .subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 15px;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+
+    .newsletter-section .highlight {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--accent-gold), #e6c9a8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin-top: 10px;
+    }
+
+    .newsletter-form {
+        max-width: 650px;
+        margin: 40px auto 0;
+        position: relative;
+    }
+
+    .input-group-custom {
+        display: flex;
+        gap: 15px;
+        align-items: stretch;
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 60px;
+        padding: 8px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+    }
+
+    .input-group-custom:hover {
+        border-color: rgba(212, 165, 116, 0.5);
+        box-shadow: 0 15px 50px rgba(139, 90, 43, 0.2);
+    }
+
+    .input-group-custom:focus-within {
+        border-color: var(--accent-gold);
+        box-shadow: 0 15px 50px rgba(139, 90, 43, 0.3);
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .newsletter-form input[type="email"] {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: white;
+        font-size: 1rem;
+        padding: 18px 25px;
+        outline: none;
+        font-weight: 400;
+    }
+
+    .newsletter-form input[type="email"]::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 300;
+    }
+
+    .newsletter-form .btn-subscribe {
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-gold));
+        color: white;
+        border: none;
+        padding: 18px 45px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 25px rgba(139, 90, 43, 0.4);
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .newsletter-form .btn-subscribe::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s;
+    }
+
+    .newsletter-form .btn-subscribe:hover::before {
+        left: 100%;
+    }
+
+    .newsletter-form .btn-subscribe:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(139, 90, 43, 0.6);
+    }
+
+    .newsletter-form .btn-subscribe:active {
+        transform: translateY(-1px);
+    }
+
+    .benefits-list {
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        margin-top: 35px;
+        flex-wrap: wrap;
+    }
+
+    .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .benefit-item:hover {
+        color: var(--accent-gold);
+        transform: translateY(-2px);
+    }
+
+    .benefit-item i {
+        color: var(--accent-gold);
+        font-size: 1.2rem;
+    }
+
+    /* ===== OPTIMIZED FOOTER ===== */
+    .footer {
+        background: linear-gradient(180deg, #0f0c09 0%, #1a1512 50%, #0f0c09 100%);
+        color: #e5ddd5;
+        padding: 90px 0 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg,
+                transparent 0%,
+                var(--primary-color) 20%,
+                var(--accent-gold) 50%,
+                var(--primary-color) 80%,
+                transparent 100%);
+        box-shadow: 0 0 30px rgba(139, 90, 43, 0.5);
+    }
+
+    .footer::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -10%;
+        width: 120%;
+        height: 100%;
+        background:
+            radial-gradient(ellipse at 30% 20%, rgba(139, 90, 43, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 60%, rgba(212, 165, 116, 0.05) 0%, transparent 50%);
+        animation: ambientGlow 20s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes ambientGlow {
+        0%, 100% {
+            opacity: 0.3;
+            transform: translateY(0);
+        }
+        50% {
+            opacity: 0.6;
+            transform: translateY(-20px);
+        }
+    }
+
+    .footer .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-brand {
+        position: relative;
+    }
+
+    .footer-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        letter-spacing: 3px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-logo .logo-vir {
+        background: linear-gradient(135deg, #ffffff 0%, #f0e6dc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .footer-logo .logo-cosa {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .footer-logo::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent-gold), transparent);
+        border-radius: 2px;
+    }
+
+    .footer-tagline {
+        color: #b8aca0;
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        font-weight: 300;
+        max-width: 300px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .social-link {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(139, 90, 43, 0.3);
+        border-radius: 50%;
+        color: #d4c5b8;
+        font-size: 1.2rem;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-link::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-gold));
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+
+    .social-link:hover::before {
+        width: 150%;
+        height: 150%;
+    }
+
+    .social-link:hover {
+        color: white;
+        border-color: var(--accent-gold);
+        transform: translateY(-8px) rotate(5deg);
+        box-shadow: 0 12px 30px rgba(139, 90, 43, 0.4);
+    }
+
+    .social-link i {
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .social-link:hover i {
+        transform: scale(1.15);
+    }
+
+    .footer-section {
+        margin-bottom: 40px;
+    }
+
+    .footer-title {
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 15px;
+        letter-spacing: 1px;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-gold), transparent);
+        border-radius: 2px;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 16px;
+        transition: transform 0.3s ease;
+    }
+
+    .footer-links li:hover {
+        transform: translateX(8px);
+    }
+
+    .footer-links a {
+        color: #b8aca0;
+        text-decoration: none;
+        font-size: 0.98rem;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        font-weight: 300;
+    }
+
+    .footer-links a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 0;
+        height: 1px;
+        background: var(--accent-gold);
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer-links a:hover {
+        color: var(--accent-gold);
+    }
+
+    .footer-links a:hover::before {
+        width: 100%;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #b8aca0;
+        font-size: 0.98rem;
+        margin-bottom: 18px;
+        font-weight: 300;
+        transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+        color: var(--accent-gold);
+        transform: translateX(5px);
+    }
+
+    .contact-item i {
+        color: var(--accent-gold);
+        font-size: 1.1rem;
+        width: 25px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover i {
+        transform: scale(1.2);
+    }
+
+    .footer-bottom {
+        margin-top: 70px;
+        padding: 35px 0;
+        border-top: 1px solid rgba(139, 90, 43, 0.15);
+        position: relative;
+    }
+
+    .footer-bottom::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 300px;
+        height: 1px;
+        background: linear-gradient(90deg,
+                transparent 0%,
+                var(--accent-gold) 50%,
+                transparent 100%);
+    }
+
+    .copyright {
+        text-align: center;
+        color: #8a7e72;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        font-weight: 300;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+    }
+
+    .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in-up:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .newsletter-section { padding: 80px 0; }
+        .newsletter-section h3 { font-size: 2.4rem; }
+        .footer-logo { font-size: 2.3rem; }
+    }
+
+    @media (max-width: 768px) {
+        .newsletter-section { padding: 60px 0; }
+        .newsletter-section h3 { font-size: 2rem; }
+        .input-group-custom {
+            flex-direction: column;
+            gap: 0;
+            padding: 10px;
+        }
+        .newsletter-form input[type="email"] { padding: 18px 20px; }
+        .newsletter-form .btn-subscribe {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .benefits-list {
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        .footer { padding: 60px 0 0; }
+        .footer-logo { font-size: 2rem; }
+        .social-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 576px) {
+        .newsletter-icon {
+            width: 65px;
+            height: 65px;
+            font-size: 1.6rem;
+        }
+        .newsletter-section h3 { font-size: 1.75rem; }
+        .newsletter-section .subtitle { font-size: 1.1rem; }
+        .footer-logo { font-size: 1.8rem; }
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Set current page URL for newsletter redirect
+    document.addEventListener('DOMContentLoaded', function () {
+        const redirectInput = document.getElementById('currentPageUrl');
+        if (redirectInput) {
+            redirectInput.value = window.location.pathname + window.location.search;
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+    });
+
+    // Handle newsletter form submission feedback
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("newsletter") === "success") {
+        Swal.fire({
+            icon: "success",
+            title: "Welcome to the Vircosa Family!",
+            text: "Thank you for joining us. Check your email for your exclusive 10% discount code!",
+            confirmButtonColor: "#8B5A2B",
+            confirmButtonText: "Amazing!"
+        });
+
+        params.delete("newsletter");
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, "", cleanUrl);
+    }
+
+    if (params.get("newsletter") === "exists") {
+        Swal.fire({
+            icon: "info",
+            title: "You're Already Part of Our Journey!",
+            text: "We're grateful to have you with us. Stay tuned for exclusive updates.",
+            confirmButtonColor: "#8B5A2B",
+            confirmButtonText: "Wonderful!"
+        });
+
+        params.delete("newsletter");
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, "", cleanUrl);
+    }
+
+    if (params.get("newsletter") === "error") {
+        Swal.fire({
+            icon: "error",
+            title: "Oops, Something Went Wrong",
+            text: "Please try again or contact us if the issue persists.",
+            confirmButtonColor: "#8B5A2B",
+            confirmButtonText: "Try Again"
+        });
+
+        params.delete("newsletter");
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, "", cleanUrl);
+    }
+</script>
