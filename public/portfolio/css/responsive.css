@@ -1,0 +1,272 @@
+/* Responsive Styles */
+@media (max-width: 1199.98px) {
+    /* Adjustments for large tablets and small laptops */
+    .hero h1 {
+        font-size: 50px;
+    }
+    
+    .hero h2 {
+        font-size: 24px;
+    }
+    
+    .section-title .title {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Tablet styles */
+    .navbar {
+        padding: 15px 0;
+        background-color: white;
+        box-shadow: var(--box-shadow);
+    }
+    
+    .navbar-brand {
+        color: var(--dark-color);
+    }
+    
+    .navbar-toggler {
+        color: var(--dark-color);
+    }
+    
+    .navbar-nav .nav-link {
+        color: var(--dark-color);
+        padding: 10px 0;
+    }
+    
+    .social-icons a {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: var(--dark-color);
+    }
+    
+    .hero {
+        padding-top: 70px;
+        text-align: center;
+    }
+    
+    .hero-image {
+        margin-top: 50px;
+    }
+    
+    .about-content {
+        margin-top: 30px;
+    }
+    
+    .service-card {
+        margin-bottom: 30px;
+    }
+    
+    .project-card {
+        margin-bottom: 30px;
+    }
+    
+    .footer-brand {
+        margin-bottom: 30px;
+    }
+    
+    .footer .col-lg-4 {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Small tablet and large phone styles */
+    .hero h1 {
+        font-size: 42px;
+    }
+    
+    .hero h2 {
+        font-size: 22px;
+    }
+    
+    .section {
+        padding: 70px 0;
+    }
+    
+    .section-title .title {
+        font-size: 32px;
+    }
+    
+    .section-title .subtitle {
+        font-size: 16px;
+    }
+    
+    .btn-outline {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    .about-buttons .btn-outline {
+        margin-left: 15px;
+    }
+    
+    .stats .col-6 {
+        margin-bottom: 15px;
+    }
+    
+    .testimonial-content p {
+        font-size: 16px;
+    }
+    
+    .client-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .client-image {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .cta h2 {
+        font-size: 28px;
+    }
+    
+    .cta .btn-light {
+        margin-top: 20px;
+    }
+    
+    .project-modal .modal-body .row {
+        flex-direction: column-reverse;
+    }
+    
+    .project-modal .project-slider {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    /* Small phone styles */
+    .hero h1 {
+        font-size: 36px;
+    }
+    
+    .hero h2 {
+        font-size: 20px;
+    }
+    
+    .hero-description {
+        font-size: 16px;
+    }
+    
+    .navbar-brand .full-name {
+        display: none;
+    }
+    
+    .section-title .title {
+        font-size: 28px;
+    }
+    
+    .section-title .title:after {
+        width: 40px;
+    }
+    
+    .info-list li {
+        flex-direction: column;
+    }
+    
+    .info-list li strong {
+        margin-bottom: 5px;
+    }
+    
+    .stat-box .number {
+        font-size: 28px;
+    }
+    
+    .experience-item {
+        flex-direction: column;
+    }
+    
+    .experience-date {
+        margin-bottom: 10px;
+    }
+    
+    .filter-menu li {
+        margin-bottom: 10px;
+    }
+    
+    .skills-category .col-md-6 {
+        margin-bottom: 15px;
+    }
+    
+    .contact-form {
+        margin-top: 30px;
+    }
+    
+    .footer-bottom .col-md-6 {
+        text-align: center;
+    }
+    
+    .footer-bottom .text-md-end {
+        text-align: center !important;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    /* Extra small devices */
+    .hero h1 {
+        font-size: 32px;
+    }
+    
+    .hero-buttons .btn {
+        display: block;
+        width: 100%;
+    }
+    
+    .hero-buttons .btn-outline {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    .section-title .title {
+        font-size: 24px;
+    }
+    
+    .project-tags span {
+        font-size: 12px;
+    }
+    
+    .tool-item h4 {
+        font-size: 14px;
+    }
+}
+
+/* Special responsive cases */
+@media (max-height: 700px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 100px 0;
+    }
+}
+
+/* Print styles */
+@media print {
+    .navbar,
+    .back-to-top,
+    .footer,
+    .cta {
+        display: none !important;
+    }
+    
+    body {
+        padding: 20px;
+        color: #000;
+        background: #fff;
+    }
+    
+    a {
+        color: #000 !important;
+        text-decoration: underline !important;
+    }
+    
+    .section {
+        padding: 20px 0 !important;
+        page-break-inside: avoid;
+    }
+    
+    .container {
+        max-width: 100% !important;
+    }
+}

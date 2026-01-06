@@ -1,0 +1,127 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Center the converter on the screen */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4e4ba;
+}
+
+/* Main Container */
+.conatainer {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Heading */
+.conatainer h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2f3542;
+}
+
+/* Input Section */
+.amount p,
+.from p,
+.to p {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #2f3542;
+}
+
+.amount input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced6e0;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.amount input:focus {
+    border-color: #3742fa;
+}
+
+/* Dropdown Section */
+.dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.select-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ced6e0;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.select-container img {
+    width: 32px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.select-container select {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Swap Icon */
+.fa-arrow-right-arrow-left {
+    font-size: 20px;
+    color: #2f3542;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: transform 0.3s;
+}
+
+.fa-arrow-right-arrow-left:hover {
+    transform: rotate(180deg);
+}
+
+/* Exchange Rate Message */
+.msg {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1e90ff;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #3742fa;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #2f3ff5;
+}

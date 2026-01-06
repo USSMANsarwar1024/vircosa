@@ -1,0 +1,93 @@
+/portfolio/
+├── index.html          # Home page
+├── about.html          # About me page
+├── projects.html       # Projects showcase
+├── skills.html         # Skills & expertise
+├── contact.html        # Contact page
+├── css/
+│   ├── style.css       # Main styles
+│   ├── animations.css  # Animation styles
+│   └── responsive.css  # Responsive styles
+├── js/
+│   ├── main.js         # Main JavaScript
+│   ├── particles.js    # Particle effect
+│   └── scroll.js       # Smooth scroll
+├── images/             # All images
+└── libs/               # External libraries
+
+
+
+#890304	
+#00113a	
+#002263	
+#e8e5c3	
+#f8f2bf
+
+ Step-by-Step Guide (with Node.js + Express)
+🧱 1. Project Setup
+If you're using Node.js backend:
+
+bash
+Copy
+Edit
+npm init -y
+npm install express
+📁 2. File Structure
+pgsql
+Copy
+Edit
+project/
+├── server.js
+├── public/
+│   └── UsmanSr_resume.pdf
+└── index.html
+📝 3. server.js
+js
+Copy
+Edit
+const express = require('express');
+const path = require('path');
+const app = express();
+const PORT = 3000;
+
+// Serve static files from public folder
+app.use(express.static('public'));
+
+// Endpoint to download resume
+app.get('/download-resume', (req, res) => {
+  const filePath = path.join(__dirname, 'public', 'UsmanSr_resume.pdf');
+  res.download(filePath, 'UsmanSr_Resume.pdf', err => {
+    if (err) {
+      console.error("Download failed:", err);
+      res.status(500).send("Something went wrong.");
+    }
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
+🌐 4. Update Your HTML Button
+Update your download button link:
+
+html
+Copy
+Edit
+<a href="/download-resume" class="btn btn-lets-talk">Download Resume</a>
+This triggers the GET /download-resume route, which sends the PDF file.
+
+✅ What This Gives You:
+No FTP needed
+
+Fast, reliable HTTP-based download
+
+Works on any device/browser
+
+File named UsmanSr_Resume.pdf will be downloaded when clicked
+
+🧠 Optional Enhancements
+Track how many times resume was downloaded
+
+Log user IP or timestamp
+
+Add security (auth, rate limiting)

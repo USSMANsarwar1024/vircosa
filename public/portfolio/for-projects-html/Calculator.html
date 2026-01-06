@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f0c29 0%,
+          #302b63 50%,
+          #24243e 100%
+        );
+        font-family: "Inter", sans-serif;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .calculator {
+        background: linear-gradient(135deg, #265265, #345b68, #274958);
+
+        border-radius: 25px;
+        padding: 25px 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        width: 340px;
+      }
+
+      .display {
+        font-size: 1.4rem;
+        font-weight: 300;
+        text-align: right;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #000;
+        margin-bottom: 20px;
+        color: #a5a5a5;
+      }
+
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 12px;
+      }
+
+      .btn {
+        width: 100%;
+        height: 65px;
+        font-size: 1.5rem;
+        font-weight: 500;
+
+        border: none;
+        border-radius: 50px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .btn:hover {
+        filter: brightness(125%);
+      }
+
+      .numerics {
+        background-color: #333;
+        color: white;
+      }
+
+      .operators {
+        background-color: #ff9500;
+        color: white;
+      }
+
+      .function-btn {
+        background-color: #a5a5a5;
+        color: black;
+      }
+
+      .zero {
+        grid-column: span 2;
+        border-radius: 50px;
+        justify-content: flex-start;
+        padding-left: 25px;
+      }
+
+      .zero:hover {
+        justify-content: center;
+      }
+
+      .operators:hover {
+        background-color: #ff7f00;
+      }
+
+      .function-btn:hover {
+        background-color: #8c8c8c;
+      }
+
+      .numerics:hover {
+        background-color: #444;
+      }
+
+      @media only screen and (max-width: 600px) {
+        body {
+          padding: 20px;
+          height: auto;
+          min-height: 100vh;
+        }
+
+        .calculator {
+          margin-top: 50px;
+          width: 100%;
+          max-width: 340px;
+          padding: 20px 15px;
+        }
+
+        .display {
+          font-size: 1.4rem;
+          padding: 12px;
+        }
+
+        .btn {
+          height: 60px;
+          font-size: 1.3rem;
+        }
+
+        .buttons {
+          grid-gap: 10px;
+        }
+
+        h3 {
+          font-size: 1rem;
+          margin-bottom: 10px;
+        }
+      }
+
+      @media only screen and (max-width: 400px) {
+        .calculator {
+          padding: 15px 10px;
+        }
+
+        .display {
+          font-size: 2rem;
+        }
+
+        .btn {
+          height: 55px;
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="calculator text-center">
+      <h3>
+        Usman Sarwar <br />
+        F2023266078 <br />
+        Web-Tech V4
+      </h3>
+      <br />
+
+      <!-- <div id="display" class="display">0</div> -->
+      <input class="display" id="display" readonly />
+
+      <div class="buttons">
+        <button onclick="clearDisplay()" class="btn function-btn">AC</button>
+        <button onclick="appendTo('+/-')" class="btn function-btn">±</button>
+        <button onclick="appendTo('%')" class="btn function-btn">%</button>
+        <button onclick="appendTo('/')" class="btn operators">÷</button>
+
+        <button onclick="appendTo('7')" class="btn numerics">7</button>
+        <button onclick="appendTo('8')" class="btn numerics">8</button>
+        <button onclick="appendTo('9')" class="btn numerics">9</button>
+        <button onclick="appendTo('*')" class="btn operators">x</button>
+
+        <button onclick="appendTo('4')" class="btn numerics">4</button>
+        <button onclick="appendTo('5')" class="btn numerics">5</button>
+        <button onclick="appendTo('6')" class="btn numerics">6</button>
+        <button onclick="appendTo('-')" class="btn operators">-</button>
+
+        <button onclick="appendTo('1')" class="btn numerics">1</button>
+        <button onclick="appendTo('2')" class="btn numerics">2</button>
+        <button onclick="appendTo('3')" class="btn numerics">3</button>
+        <button onclick="appendTo('+')" class="btn operators">+</button>
+
+        <button onclick="appendTo('0')" class="btn numerics zero">0</button>
+        <button onclick="appendTo('.')" class="btn numerics">.</button>
+        <button onclick="calcAns()" class="btn operators">=</button>
+      </div>
+    </div>
+    <br />
+
+    <script>
+      const display = document.getElementById("display");
+
+      function appendTo(input) {
+        display.value += input;
+      }
+
+      function calcAns() {
+        try {
+          display.value = eval(display.value);
+        } catch {
+          display.value = "Syntax Error";
+        }
+      }
+
+      function clearDisplay() {
+        display.value = "";
+      }
+    </script>
+  </body>
+</html>

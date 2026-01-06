@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills | Usman Sarwar - DevOps Engineer</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <!-- AOS Animation -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Inherit all styles from index.html */
+    :root {
+      --primary-color: #6a0572;
+      --secondary-color: #0d1b2a;
+      --accent-color: #f9c80e;
+      --light-color: #f1f1f1;
+      --dark-color: #1a1a1a;
+      --gradient-main: linear-gradient(135deg, #6a0572, #ab83a1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      color: var(--text-color);
+      overflow-x: hidden;
+      background-color: white;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      color: var(--secondary-color);
+    }
+
+    /* Skills Page Specific Styles */
+    .page-header {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      color: white;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2rem;
+    }
+
+    .skills-overview {
+      padding: 100px 0;
+      background: linear-gradient(#bfeff8ec, #e8c3d1);
+      color: #00113a;
+    }
+
+    .skills-visual {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .skills-visual:hover {
+      transform: translateY(-10px);
+    }
+
+    .skills-categories {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #d9f7f5ca 0%, #fae0f5cd 100%);
+    }
+
+    .category-title {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 30px;
+      color: var(--primary-color);
+    }
+
+    .category-icon {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+    }
+
+    .skill-item {
+      margin-bottom: 25px;
+    }
+
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .skill-name {
+      font-weight: 600;
+    }
+
+    .skill-percent {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .skill-bar {
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      width: 0;
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+
+    .tools-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #cee7949c 0%, #96e6a1d4 100%);
+      
+      
+    }
+
+    .tool-item {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+      margin-bottom: 30px;
+      height: 90%;
+    }
+
+    .tool-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .tool-item img {
+      height: 60px;
+      width: auto;
+      margin-bottom: 20px;
+      transition: var(--transition);
+    }
+
+    .tool-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .certifications-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #c9f9ffa8 0%, #eff2d1 100%);
+    }
+
+    .certification-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+      height: 100%;
+      margin-bottom: 30px;
+    }
+
+    .certification-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .certification-image {
+      height: 200px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f9fa;
+    }
+
+    .certification-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 20px;
+    }
+
+    .certification-content {
+      padding: 25px;
+    }
+
+    .certification-content h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .certification-content p {
+      color: #666;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .certification-content .date {
+      display: block;
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 767.98px) {
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img src="refrences/img-2.png" alt="DevOps Logo" style="width: 100px; max-width: 100%" />
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="skills.html">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="projects.html">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="https://www.linkedin.com/in/usman-sarwar-a69b70332" class="btn btn-outline-primary me-2"
+            target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://github.com/USSMANsarwar1024" class="btn btn-outline-primary" target="_blank"
+            rel="noopener noreferrer" style="margin-right: 20px;">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12" data-aos="fade-up">
+          <h1>My Skills</h1>
+          <p>Technologies and methodologies I work with</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Overview -->
+  <section class="skills-overview">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="section-title">
+            <h2>Technical <span>Expertise</span></h2>
+            <p class="subtitle">Where I <span style="font-weight: bold;">Excel</span></p>
+          </div>
+          <p>
+            With a strong foundation in computer science and hands-on experience across the
+            development lifecycle, I bridge the gap between software development and operations.
+            My skills span from writing clean, efficient code to automating infrastructure
+            and optimizing deployment pipelines.
+          </p>
+          <p>
+            Proactive student at UMT (CGPA 3.87),
+            passionate about DevOps, Cloud
+            Engineering, and Web Development.
+            I build, break, and learn weekly.
+            I believe in curiosity, velocity, and turning
+            ideas into actions.
+          </p>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="skills-visual">
+            <img src="refrences/skills.png"
+              onerror="this.onerror=null; this.src='https://placehold.co/600x400/5D0360/FFC107?text=Skills+Visualization';"
+              alt="Skills Visualization" class="img-fluid" style="width: 100%;" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills by Category -->
+  <section class="skills-categories">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>Skills <span>Breakdown</span></h2>
+        <p class="subtitle">By category and proficiency</p>
+      </div>
+
+      <!-- DevOps Skills -->
+      <div class="skills-category" data-aos="fade-up">
+        <h3 class="category-title">
+          <i class="fas fa-server category-icon"></i>
+          DevOps & Cloud
+        </h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Jenkins</span>
+                <span class="skill-percent">75%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="75"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Docker </span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="88"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">AWS Cloud Services</span>
+                <span class="skill-percent">70%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="70"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Infrastructure as Code</span>
+                <span class="skill-percent">67%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="67"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Apache Tomcat</span>
+                <span class="skill-percent">80%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="80"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Cloud Native</span>
+                <span class="skill-percent">75%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="75"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <!-- Development Skills -->
+      <div class="skills-category" data-aos="fade-up" data-aos-delay="100">
+        <h3 class="category-title">
+          <i class="fas fa-code category-icon"></i>
+          Development
+        </h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">JavaScript</span>
+                <span class="skill-percent">72%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="72"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Html/Css</span>
+                <span class="skill-percent">85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="85"></div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Database Systems</span>
+                <span class="skill-percent">86%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="86"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">C/C++</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="90"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <br>
+        <!-- Other Skills -->
+        <div class="skills-category" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="category-title">
+            <i class="fas fa-cogs category-icon"></i>
+            Other Technical Skills
+          </h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span class="skill-name">Linux (Debian / Ubuntu)</span>
+                  <span class="skill-percent">80%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" data-width="80"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span class="skill-name">Shell Scripting</span>
+                  <span class="skill-percent">70%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" data-width="70"></div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span class="skill-name">Git / Github</span>
+                  <span class="skill-percent">75%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" data-width="75"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span class="skill-name">Agile Methodologies</span>
+                  <span class="skill-percent">87%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" data-width="87"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+  </section>
+
+  <!-- Tools & Technologies -->
+  <section class="tools-section">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>Tools and <span>Technologies</span></h2>
+        <p class="subtitle">I work with daily</p>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="tool-item">
+            <img src="refrences/project_3.png" alt="AWS" class="img-fluid">
+            <h4>AWS</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="tool-item">
+            <img src="refrences/project_2.PNG" alt="Docker" class="img-fluid">
+            <h4>Docker</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="tool-item">
+            <img src="refrences/kubernetes.svg" alt="Kubernetes" class="img-fluid">
+            <h4>Kubernetes</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+          <div class="tool-item">
+            <img src="refrences/terraform.png" alt="Terraform" class="img-fluid">
+            <h4>Terraform</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="tool-item">
+            <img src="refrences/jenkins.png" alt="Node.js" class="img-fluid">
+            <h4>Jenkins</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="tool-item">
+            <img src="refrences/cloud-native.webp" alt="React" class="img-fluid">
+            <h4>Cloud Native</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="tool-item">
+            <img src="refrences/tomcat.png" alt="Python" class="img-fluid">
+            <h4>Apache Tomcat</h4>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+          <div class="tool-item">
+            <img src="refrences/git.webp" alt="Git" class="img-fluid">
+            <h4>Git/Github</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <!-- <section class="certifications-section">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>Certifications & <span>Achievements</span></h2>
+        <p class="subtitle">Formal recognition of my skills</p>
+      </div>
+      <div class="row">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="certification-card">
+            <div class="certification-image">
+              <img src="refrences/aws-certified.png" alt="AWS Certified Solutions Architect" class="img-fluid">
+            </div>
+            <div class="certification-content">
+              <h4>AWS Certified Solutions Architect - Associate</h4>
+              <p>Amazon Web Services</p>
+              <span class="date">Issued: June 2023</span>
+              <a href="#" class="btn btn-sm btn-outline">View Credential</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="certification-card">
+            <div class="certification-image">
+              <img src="refrences/cka-certified.png" alt="Certified Kubernetes Administrator" class="img-fluid">
+            </div>
+            <div class="certification-content">
+              <h4>Certified Kubernetes Administrator (CKA)</h4>
+              <p>Cloud Native Computing Foundation</p>
+              <span class="date">Issued: March 2023</span>
+              <a href="#" class="btn btn-sm btn-outline">View Credential</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="certification-card">
+            <div class="certification-image">
+              <img src="refrences/terraform-certified.png" alt="HashiCorp Certified: Terraform Associate"
+                class="img-fluid">
+            </div>
+            <div class="certification-content">
+              <h4>HashiCorp Certified: Terraform Associate</h4>
+              <p>HashiCorp</p>
+              <span class="date">Issued: January 2023</span>
+              <a href="#" class="btn btn-sm btn-outline">View Credential</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="certification-card">
+            <div class="certification-image">
+              <img src="refrences/google-cloud-certified.png" alt="Google Cloud Associate Engineer" class="img-fluid">
+            </div>
+            <div class="certification-content">
+              <h4>Google Cloud Associate Engineer</h4>
+              <p>Google Cloud</p>
+              <span class="date">Issued: November 2022</span>
+              <a href="#" class="btn btn-sm btn-outline">View Credential</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8" data-aos="fade-right">
+          <h2>Ready to leverage my skills for your project?</h2>
+          <p>
+            Whether you need DevOps solutions, cloud architecture, or custom software development,
+            I'm here to help bring your ideas to life with technical excellence.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+          <a href="contact.html" class="btn btn-light">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h3 class="footer-title">Usman Sarwar</h3>
+          <p>
+            Computer Science student specializing in DevOps and software
+            development, passionate about building efficient, scalable
+            solutions.
+          </p>
+          <div class="social-icons mt-4">
+            <a href="https://github.com/USSMANsarwar1024" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/usman-sarwar-a69b70332" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/USMANSARWAR4028" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/us.maan2023?igsh=MTBxenc5ZDE5bW0zcA==" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="skills.html">Skills</a></li>
+              <li><a href="projects.html">Projects</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h4>Services</h4>
+            <ul>
+              <li>DevOps</a></li>
+              <li>Web Development</a></li>
+              <li>Cloud Solutions</a></li>
+              <li>Consulting</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-links">
+            <h4>Contact Info</h4>
+            <ul>
+              <li>
+                <i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan
+              </li>
+              <li><i class="fas fa-phone me-2"></i>+92-308-1036864</li>
+              <li>
+                <i class="fas fa-envelope me-2"></i> usmansarwar4028@gmail.com
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Usman Sarwar. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- Scripts -->
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS Animation -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Custom JS -->
+  <script>
+    // Preloader
+    window.addEventListener("load", function () {
+      const preloader = document.querySelector(".preloader");
+      preloader.style.opacity = "0";
+      setTimeout(() => {
+        preloader.style.display = "none";
+      }, 500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener("scroll", function () {
+      const navbar = document.querySelector(".navbar");
+      const backToTop = document.querySelector(".back-to-top");
+
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+
+      if (window.scrollY > 300) {
+        backToTop.classList.add("active");
+      } else {
+        backToTop.classList.remove("active");
+      }
+    });
+
+    // Initialize AOS animation
+    AOS.init({
+      duration: 800,
+      easing: "ease-in-out",
+      once: true,
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute("href");
+        if (targetId === "#") return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+
+    // Back to top button
+    document
+      .querySelector(".back-to-top")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+    // Animate skill bars when scrolled into view
+    const skillBars = document.querySelectorAll(".skill-progress");
+
+    const animateSkillBars = () => {
+      skillBars.forEach((bar) => {
+        const rect = bar.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          const width = bar.getAttribute("data-width");
+          anime({
+            targets: bar,
+            width: width + "%",
+            duration: 1500,
+            easing: "easeInOutQuad",
+            delay: anime.stagger(100),
+          });
+        }
+      });
+    };
+
+    // Run once on load and then on scroll
+    animateSkillBars();
+    window.addEventListener("scroll", animateSkillBars);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+</head>
+<body>
+    <h1>Random Quote Generator</h1>
+    <p id="quote"></p>
+    <button onclick="generateQuote()">Generate</button>
+
+    <script>
+        const quotes = [
+            "Carry out a random act of kindness, with no expectation of reward, safe in the knowledge that one day someone might do the same for you.",
+            "Everything happening around me is very random. I am enjoying the phase, as the journey is far more enjoyable than the destination.",
+            "I don't believe that if you do good, good things will happen. Everything is completely accidental and random. Sometimes bad things happen to very good people and sometimes good things happen to bad people. But at least if you try to do good things, then you're spending your time doing something worthwhile.",
+            "I believe life is an intelligent thing: that things aren't random.",
+            "Goals transform a random walk into a chase.",
+            "I'm unpredictable, I never know where I'm going until I get there, I'm so random, I'm always growing, learning, changing, I'm never the same person twice. But one thing you can be sure of about me; is I will always do exactly what I want to do.",
+            "A musician must make music, an artist must paint, a poet must write, if he is to be ultimately at peace with himself. What a man can be, he must be."
+        ];
+
+        const usedIndexes = new Set();
+        const quoteElement = document.getElementById("quote");
+
+        function generateQuote(){
+            // quoteElement.innerHTML = 'Hello, world';
+            while (true) {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                
+                if(usedIndexes.has(randomIndex)){
+                    continue;
+                }
+
+                const quote = quotes[randomIndex];
+                quoteElement.innerHTML = quote;
+                usedIndexes.add(randomIndex);
+                break;
+            }
+            
+        }
+    </script>
+
+</body>
+</html>
+

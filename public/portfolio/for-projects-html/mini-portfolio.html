@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio - Beginner</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background: #f5f5f5; color: #333; font-family: Arial, sans-serif; }
+    header.hero { background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://placehold.co/1600x900') center/cover; color: #fff; height: 100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 0 1rem; }
+    header.hero h1 { font-size: 3rem; margin-bottom:1rem; }
+    header.hero p { font-size:1.25rem; max-width:700px; margin-bottom:2rem; }
+    .btn-main { background:#66ccff; color:#fff; padding:0.75rem 1.5rem; border-radius:5px; text-decoration:none; font-weight:bold; }
+    .btn-main:hover { background:#3399ff; }
+    section { padding:60px 15px; }
+    .about-card, .contact-card { background:#fff; padding:2rem; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+    .skills .badge { background:#66ccff; font-size:1rem; margin:0.25rem; }
+    .projects .card img { height:200px; object-fit:cover; }
+    footer { background:#333; color:#fff; padding:20px; text-align:center; }
+    footer .social a { color:#fff; margin:0 10px; font-size:1.25rem; }
+    footer .social a:hover { color:#66ccff; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home">My Portfolio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="home" class="hero">
+    <h1>Hello, I'm Usman</h1>
+    <p>Computer Science Student | Web Developer | Technology Enthusiast</p>
+    <a href="#contact" class="btn-main">Contact Me</a>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2 class="text-center mb-4">About Me</h2>
+      <div class="about-card">
+        <div class="row align-items-center">
+          <div class="col-md-5 mb-4 mb-md-0"><img src="https://placehold.co/600x400" class="img-fluid rounded" alt="Profile"></div>
+          <div class="col-md-7">
+            <p>Hi! I'm a Computer Science student passionate about technology and programming. I'm learning web development and exploring programming languages.</p>
+            <p>I love building projects that solve real-world problems. Outside coding, I enjoy reading and gaming.</p>
+            <h5 class="mt-3">My Skills</h5>
+            <div class="skills">
+              <span class="badge">HTML</span>
+              <span class="badge">CSS</span>
+              <span class="badge">JavaScript</span>
+              <span class="badge">Python</span>
+              <span class="badge">C++</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="projects bg-light">
+    <div class="container">
+      <h2 class="text-center mb-4">My Projects</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="https://placehold.co/600x400" class="card-img-top" alt="Project 1">
+            <div class="card-body">
+              <h5 class="card-title">Personal Website</h5>
+              <p class="card-text">A simple portfolio built with HTML & CSS.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="https://placehold.co/600x400" class="card-img-top" alt="Project 2">
+            <div class="card-body">
+              <h5 class="card-title">Calculator App</h5>
+              <p class="card-text">A basic calculator built using JavaScript.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="https://placehold.co/600x400" class="card-img-top" alt="Project 3">
+            <div class="card-body">
+              <h5 class="card-title">To-Do List</h5>
+              <p class="card-text">A simple to-do list app to manage tasks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="text-center mb-4">Contact Me</h2>
+      <div class="contact-card mx-auto" style="max-width:600px;">
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" class="form-control" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-main">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social mb-2">
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>&copy; 2025 Usman. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

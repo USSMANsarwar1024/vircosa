@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Flipper</title>
+
+    <style>
+        #green {
+            background-color: green;
+            color: white;
+        }
+
+        #red {
+            background-color: red;
+            color: white;
+        }
+
+        #blue {
+            background-color: blue;
+            color: white;
+        }
+
+        #random {
+            background-color: black;
+            color: white;
+        }
+
+        button {
+            border-radius: 5px;
+            border: solid;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 7.5px;
+            border-color: black;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            filter: brightness(85%);
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Color Flipper</h2>
+
+    <button id="green" onclick="changeColor('green')">Green</button>
+    <button id="red" onclick="changeColor('red')">Red</button>
+    <button id="blue" onclick="changeColor('blue')">Blue</button>
+    <button id="random" onclick="randomColor()">Random</button>
+
+    <p id="color-name">Current Color : Default</p>
+
+    <script>
+        const body = document.getElementsByTagName('body')[0];
+        // body.style.backgroundColor = 'red';
+        function changeColor(name) {
+            body.style.backgroundColor = name;
+            document.getElementById('color-name').textContent = `Current Color : ${name}`;
+        }
+
+        // changeColor("yellow");
+
+        function randomColor() {
+            const red = Math.round(Math.random() * 255);
+            const green = Math.round(Math.random() * 255);
+            const blue = Math.round(Math.random() * 255);
+            // const a = Math.random();
+            const a = Math.round(Math.random() * 10) / 10;
+
+            if (a == 0) {
+                a = 1;
+            }
+
+            const color = `rgba(${red}, ${green}, ${blue}, ${a})`;
+            body.style.backgroundColor = color;
+            document.getElementById('color-name').textContent = `Current Color : ${color}`;
+        }
+
+        // document.getElementById('color-name').textContent = `Current Color : ${name}`;
+
+        // randomColor();
+    </script>
+</body>
+
+</html>

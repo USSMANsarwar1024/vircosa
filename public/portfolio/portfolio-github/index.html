@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usman Sarwar</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <!-- AOS Animation -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="css/styles.css" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img src="refrences/img-2.png" alt="DevOps Logo" style="width: 100px; max-width: 100%" />
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="skills.html">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="projects.html">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="https://www.linkedin.com/in/usman-sarwar-a69b70332" class="btn btn-outline-primary me-2"
+            target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://github.com/USSMANsarwar1024" class="btn btn-outline-primary" target="_blank"
+            rel="noopener noreferrer" style="margin-right: 20px;">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Merged Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 text-center text-lg-start" data-aos="fade-right">
+          <h1 class="display-4 mb-4">
+            Hi, I'm <span class="fw-bold">Usman Sarwar</span>
+          </h1>
+          <p class="lead mb-4">DevOps Engineer</p>
+          <p class="mb-5">
+            Computer Scientist passionate
+            about DevOps and Cloud Engineering. Experienced in
+            building AWS-based infrastructures, CI/CD pipelines with
+            Jenkins, Docker containerization, and static/dynamic web
+            applications. Open to roles in DevOps, Development, or Digital
+            Technologies to expand skills and contribute with energy
+            and creativity.
+          </p>
+          <div class="d-flex justify-content-center justify-content-lg-start mb-4">
+            <a href="contact.html" class="btn btn-hire-me me-3" target="_blank" rel="noopener noreferrer">Hire Me</a>
+            <a href="/download-resume" class="btn btn-lets-talk" target="_blank" rel="noopener noreferrer">Download
+              Resume</a>
+
+          </div>
+          <div class="social-icons-hero d-flex justify-content-center justify-content-lg-start mt-5">
+            <a href="https://www.instagram.com/us.maan2023?igsh=MTBxenc5ZDE5bW0zcA==" aria-label="Facebook"><i
+                class="fab fa-facebook-f" target="_blank" rel="noopener noreferrer"></i></a>
+            <a href="https://x.com/USMANSARWAR4028" aria-label="Twitter"><i class="fab fa-twitter" target="_blank"
+                rel="noopener noreferrer"></i></a>
+            <a href="https://www.linkedin.com/in/usman-sarwar-a69b70332" aria-label="LinkedIn"><i
+                class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left">
+          <div class="hero-image-container">
+            <img src="refrences/gpt.png"
+              onerror="this.onerror=null; this.src='https://placehold.co/800x800/5D0360/FFC107?text=Placeholder';"
+              alt="Usman Sarwar Professional Portrait" class="img-fluid rounded" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section" id="services">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>My <span>Services</span></h2>
+        <p class="subtitle">What I can do for you</p>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-card">
+            <div class="icon">
+              <i class="fas fa-server"></i>
+            </div>
+            <h3>DevOps Engineering</h3>
+            <p>
+              Implementing CI/CD pipelines, infrastructure as code, and cloud
+              solutions to streamline your development workflow and deployment
+              processes.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card">
+            <div class="icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Web Development</h3>
+            <p>
+              Building responsive, modern web applications with clean code and
+              optimized performance using HTML, CSS, JavaScript and Node.js.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-card">
+            <div class="icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3>Cloud Solutions</h3>
+            <p>
+              Designing and implementing scalable cloud architectures on AWS to ensure reliability, security, and
+              cost-efficiency.
+            </p>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Projects Preview Section -->
+  <section class="projects-preview" id="projects">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Featured <span>Projects</span></h2>
+        <p class="subtitle">A selection of my recent work</p>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-card">
+            <div class="project-image">
+              <img src="refrences/project_1.svg" alt="Project 1" class="img-fluid"
+                style="width: 72.5%; margin-left: 55px;" />
+            </div>
+            <div class="overlay">
+              <div class="project-info">
+                <h3>Zephyr Lux</h3>
+                <p>DevOps | Web-Dev | AWS</p>
+                <a href="https://github.com/USSMANsarwar1024/Zephyr-Luxe.git" class="btn btn-sm btn-hire-me me-3"
+                  target="_blank" rel="noopener noreferrer">View Details</a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="project-card">
+            <div class="project-image">
+              <img src="refrences/project_2.PNG" alt="Project 2" class="img-fluid"
+                style="width: 72.5%; margin-left: 50px;" />
+            </div>
+            <div class="overlay">
+              <div class="project-info">
+                <h3>Docker Deployment</h3>
+                <p>Dockerized Jenkins and Tomcat</p>
+                <a href="https://drive.google.com/drive/folders/1GqEOuI3HNT9IvpZs-VADNjjiapIsPOm4?usp=drive_link"
+                  class="btn btn-sm btn-hire-me me-3" target="_blank" rel="noopener noreferrer">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="project-card">
+            <div class="project-image">
+              <img src="refrences/project_3.png" alt="Project 3" class="img-fluid" />
+            </div>
+            <div class="overlay">
+              <div class="project-info">
+                <h3>Deployment on AWS</h3>
+                <p>Tomcat | AWS | Jenkins</p>
+                <a href="https://drive.google.com/drive/folders/1MYXfHUI1ci5Lsd9kEik6KuDnhxU8yLTq?usp=sharing"
+                  class="btn btn-sm btn-hire-me me-3" target="_blank" rel="noopener noreferrer">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5" data-aos="fade-up">
+        <a href="https://drive.google.com/drive/folders/1Xv0or5C1bYOaUGOvdMfdjun0twh2eBx5?usp=drive_link"
+          class="btn btn-sm btn-hire-me me-3" target="_blank" rel="noopener noreferrer">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Skills Section -->
+  <section class="skills-section" id="skills">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>My <span>Skills</span></h2>
+        <p class="subtitle">Technologies I work with</p>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="skill-item" data-aos="fade-up" data-aos-delay="100">
+            <div class="skill-info">
+              <span class="skill-name">Apache Tomcat</span>
+              <span class="skill-percent">80%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="80"></div>
+            </div>
+          </div>
+          <div class="skill-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="skill-info">
+              <span class="skill-name">Jenkins</span>
+              <span class="skill-percent">75%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75"></div>
+            </div>
+          </div>
+          <div class="skill-item" data-aos="fade-up" data-aos-delay="300">
+            <div class="skill-info">
+              <span class="skill-name">Docker</span>
+              <span class="skill-percent">88%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="88"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="skill-item" data-aos="fade-up" data-aos-delay="400">
+            <div class="skill-info">
+              <span class="skill-name">Amazon Web Services</span>
+              <span class="skill-percent">70%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="70"></div>
+            </div>
+          </div>
+          <div class="skill-item" data-aos="fade-up" data-aos-delay="500">
+            <div class="skill-info">
+              <span class="skill-name">Cloud Native</span>
+              <span class="skill-percent">75%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75"></div>
+            </div>
+          </div>
+          <div class="skill-item" data-aos="fade-up" data-aos-delay="600">
+            <div class="skill-info">
+              <span class="skill-name">Kubernetes</span>
+              <span class="skill-percent">72%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="72"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Timeline Section -->
+  <section class="timeline-section" id="timeline">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>My <span>Journey</span></h2>
+        <p class="subtitle">Education and experience</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content" data-aos="fade-up">
+            <div class="timeline-date">2023 - Present</div>
+            <h3 class="timeline-title">Computer Science Student</h3>
+            <p>
+              Currently pursuing my degree in Computer Science with a focus on
+              DevOps, Web development and cloud technologies.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content" data-aos="fade-up">
+            <div class="timeline-date">Fall - 2024</div>
+            <h3 class="timeline-title">DevOps Projects</h3>
+            <p>
+              Worked on implementing CI/CD pipelines and containerization
+              solutions for enterprise level applications.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content" data-aos="fade-up">
+            <div class="timeline-date">Spring - 2025</div>
+            <h3 class="timeline-title">Cloud Engineering</h3>
+            <p>
+              Designed and implemented cloud infrastructure solutions for
+              various clients on AWS platform.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content" data-aos="fade-up">
+            <div class="timeline-date">Summer - 2025</div>
+            <h3 class="timeline-title">Freelance DevOps Consultant</h3>
+            <p>
+              Helping startups and small businesses optimize their development
+              workflows and cloud infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-title center" data-aos="fade-up">
+        <h2>Client <span>Testimonials</span></h2>
+        <p class="subtitle">What others say about my work</p>
+      </div>
+      <div class="row">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="testimonial-card">
+            <div class="quote-icon">
+              <i class="fas fa-quote-left"></i>
+            </div>
+            <div class="testimonial-content">
+              <p>
+                "UsmanSr transformed our deployment process with their
+                DevOps expertise. What used to take hours now happens
+                automatically with zero downtime. Their attention to detail
+                and problem-solving skills are exceptional."
+              </p>
+            </div>
+            <div class="client-info">
+              <div class="client-image">
+                <img src="refrences/client-1.jpg" alt="Client 1" class="img-fluid" />
+              </div>
+              <div class="client-details">
+                <h4>Bakir Raza</h4>
+                <p>CTO, Startup Inc.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="testimonial-card">
+            <div class="quote-icon">
+              <i class="fas fa-quote-left"></i>
+            </div>
+            <div class="testimonial-content">
+              <p>
+                "Working with Usman Sarwar on our cloud migration was a
+                game-changer. They not only implemented the technical solution
+                but also documented everything thoroughly and trained our
+                team. Highly recommended!"
+              </p>
+            </div>
+            <div class="client-info">
+              <div class="client-image">
+                <img src="refrences/client-2.png" alt="Client 2" class="img-fluid" />
+              </div>
+              <div class="client-details">
+                <h4>Sarah Johnson</h4>
+                <p>Director of Engineering, Startup Co.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8" data-aos="fade-right">
+          <h2>Ready to work together?</h2>
+          <p>
+            Whether you need DevOps solutions, cloud architecture, or custom
+            software development, I'm here to help bring your ideas to life
+            with technical excellence.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+          <a href="contact.html" class="btn btn-light">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h3 class="footer-title">Usman Sarwar</h3>
+          <p>
+            Computer Science student specializing in DevOps and software
+            development, passionate about building efficient, scalable
+            solutions.
+          </p>
+          <div class="social-icons mt-4">
+            <a href="https://github.com/USSMANsarwar1024" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/usman-sarwar-a69b70332" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/USMANSARWAR4028" target="_blank" rel="noopener noreferrer"><i
+                class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/us.maan2023?igsh=MTBxenc5ZDE5bW0zcA==" target="_blank"
+              rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="skills.html">Services</a></li>
+              <li><a href="projects.html">Projects</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h4>Services</h4>
+            <ul>
+              <li>DevOps</a></li>
+              <li>Web Development</a></li>
+              <li>Cloud Solutions</a></li>
+              <li>Consulting</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-links">
+            <h4>Contact Info</h4>
+            <ul>
+              <li>
+                <i class="fas fa-map-marker-alt me-2"></i> Lahore, Pakistan
+              </li>
+              <li><i class="fas fa-phone me-2"></i>+92-308-1036864</li>
+              <li>
+                <i class="fas fa-envelope me-2"></i> usmansarwar4028@gmail.com
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <a href="../index.html" class="btn btn-light" style="margin-top: 10px;" >New Version 2.0</a>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 Usman Sarwar. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- Scripts (updated) -->
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS Animation -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Custom JS -->
+  <script>
+    // Preloader
+    window.addEventListener("load", function () {
+      const preloader = document.querySelector(".preloader");
+      preloader.style.opacity = "0";
+      setTimeout(() => {
+        preloader.style.display = "none";
+      }, 500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener("scroll", function () {
+      const navbar = document.querySelector(".navbar");
+      const backToTop = document.querySelector(".back-to-top");
+
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+
+      if (window.scrollY > 300) {
+        backToTop.classList.add("active");
+      } else {
+        backToTop.classList.remove("active");
+      }
+    });
+
+    // Add this to your existing script
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        if (navbarCollapse.classList.contains('show')) {
+          const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+          bsCollapse.hide();
+        }
+      });
+    });
+
+    // Initialize AOS animation
+    AOS.init({
+      duration: 800,
+      easing: "ease-in-out",
+      once: true,
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute("href");
+        if (targetId === "#") return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+
+    // Back to top button
+    document
+      .querySelector(".back-to-top")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+  </script>
+
+  <script>
+    // Preloader
+    window.addEventListener("load", function () {
+      const preloader = document.querySelector(".preloader");
+      // Anime.js animation for preloader
+      anime({
+        targets: preloader,
+        opacity: 0,
+        duration: 500,
+        easing: "easeInOutQuad",
+        complete: function () {
+          preloader.style.display = "none";
+        },
+      });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener("scroll", function () {
+      const navbar = document.querySelector(".navbar");
+      const backToTop = document.querySelector(".back-to-top");
+
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+
+      if (window.scrollY > 300) {
+        backToTop.classList.add("active");
+      } else {
+        backToTop.classList.remove("active");
+      }
+    });
+
+    // Initialize AOS animation
+    AOS.init({
+      duration: 800,
+      easing: "ease-in-out",
+      once: true,
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute("href");
+        if (targetId === "#") return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+
+    // Back to top button
+    document
+      .querySelector(".back-to-top")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+    // Anime.js Animations
+    document.addEventListener("DOMContentLoaded", function () {
+      // Floating elements animation
+      anime({
+        targets: ".floating-element.shape-1",
+        translateY: ["0px", "-30px"],
+        rotate: {
+          value: "+=10",
+          duration: 10000,
+        },
+        direction: "alternate",
+        loop: true,
+        easing: "easeInOutSine",
+        duration: 3000,
+      });
+
+      anime({
+        targets: ".floating-element.shape-2",
+        translateY: ["0px", "30px"],
+        rotate: {
+          value: "-=15",
+          duration: 15000,
+        },
+        direction: "alternate",
+        loop: true,
+        easing: "easeInOutSine",
+        duration: 4000,
+      });
+
+      // Animate skill bars when scrolled into view
+      const skillBars = document.querySelectorAll(".skill-progress");
+
+      const animateSkillBars = () => {
+        skillBars.forEach((bar) => {
+          const rect = bar.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            const width = bar.getAttribute("data-width");
+            anime({
+              targets: bar,
+              width: width + "%",
+              duration: 1500,
+              easing: "easeInOutQuad",
+              delay: anime.stagger(100),
+            });
+          }
+        });
+      };
+
+      // Run once on load and then on scroll
+      animateSkillBars();
+      window.addEventListener("scroll", animateSkillBars);
+
+      // Timeline item animations
+      const timelineItems = document.querySelectorAll(".timeline-item");
+
+      const animateTimelineItems = () => {
+        timelineItems.forEach((item, index) => {
+          const rect = item.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            anime({
+              targets: item,
+              opacity: 1,
+              translateY: 0,
+              duration: 800,
+              easing: "easeOutExpo",
+              delay: index * 200,
+            });
+          }
+        });
+      };
+
+      // Run once on load and then on scroll
+      animateTimelineItems();
+      window.addEventListener("scroll", animateTimelineItems);
+
+      // Text animation for hero section
+      const heroTitle = document.querySelector(".hero-section h1");
+      if (heroTitle) {
+        const text = heroTitle.innerText;
+        heroTitle.innerHTML = "";
+
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement("span");
+          span.className = "letter";
+          span.textContent = text[i] === " " ? " " : text[i];
+          heroTitle.appendChild(span);
+        }
+
+        anime.timeline({ loop: false }).add({
+          targets: ".hero-section h1 .letter",
+          opacity: [0, 1],
+          translateY: [50, 0],
+          duration: 1000,
+          delay: (el, i) => 100 * i,
+          easing: "easeOutExpo",
+        });
+      }
+
+      // Button hover effects
+      const buttons = document.querySelectorAll(
+        ".btn-hire-me, .btn-lets-talk"
+      );
+      buttons.forEach((button) => {
+        button.addEventListener("mouseenter", function () {
+          anime({
+            targets: this,
+            scale: 1.05,
+            duration: 200,
+            easing: "easeOutExpo",
+          });
+        });
+
+        button.addEventListener("mouseleave", function () {
+          anime({
+            targets: this,
+            scale: 1,
+            duration: 200,
+            easing: "easeOutExpo",
+          });
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
