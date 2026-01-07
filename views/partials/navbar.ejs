@@ -3,7 +3,8 @@
         <!-- Logo with soft floating effect -->
         <a class="navbar-brand logo-container" href="/">
             <div class="logo-soft-bg">
-                <span class="logo-text">Vir<span class="logo-accent">cosa</span></span>
+                <!-- <span class="logo-text">Vir<span class="logo-accent">cosa</span></span> -->
+                 <img src="/images/logo.png" alt="Vircosa Logo">
             </div>
         </a>
         
@@ -105,10 +106,11 @@
         <div class="search-trending">
             <span class="trending-label">Trending:</span>
             <div class="trending-tags">
-                <button class="trending-tag" data-search="Citrus">Citrus Fresh</button>
-                <button class="trending-tag" data-search="Floral">Floral Bouquet</button>
-                <button class="trending-tag" data-search="Woody">Woody Notes</button>
-                <button class="trending-tag" data-search="Oriental">Oriental Spice</button>
+                <button class="trending-tag" data-search="Azzaro Wanted">Azzaro Wanted</button>
+                <button class="trending-tag" data-search="White Oud">White Oud</button>
+                <button class="trending-tag" data-search="Allure Homme Sports">Allure Homme Sports</button>
+                <button class="trending-tag" data-search="Bleu De Chanel">Bleu De Chanel</button>
+                <button class="trending-tag" data-search="Dior Savage">Dior Savage</button>
             </div>
         </div>
 
@@ -166,18 +168,72 @@
     }
 
     .logo-soft-bg {
-        background: linear-gradient(135deg, rgba(139, 90, 43, 0.1), rgba(212, 175, 142, 0.1));
-        padding: 6px 16px;
-        border-radius: 20px;
-        display: inline-block;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.8), 
+            rgba(248, 245, 242, 0.9)
+        );
+        padding: 10px 24px;
+        border-radius: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(139, 90, 43, 0.1);
-        transition: all 0.3s ease;
+        border: 1.5px solid rgba(139, 90, 43, 0.15);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 56px;
+        box-shadow: 
+            0 2px 8px rgba(139, 90, 43, 0.08),
+            inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logo-soft-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(212, 175, 142, 0.15),
+            transparent
+        );
+        transition: left 0.6s ease;
+    }
+
+    .logo-soft-bg:hover::before {
+        left: 100%;
     }
 
     .logo-soft-bg:hover {
-        background: linear-gradient(135deg, rgba(139, 90, 43, 0.15), rgba(212, 175, 142, 0.15));
-        transform: scale(1.02);
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.95), 
+            rgba(248, 245, 242, 1)
+        );
+        border-color: rgba(212, 175, 142, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 
+            0 6px 20px rgba(139, 90, 43, 0.15),
+            inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .logo-soft-bg img {
+        height: 42px;
+        width: auto;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 2px 4px rgba(139, 90, 43, 0.1));
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .logo-soft-bg:hover img {
+        filter: drop-shadow(0 4px 8px rgba(139, 90, 43, 0.2));
+        transform: scale(1.03);
     }
 
     .logo-text {
