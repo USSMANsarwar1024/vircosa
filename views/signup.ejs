@@ -506,7 +506,7 @@
           </div>
 
           <div class="card-body">
-            <form method="POST" action="/signup" enctype="multipart/form-data">
+            <form id="signupForm" method="POST" action="/signup" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -783,10 +783,13 @@
     });
 
     // Form submission
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      const btn = document.querySelector('.btn-register');
-      btn.classList.add('loading');
-    });
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+      signupForm.addEventListener('submit', function() {
+        const btn = document.querySelector('.btn-register');
+        btn.classList.add('loading');
+      });
+    }
 
     // Input focus effects
     document.querySelectorAll('.form-control').forEach(input => {

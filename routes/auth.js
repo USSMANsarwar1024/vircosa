@@ -3,6 +3,8 @@ const router = express.Router();
 const multer = require("multer");
 const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
+const path = require("path");
 
 const { setCookie, redirectIfLoggedIn } = require("../middleware/auth");
 const transporter = require("../config/mailer");
@@ -10,9 +12,12 @@ const transporter = require("../config/mailer");
 // ============================
 // Multer storage configuration
 // ============================
+const uploadDir = path.join(__dirname, "..", "public", "uploads", "userPictures");
+fs.mkdirSync(uploadDir, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/userPictures");
+    cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
     const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -73,8 +78,10 @@ router.post("/signup", upload.single("profilePicture"), async (req, res) => {
     // console.log("FILE:", req.file);
 
     // Send verification email
-    await transporter.sendMail({
-      from: process.env.MAIL_FROM,
+    const mailFrom = process.env.MAIL_FROM || process.env.MAIL_USER;
+
+    const mailInfo = await transporter.sendMail({
+      from: mailFrom,
       to: newUser.email,
       subject: "Verify Your Email — Vircosa",
       html: `
@@ -136,6 +143,9 @@ router.post("/signup", upload.single("profilePicture"), async (req, res) => {
         `
       });
 
+    // Log for troubleshooting email delivery (does not expose secrets)
+    // console.log("Signup mail queued", { to: newUser.email, messageId: mailInfo.messageId });
+
 
 
     // Redirect to verification page
@@ -143,7 +153,7 @@ router.post("/signup", upload.single("profilePicture"), async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server Error");
+    res.status(500).send("Server Error, Please contact support.<br>support@vircosa.com");
   }
 });
 
@@ -201,8 +211,7 @@ router.post("/login", async (req, res) => {
 
     setCookie(existingUser, res, "login");
   } catch (err) {
-    console.error("Login Error:", err);
-    return res.status(500).send("A server error occurred during login.");
+    return res.status(500).send("Server Error, Please contact support.<br>support@vircosa.com");
   }
 });
 
@@ -270,8 +279,7 @@ router.post("/resend-otp", async (req, res) => {
     return res.json({ message: "OTP resent successfully" });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server Error, Please contact support.<br>support@vircosa.com" });
   }
 });
 

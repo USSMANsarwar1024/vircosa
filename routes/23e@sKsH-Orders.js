@@ -143,8 +143,10 @@ router.post("/update-status/:orderId", async (req, res) => {
     const statusInfo = statusMessages[status];
 
     try {
-      await transporter.sendMail({
-        from: process.env.MAIL_FROM,
+      const mailFrom = process.env.MAIL_FROM || process.env.MAIL_USER;
+
+      const mailInfo = await transporter.sendMail({
+        from: mailFrom,
         to: order.shipping.email,
         subject: `${statusInfo.icon} ${statusInfo.subject} - ${order.orderNumber}`,
         html: `

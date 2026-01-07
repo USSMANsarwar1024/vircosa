@@ -1448,7 +1448,11 @@
                                 <div class="col-md-3">
                                     <div class="stat-card text-center p-3">
                                         <div class="stat-number display-6 fw-bold text-amber">
-                                            <%= new Set(myReviews.map(r => r.product.category)).size %>
+                                            <%= new Set(
+                                                myReviews
+                                                    .filter(r => r && r.product && r.product.category)
+                                                    .map(r => r.product.category)
+                                            ).size %>
                                         </div>
                                         <div class="stat-label text-muted">Categories Reviewed</div>
                                     </div>
@@ -1481,7 +1485,7 @@
                         <!-- Reviews Grid -->
                         <div class="reviews-grid">
                             <div class="row">
-                                <% myReviews.forEach(r => { %>
+                                <% myReviews.filter(r => r && r.product).forEach(r => { %>
                                 <div class="col-lg-6 mb-4" data-rating="<%= r.rating %>" data-date="<%= r.createdAt.getTime() %>">
                                     <div class="review-card card border-0 shadow-sm h-100">
                                         <div class="card-body">
@@ -1655,7 +1659,7 @@
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active'));
+                this.classList.add('active');
                 
                 // Add ripple effect
                 const ripple = document.createElement('span');

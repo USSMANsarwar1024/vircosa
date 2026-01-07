@@ -60,7 +60,7 @@ router.get("/", isLoggedIn, async (req, res) => {
       .sort({ createdAt: -1 })
       .lean();
 
-    
+
 
     const orders = await Order.find({ user: user._id }).sort({ createdAt: -1 }).lean();
 
@@ -209,7 +209,7 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
 
     await newOrder.save();
 
-     // 🔻 Reduce stock
+    // 🔻 Reduce stock
     for (const item of user.cart) {
       const product = await Product.findById(item.product._id);
       const variant = product.variants.find(v => v.size === item.size);
@@ -256,8 +256,10 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
         `
       });
 
-      await transporter.sendMail({
-        from: process.env.MAIL_FROM,
+      const mailFrom = process.env.MAIL_FROM || process.env.MAIL_USER;
+
+      const mailInfo = await transporter.sendMail({
+        from: mailFrom,
         to: shipping.email,
         subject: "Your Vircosa Order Confirmation",
         html: `
@@ -281,7 +283,7 @@ router.post('/orders', isLoggedIn, upload.single('screenshot'), async (req, res)
         `
       });
 
-        return res.json({
+      return res.json({
         success: true,
         orderNumber: newOrder.orderNumber,
         message: "Order placed successfully!"

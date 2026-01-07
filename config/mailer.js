@@ -11,4 +11,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Self-test the transporter once at startup
+// transporter.verify()
+//   .then(() => console.log("Mailer ready: SMTP connection verified"))
+//   .catch((err) => console.error("Mailer verify failed:", err.message));
+
 module.exports = transporter;
