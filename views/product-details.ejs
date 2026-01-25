@@ -1249,38 +1249,57 @@
                                 </select>
                             </div>
 
-                            <!-- Reviews -->
                             <div class="reviews-list">
-                                <% reviews.forEach(r => { %>
+                                <% reviews.forEach(r => { 
+                                    const fname = r.user?.firstname || 'Anonymous';
+                                    const lname = r.user?.lastname || '';
+                                    const initials = (fname[0] || 'U') + (lname[0] || '');
+                                %>
+
                                 <div class="review-item card border-0 shadow-sm mb-3" data-rating="<%= r.rating %>" data-date="<%= r.createdAt.getTime() %>">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-circle bg-amber text-white d-flex align-items-center justify-content-center me-3">
-                                                    <%= r.user.firstname.charAt(0) + r.user.lastname.charAt(0) %>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-0"><%= r.user.firstname %> <%= r.user.lastname %></h6>
-                                                    <div class="text-amber">
-                                                        <% for(let i=1; i<=5; i++){ %>
-                                                            <i class="fas fa-star <%= i <= r.rating ? '' : 'text-light' %>" style="font-size: 0.8rem;"></i>
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <small class="text-muted">
-                                                <%= r.createdAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
-                                            </small>
+                                <div class="card-body">
+
+                                <div class="d-flex justify-content-between mb-3">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <!-- Avatar -->
+                                        <div class="avatar-circle bg-amber text-white d-flex align-items-center justify-content-center me-3">
+                                            <%= initials.toUpperCase() %>
                                         </div>
 
-                                        <% if (r.title) { %>
-                                            <h6 class="mb-2"><%= r.title %></h6>
-                                        <% } %>
-                                        <p class="mb-0"><%= r.comment %></p>
+                                        <!-- Name + Stars -->
+                                        <div>
+                                            <h6 class="mb-0"><%= fname %> <%= lname %></h6>
+
+                                            <div class="text-amber">
+                                                <% for(let i=1; i<=5; i++){ %>
+                                                    <i class="fas fa-star <%= i <= r.rating ? '' : 'text-light' %>" style="font-size: 0.8rem;"></i>
+                                                <% } %>
+                                            </div>
+                                        </div>
+
                                     </div>
+
+                                    <!-- Date -->
+                                    <small class="text-muted">
+                                        <%= r.createdAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                                    </small>
+
                                 </div>
+
+                                <% if (r.title) { %>
+                                    <h6 class="mb-2"><%= r.title %></h6>
+                                <% } %>
+
+                                <p class="mb-0"><%= r.comment %></p>
+
+                                </div>
+                                </div>
+
                                 <% }) %>
-                            </div>
+                                </div>
+
                         <% } %>
                     </div>
                 </div>
