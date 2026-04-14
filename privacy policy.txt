@@ -1,0 +1,5 @@
+privacy policy
+password change
+post checkout page
+cancel order
+include box as variant
